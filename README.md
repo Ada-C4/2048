@@ -28,3 +28,23 @@ Recreate as much of the original game as is reasonable in the one week we have a
 - Document your answers to these questions in this README.
 - Use your discussion and answers to create tasks for a trello board. Organize those tasks into deliverable components (e.e., _Scoring_, _Tile Collision_, _Win/Loss_).
 - Open a PR with your discussion notes and answers to the above questions. Include a link to your Trello board. Indicate in the PR which deliverable(s) you are targeting first.
+
+### Questions and Answers
+**How does scoring work?**  
+Scoring happens when two tiles of the same value are combined. The value of those two tiles are added to your total score.  
+**When do tiles enter the game?**  
+Every time you move on the board, a new tile enters the game. It can be a 2 or a 4, not sure if they are equally likely. It is seemingly placed in a random empty spot on the board, after the pre-existing tiles have already moved.  
+**How do you know if you've won?**  
+You win the game when one of your tiles on the board has a value of 2048.  
+**How do you know if you've lost?**  
+You lose when you cannot add another tile to the board (it’s full).  
+**What makes tiles move?**  
+Arrow keys- up, down, left, right.  
+**What happens when they move?**  
+If the values on two tiles match, their total is combined. If the values on the two tiles do not match, they are moved as closely as possible together (no empty spaces between the tiles). All of the tiles move as far as they can (not just a single space), in the direction of the key press.  
+**How would you know how far a tile should move?**  
+Tiles will move in the direction of the key you’ve hit until there is no more empty space between that tile and the next tile or the edge of the board.  
+**How would you know if tiles would collide?**  
+Tiles change colors and value.  
+**What happens when tiles collide?**  
+If the tiles match in value, they are combined into one tile with the value of the sum of the two tiles (e.g., two 32 tiles makes one 64, or two 128s make one 256).  
