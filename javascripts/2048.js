@@ -10,34 +10,38 @@ Game.prototype.moveTile = function(tile, direction) {
     case 38: //up
       console.log('up');
       console.log(tile);
-      var row = $(".tile")[0].dataset.row;
+      var row = tile[0].dataset.row;
       if (row[1] - 1 >= 0) {
-        $(".tile")[0].dataset.row = row[0] + (parseInt(row[1]) - 1);
+        tile[0].dataset.row = row[0] + (parseInt(row[1]) - 1);
       }
       break;
     case 40: //down
       console.log('down');
-      var row = $(".tile")[0].dataset.row;
+      var row = tile[0].dataset.row;
       if (parseInt(row[1]) + 1 <= 3) {
-        $(".tile")[0].dataset.row = row[0] + (parseInt(row[1]) + 1);
+        tile[0].dataset.row = row[0] + (parseInt(row[1]) + 1);
       }
       break;
     case 37: //left
       console.log('left');
-      var column = $(".tile")[0].dataset.col;
+      var column = tile[0].dataset.col;
       if (column[1] - 1 >= 0) {
-        $(".tile")[0].dataset.col = column[0] + (parseInt(column[1]) - 1);
+        tile[0].dataset.col = column[0] + (parseInt(column[1]) - 1);
       };
       break;
     case 39: //right
       console.log('right');
-      var column = $(".tile")[0].dataset.col;
+      var column = tile[0].dataset.col;
       if (parseInt(column[1]) + 1 <= 3) {
-        $(".tile")[0].dataset.col = column[0] + (parseInt(column[1]) + 1);
+        tile[0].dataset.col = column[0] + (parseInt(column[1]) + 1);
       };
       break;
   }
 };
+
+Game.prototype.newTile = function(tile, direction) {
+
+}
 
 $(document).ready(function() {
   console.log("ready to go!");
