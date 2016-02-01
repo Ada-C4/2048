@@ -1,6 +1,23 @@
 var Game = function() {
-  // Game logic and initialization here
+  var board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
 };
+
+Game.prototype.randTile = function(board) {
+  console.log(board)
+  var arr = [];
+  for(var i = 0; i < 4; i++) {
+    for(var j = 0; j < 4; j++ ) {
+      if( board[i][j] === 0 ) {
+        arr.push([i,j]);
+      }
+    }
+  }
+  var randNum = Math.floor((Math.random() * arr.length));
+  var i_board = arr[randNum][0];
+  var j_board = arr[randNum][1];
+  board[i_board][j_board] = 2;
+  return board;
+}
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
@@ -20,17 +37,17 @@ Game.prototype.moveTile = function(tile, direction) {
   }
 };
 
-$(document).ready(function() {
-  console.log("ready to go!");
-  // Any interactive jQuery functionality
-  var game = new Game();
-
-  $('body').keydown(function(event){
-    var arrows = [37, 38, 39, 40];
-    if (arrows.indexOf(event.which) > -1) {
-      var tile = $('.tile');
-      
-      game.moveTile(tile, event.which);
-    }
-  });
-});
+// $(document).ready(function() {
+//   console.log("ready to go!");
+//   // Any interactive jQuery functionality
+//   var game = new Game();
+//
+//   $('body').keydown(function(event){
+//     var arrows = [37, 38, 39, 40];
+//     if (arrows.indexOf(event.which) > -1) {
+//       var tile = $('.tile');
+//
+//       game.moveTile(tile, event.which);
+//     }
+//   });
+// });
