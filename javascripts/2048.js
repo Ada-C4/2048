@@ -15,7 +15,10 @@ Game.prototype.randTile = function(board) {
   var randNum = Math.floor((Math.random() * arr.length));
   var i_board = arr[randNum][0];
   var j_board = arr[randNum][1];
-  board[i_board][j_board] = 2;
+
+    if (Math.floor((Math.random() * 10) + 1) == 7) {
+      board[i_board][j_board] = 4;
+    } else { board[i_board][j_board] = 2; }
   return board;
 }
 
@@ -51,3 +54,6 @@ Game.prototype.moveTile = function(tile, direction) {
 //     }
 //   });
 // });
+// 
+// var game = new Game();
+// game.randTile([[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]);
