@@ -1,5 +1,7 @@
 var Game = function() {
   // Game logic and initialization here
+  this.board = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+  this.score = 0;
 };
 
 Game.prototype.moveTile = function(tile, direction) {
@@ -29,7 +31,7 @@ $(document).ready(function() {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
-      
+
       game.moveTile(tile, event.which);
     }
   });
