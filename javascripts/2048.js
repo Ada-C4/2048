@@ -1,13 +1,15 @@
 var Game = function() {
-  var board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+  this.board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
 };
 
-Game.prototype.randTile = function(board) {
-  console.log(board)
+Game.prototype.board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+
+Game.prototype.randTile = function() {
+  console.log(this.board);
   var arr = [];
   for(var i = 0; i < 4; i++) {
     for(var j = 0; j < 4; j++ ) {
-      if( board[i][j] === 0 ) {
+      if( this.board[i][j] === 0 ) {
         arr.push([i,j]);
       }
     }
@@ -17,10 +19,11 @@ Game.prototype.randTile = function(board) {
   var j_board = arr[randNum][1];
 
     if (Math.floor((Math.random() * 10) + 1) == 7) {
-      board[i_board][j_board] = 4;
-    } else { board[i_board][j_board] = 2; }
-  return board;
-}
+      this.board[i_board][j_board] = 4;
+    } else { this.board[i_board][j_board] = 2; }
+  // return this.board;
+  return [i_board, j_board];
+};
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
@@ -40,6 +43,24 @@ Game.prototype.moveTile = function(tile, direction) {
   }
 };
 
+Game.prototype.moveLeft = function(tile) {
+  // tile[0] is the row
+  // tile[1] is the column position
+  var row = tile[0];
+  var col = tile[1];
+  var value = this.board[row][col];
+
+  var board_row = this.board[tile[0]];
+
+  for(j=0; j<4; j++) {
+    if (board_row[j] === 0) {
+      this.board[row][j] = value;
+      this.board[row][col] = 0;
+      break;
+    }
+  }
+};
+
 // $(document).ready(function() {
 //   console.log("ready to go!");
 //   // Any interactive jQuery functionality
@@ -54,6 +75,8 @@ Game.prototype.moveTile = function(tile, direction) {
 //     }
 //   });
 // });
-// 
-// var game = new Game();
-// game.randTile([[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]);
+//
+var game = new Game();
+game.randTile([[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]);
+game.moveLeft(game.randTile([[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]));
+//game.randTile([[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]);
