@@ -9,40 +9,44 @@ Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   switch(direction) {
     case 38: //up
-      console.log('up');
       console.log(tile);
       var row = tile[0].dataset.row;
       if (row[1] - 1 >= 0) {
         tile[0].dataset.row = row[0] + (parseInt(row[1]) - 1);
+        this.updateBoard(tile);
       }
       break;
     case 40: //down
-      console.log('down');
       var row = tile[0].dataset.row;
       if (parseInt(row[1]) + 1 <= 3) {
         tile[0].dataset.row = row[0] + (parseInt(row[1]) + 1);
       }
       break;
     case 37: //left
-      console.log('left');
       var column = tile[0].dataset.col;
       if (column[1] - 1 >= 0) {
         tile[0].dataset.col = column[0] + (parseInt(column[1]) - 1);
-      };
+      }
       break;
     case 39: //right
-      console.log('right');
       var column = tile[0].dataset.col;
       if (parseInt(column[1]) + 1 <= 3) {
         tile[0].dataset.col = column[0] + (parseInt(column[1]) + 1);
-      };
+      }
       break;
   }
 };
 
+Game.prototype.updateBoard = function(tile, game) {
+  var row = tile[0].dataset.row[1];
+  var column = tile[0].dataset.col[1];
+  this.board[row][column] = tile[0].dataset.val;
+  console.log(this.board);
+};
+
 Game.prototype.newTile = function(tile, direction) {
 
-}
+};
 
 $(document).ready(function() {
   console.log("ready to go!");
