@@ -10,17 +10,23 @@ Game.prototype.moveTile = function(tile, direction) {
     case 38: //up
       console.log('up');
       console.log(tile);
-      var column = $(".tile")[0].dataset.col;
-      $(".tile")[0].dataset.col = "c" + column - 1;
+      var row = $(".tile")[0].dataset.row;
+      $(".tile")[0].dataset.row = row[0] + (parseInt(row[1]) - 1);
       break;
     case 40: //down
       console.log('down');
+      var row = $(".tile")[0].dataset.row;
+      $(".tile")[0].dataset.row = row[0] + (parseInt(row[1]) + 1);
       break;
     case 37: //left
       console.log('left');
+      var column = $(".tile")[0].dataset.col;
+      $(".tile")[0].dataset.col = column[0] + (parseInt(column[1]) - 1);
       break;
     case 39: //right
       console.log('right');
+      var column = $(".tile")[0].dataset.col;
+      $(".tile")[0].dataset.col = column[0] + (parseInt(column[1]) + 1);
       break;
   }
 };
