@@ -1,3 +1,6 @@
+[answers to baseline questions](https://gist.github.com/rileyrileyrose/e23ed49c86fd48ef626e)
+
+
 # 2048
 For this project, we will be working in pairs to create a clone of the super-fun browser based game [2048](http://gabrielecirulli.github.io/2048/).
 
