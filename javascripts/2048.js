@@ -9,6 +9,9 @@ Game.prototype.moveTile = function(tile, direction) {
   switch(direction) {
     case 38: //up
       console.log('up');
+      console.log(tile);
+      var column = $(".tile")[0].dataset.col;
+      $(".tile")[0].dataset.col = "c" + column - 1;
       break;
     case 40: //down
       console.log('down');
