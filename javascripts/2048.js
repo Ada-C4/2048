@@ -1,9 +1,9 @@
 var Game = function() {
   // Game logic and initialization here
-  this.board = [[9, 9, 9, 9],
-                [9, 9, 9, 9],
-                [9, 9, 9, 9],
-                [9, 9, 9, 9]];
+  this.board = [[0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0]];
 };
 
 Game.prototype.play = function() {
@@ -43,31 +43,43 @@ Game.prototype.moveTileUp = function(tile) {
   var x = parseInt($(".tile").attr("data-col").slice(-1));
   if (newY >= 0) {
     tile[0].setAttribute("data-row", ("r" + newY));
-    console.log(this.board);
-    console.log("before board reassignment:");
-    console.log(this.board[y][x]);
-    console.log(this.board[newY][x]);
     this.board[newY][x] = this.board[y][x];
-    console.log("after board reassignment:");
-    console.log(this.board[y][x]);
-    console.log(this.board[newY][x]);
     this.board[y][x] = 0;
-    console.log("after zeroing out previous square:");
-    console.log(this.board[y][x]);
-    console.log(this.board[newY][x]);
-
-    console.log(this.board);
   }
 };
 
-Game.prototype.setRandoTile = function() {
-  $("#gameboard").append("<div></div>");
-  $("div").last().addClass("tile");
-  $("div").last().attr("data-row", "r1");
-  $("div").last().attr("data-col", "c1");
-  $("div").last().attr("data-val", "2");
-  $("div").last().text("2");
-  this.board[1][1] = 2;
+Game.prototype.addRandoTile = function() {
+  var tile = $("<div data-row='' data-col='' data-val=''></div>");
+  var dataVal = Math.random() < 0.2 ? 4 : 2;
+  var emptySpaces = this.returnEmptySpaces();
+  var randoLocation = emptySpaces[Math.floor(Math.random() * emptySpaces.length)];
+  tile.addClass("tile");
+  tile.attr("data-row", "r" + randoLocation[0]);
+  tile.attr("data-col", "c" + randoLocation[1]);
+  tile.attr("data-val", dataVal);
+  tile.text(dataVal);
+  $("#gameboard").append(tile);
+  console.log(tile.attr("data-row"));
+  this.board[randoLocation[0]][randoLocation[1]] = dataVal;
+  console.log(this.board);
+};
+
+Game.prototype.returnEmptySpaces = function() {
+  var emptySpaces = [];
+  var row = null;
+  var col = null;
+  var tileLocation = null;
+  for (var i = 0; i < 4; i++) {
+    row = i;
+    for (var j = 0; j < 4; j++) {
+      col = j;
+      tileLocation = this.board[row][col];
+      if (tileLocation === 0) {
+        emptySpaces.push([row, col]);
+      }
+    }
+  }
+  return emptySpaces;
 };
 
 
@@ -76,7 +88,7 @@ $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
   var game = new Game();
-  game.setRandoTile();
+  game.addRandoTile();
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
@@ -87,3 +99,7 @@ $(document).ready(function() {
     }
   });
 });
+
+function tileSelectText(row, col) {
+  return ".tile[data-row=\"" + row + "\"][data-col=\"" + col + "\"]";
+}
