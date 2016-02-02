@@ -1,23 +1,37 @@
 var Game = function() {
   // Game logic and initialization here
   this.gameOver = false;
-  this.board = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+  this.board = [];
 };
 
-Game.prototype.addTile = function() {
+var tileCount = 0;
+
+var Tile = function (row, col) {
+  // make new Tiles
+  this.row = row;
+  this.col = col;
+  // update so it can also be 4
+  this.val = 2;
+  this.tileId = tileCount++;
+};
+
+
+Game.prototype.addTile = function () {
   var tilePlaced = false;
+  var currentTiles = [];
+  this.board.forEach(function (tile) {
+    currentTiles.push([tile.row, tile.col]);
+  });
   while (!tilePlaced) {
-    var col =  Math.floor(Math.random() * (4 - 0)),
-        row =  Math.floor(Math.random() * (4 - 0));
-    if (this.board[row][col] === 0) {
-      tilePlaced = true;
-      this.board[row][col] = 2;
-      // Update data-val when we add random 2 or 4
-      var $tileHTML = $('<div class="tile" data-row="r'+ row +'", data-col="c'+ col +'" data-val="2">2</div>');
-      $('#gameboard').append($tileHTML);
-    }
+      var col =  Math.floor(Math.random() * (4 - 0)),
+          row =  Math.floor(Math.random() * (4 - 0));
+      if (!currentTiles.includes([row, col])) {
+        tilePlaced = true;
+        this.board.push(new Tile(row, col));
+      }
   }
 };
+
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
@@ -72,6 +86,7 @@ $(document).ready(function() {
   var game = new Game();
   game.addTile();
   game.addTile();
+  console.dir(game.board);
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
