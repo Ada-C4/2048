@@ -6,6 +6,8 @@ var Game = function() {
 };
 
 Game.prototype.moveTile = function(tile, direction) {
+  var column;
+  var row;
   // Game method here
   // console.log(this.board);
   switch(direction) {
@@ -15,8 +17,8 @@ Game.prototype.moveTile = function(tile, direction) {
       });
 
       for (var i = 0; i < tile.length; i++) {
-        var row = tile[i].dataset.row;
-        var column = tile[i].dataset.col;
+        row = tile[i].dataset.row;
+        column = tile[i].dataset.col;
         if (row[1] - 1 >= 0) {
           while (this.board[row[1] - 1][column[1]] === 0) {
             this.removeFromBoard(tile[i]);
@@ -37,11 +39,11 @@ Game.prototype.moveTile = function(tile, direction) {
         return (b.dataset.row[1] - a.dataset.row[1]);
       });
 
-      console.log(tile[0])
+      console.log(tile[0]);
 
-      for (var i = 0; i < tile.length; i++) {
-        var row = tile[i].dataset.row;
-        var column = tile[i].dataset.col;
+      for (i = 0; i < tile.length; i++) {
+        row = tile[i].dataset.row;
+        column = tile[i].dataset.col;
         if (parseInt(row[1]) + 1 <= 3) {
           while (this.board[parseInt(row[1]) + 1][column[1]] === 0) {
             this.removeFromBoard(tile[i]);
@@ -61,7 +63,7 @@ Game.prototype.moveTile = function(tile, direction) {
         return a.dataset.col[1] - b.dataset.col[1];
       });
 
-      for (var i = 0; i < tile.length; i++) {
+      for (i = 0; i < tile.length; i++) {
         console.log(i);
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
@@ -84,7 +86,7 @@ Game.prototype.moveTile = function(tile, direction) {
         return b.dataset.col[1] - a.dataset.col[1];
       });
 
-      for (var i = 0; i < tile.length; i++) {
+      for (i = 0; i < tile.length; i++) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (parseInt(column[1]) + 1 <= 3) {
