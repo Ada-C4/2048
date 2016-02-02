@@ -83,14 +83,19 @@ Game.prototype.moveTile = function(tile, direction) {
 };
 
 Game.prototype.moveLeft = function() {
-  console.log("hi");
   var board = this.board;
+  console.log(board);
   for (var r = 0; r < 4; r++) {
-    for (var c = 0; c < 4; c++) {
+    for (var c = 1; c < 4; c++) {
       if (board[r][c] !== 0) {
         if (board[r][c - 1] === 0) {
+          var cVal = c + 1;
+          if(c === 3){
+            cVal = 0;
+          }
+          // shift to the left
           board[r][c - 1] = board[r][c];
-          board[r][c] = board[r][c + 1];
+          board[r][c] = board[r][cVal];
         }
       }
     }
