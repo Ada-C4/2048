@@ -2,7 +2,8 @@ var Game = function() {
   // Game logic and initialization here
   this.board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
   this.score = 0;
-  this.availableSquares = 16;
+  // 15 becuase squares are counted based on the board array which stars at 0
+  this.availableSquares = 15;
 };
 
 Game.prototype.moveTile = function(tile, direction) {
@@ -65,21 +66,29 @@ Game.prototype.createRandomTile = function() {
     var rando = getRando(0,this.availableSquares);
  // assign the tile's value to the board
     // calculates the index of the intter array
+    console.log(rando);
     var innerArr = ((rando/4).toString()).charAt(0);
     // calculates the index in the innerArray that the tile should ba assiged to
-    var innerArrIndex = (rando - (innerArr * 4)) - 1;
+    console.log(innerArr);
+    var innerArrIndex = (rando - (innerArr * 4));
     // looks at the index in the inner Array and if no empty moves to the next index
+    console.log(innerArrIndex);
     while (this.board[innerArr][innerArrIndex] != 0) {
       innerArrIndex++;
     }
     // assigns the tile value to the board
-    this.board[innerArr][innerArrIndex] = 2;
+    var twoOrFour = getRando(0,9);
+    if (twoOrFour == 0) {
+      var tileVal = 4;
+    } else {
+      var tileVal = 2;
+    }
+
+    this.board[innerArr][innerArrIndex] = tileVal;
 
  // assign a tile there
-    $(".cells").after('<div class="tile" data-row="r3", data-col="c1" data-val="2">2</div>');
 
-    $(".cells").after('<div class="tile" data-row="r0", data-col="c2" data-val="2">2</div>');
-
+    $(".cells").after('<div class="tile" data-row="r' + innerArr +'", data-col="c' + innerArrIndex + '" data-val="' + tileVal + '">' + tileVal + '</div>');
 };
 
 
