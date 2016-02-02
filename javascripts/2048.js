@@ -20,20 +20,12 @@ Game.prototype.moveTile = function(tile, direction) {
       var movePlaces = 0;
       this.gameBoard.forEach(function(row, rowIndex){
         row.forEach(function(column, columnIndex){
-          if(column != 0 && columnIndex != 0){
-            console.log('column: ' + column);
-            console.log('columnIndex' + columnIndex);
-            console.log('row: ' + row);
-            console.log('rowIndex: ' + rowIndex);
+          if(column !== 0 && columnIndex !== 0) {
             for (var i = columnIndex; i >= 0; i--) {
-              console.log('i: ' + i);
-              console.log(self.gameBoard[rowIndex]);
               if (self.gameBoard[rowIndex][i-1] === 0) {
                 movePlaces += 135;
               }
-            $('.tile[data-row=r' + rowIndex + ']' + ', .tile[data-col=c' + columnIndex + ']').animate({ left: '-=' + movePlaces }, 100);
-            console.log('.tile[data-row=r' + rowIndex + ']' + ', .tile[data-col=c' + columnIndex + ']');
-            }
+            $('.tile[data-row=r' + rowIndex + ']' + ', .tile[data-col=c' + columnIndex + ']').animate({ left: '-=' + movePlaces }, 100);            }
           }
         });
       });
