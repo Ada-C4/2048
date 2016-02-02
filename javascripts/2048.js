@@ -3,16 +3,9 @@ var Game = function() {
   this.score = 0;
 };
 
-Game.prototype.scoring = function() {
-  var currentScore = 0;
-  for (var i = 0; i < 4; i++) {
-    for (var j = 0; j < 4; j++ ) {
-      currentScore += this.board[i][j];
-    }
-  }
-  this.score = currentScore;
+Game.prototype.scoring = function(tile) {
+  this.score += tile;
   console.log(this.score)
-  return this.score;
 }
 
 
@@ -83,6 +76,7 @@ Game.prototype.collideLeft = function() {
       //console.log(row[x-1]);
       if ((row[x] === row[x+1]) && row[x] !== 0) {
         row[x] = (row[x] + row[x+1]);
+        self.scoring(row[x]);
         row[x+1] = 0;
         switch(x) {
           case 0:
@@ -126,6 +120,7 @@ Game.prototype.collideRight = function() {
       //console.log(row[x-1]);
       if ((row[x] === row[x-1]) && row[x] !== 0) {
         row[x] = (row[x] + row[x-1]);
+        self.scoring(row[x]);
         row[x-1] = 0;
         switch(x) {
           case 3:
@@ -165,6 +160,7 @@ Game.prototype.collideDown = function() {
       //console.log(row[x-1]);
       if (( board[row][bcol] === board[row-1][bcol]) && board[row][bcol] !== 0) {
         board[row][bcol] = (board[row][bcol] + board[row-1][bcol]);
+        self.scoring(board[row][bcol]);
         board[row-1][bcol] = 0;
         switch(row) {
           case 3:
@@ -203,6 +199,7 @@ Game.prototype.collideUp = function() {
     for (var row = 0; row < 3; row++) {
       if (( board[row][bcol] === board[row+1][bcol]) && (board[row][bcol] !== 0)) {
         board[row][bcol] = (board[row][bcol] + board[row+1][bcol]);
+        self.scoring(board[row][bcol]);
         board[row+1][bcol] = 0;
         switch(row) {
           case 0:
@@ -237,5 +234,5 @@ Game.prototype.collideUp = function() {
 //
 var game = new Game();
 var f = game.randTile();
-game.moveUp(f);
-game.collideUp();
+game.moveLeft(f);
+game.collideLeft();
