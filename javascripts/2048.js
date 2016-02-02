@@ -7,26 +7,27 @@ var Game = function() {
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
-  // var this = new Game();
   console.log(this.board);
   switch(direction) {
     case 38: //up
-      var row = tile[0].dataset.row;
-      var column = tile[0].dataset.col;
-      while (this.board[row[1] - 1][column[1]] === 0) {
-        this.removeFromBoard(tile);
-        tile[0].dataset.row = row[0] + (parseInt(row[1]) - 1);
-        this.addToBoard(tile);
-        row = tile[0].dataset.row;
-        if (row[1] - 1 < 0) {
-          break;
+      for (var i = 0; i < tile.length; i++) {
+        var row = tile[i].dataset.row;
+        var column = tile[i].dataset.col;
+        while (this.board[row[1] - 1][column[1]] === 0) {
+          this.removeFromBoard(tile);
+          tile[i].dataset.row = row[0] + (parseInt(row[1]) - 1);
+          this.addToBoard(tile);
+          row = tile[i].dataset.row;
+          if (row[1] - 1 < 0) {
+            break;
+          }
         }
       }
       this.newTile();
       break;
     case 40: //down
-      row = tile[0].dataset.row;
-      column = tile[0].dataset.col;
+      var row = tile[0].dataset.row;
+      var column = tile[0].dataset.col;
       while (this.board[parseInt(row[1]) + 1][column[1]] === 0) {
         this.removeFromBoard(tile);
         tile[0].dataset.row = row[0] + (parseInt(row[1]) + 1);
@@ -96,7 +97,6 @@ $(document).ready(function() {
   $('body').keydown(function(event){
     if (game.arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
-
       game.moveTile(tile, event.which);
     }
   });
