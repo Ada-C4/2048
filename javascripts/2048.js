@@ -11,25 +11,46 @@ Game.prototype.moveTile = function(tile, direction) {
       console.log('up');
       // console.log(tile.attr("data-row"));
       // console.log(tile.attr("data-col"));
-      console.log(tile);
-      console.log(tile[0]);
+      // console.log(tile);
+      // console.log(tile[0]);
+      // console.log(tile[0].dataset.row);
+      // console.log(tile[0].dataset.col);
+      // console.log(tile[0].dataset.val);
+      var currentRow = parseInt(tile[0].dataset.row.charAt(1));
+      if (currentRow > 0) {
+        tile[0].dataset.row = "r" + (currentRow - 1);
+        tile.animate({top: '-=135px'}, 50);
+      }
       console.log(tile[0].dataset.row);
-      console.log(tile[0].dataset.col);
-      console.log(tile[0].dataset.val);
-      $('.tile').animate({top: '-=135px'}, 50);
       // check to see if the space above is empty, if Yes, move to that space
       break;
     case 40: //down
+
+      var currentRow = parseInt(tile[0].dataset.row.charAt(1));
+      if (currentRow < 3) {
+        tile[0].dataset.row = "r" + (currentRow + 1);
+        tile.animate({top: '+=135px'}, 50);
+      }
+      console.log(tile[0].dataset.row);
       console.log('down');
-      $('.tile').animate({top: '+=135px'}, 50);
       break;
     case 37: //left
+      var currentCol = parseInt(tile[0].dataset.col.charAt(1));
+      if (currentCol > 0) {
+        tile[0].dataset.col = "c" + (currentCol - 1);
+        tile.animate({left: '-=135px'}, 50);
+      }
+      console.log(tile[0].dataset.col);
       console.log('left');
-      $('.tile').animate({left: '-=135px'}, 50);
       break;
     case 39: //right
+      var currentCol = parseInt(tile[0].dataset.col.charAt(1));
+      if (currentCol < 3) {
+        tile[0].dataset.col = "c" + (currentCol + 1);
+        tile.animate({left: '+=135px'}, 50);
+      }
+      console.log(tile[0].dataset.col);
       console.log('right');
-      $('.tile').animate({left: '+=135px'}, 50);
       break;
   }
 };
