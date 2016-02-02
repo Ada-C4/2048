@@ -13,7 +13,6 @@ Game.prototype.randTile = function() {
       }
     }
   }
-  console.log(arr)
   var randNum = Math.floor((Math.random() * arr.length));
   var i_board = arr[randNum][0];
   var j_board = arr[randNum][1];
@@ -70,7 +69,7 @@ Game.prototype.moveRight = function(tile) {
   var value = this.board[row][col];
   var board_row = this.board[tile[0]];
 
-  for(j= 3; j > col; j--) {
+  for(var j= 3; j > col; j--) {
     if (board_row[j] === 0) {
       this.board[row][j] = value;
       this.board[row][col] = 0;
@@ -79,6 +78,21 @@ Game.prototype.moveRight = function(tile) {
   }
   return this.board;
 };
+
+Game.prototype.moveDown = function(tile) {
+  var row = tile[0];
+  var col = tile[1];
+  var value = this.board[row][col];
+  // var board_col = this.board[tile[1]];
+  for(var i = 3; i > row ; i--) {
+    if ((this.board[i][col]) === 0) {
+      this.board[i][col] = value;
+      this.board[row][col] = 0;
+      break;
+    }
+  }
+  return this.board
+}
 
 
 
@@ -103,6 +117,4 @@ Game.prototype.moveRight = function(tile) {
 //
 var game = new Game();
 var f = game.randTile();
-// game.moveLeft(f);
-game.moveRight(f);
-//game.randTile([[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]);
+  game.moveDown(f);
