@@ -11,28 +11,21 @@ Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   switch(direction) {
     case 38: //up
-      console.log('up');
-      var upRow = parseInt($(".tile").attr("data-row").slice(-1)) - 1;
-      if (upRow >= 0) {
-        tile[0].setAttribute("data-row", ("r" + upRow));
-      }
+      this.moveTileUp(tile);
       break;
     case 40: //down
-      console.log('down');
       var downRow = parseInt($(".tile").attr("data-row").slice(-1)) + 1;
       if (downRow <= 3) {
         tile[0].setAttribute("data-row", ("r" + downRow));
       }
       break;
     case 37: //left
-      console.log('left');
       var leftCol = parseInt($(".tile").attr("data-col").slice(-1)) - 1;
       if (leftCol >= 0) {
         tile[0].setAttribute("data-col", ("c" + leftCol));
       }
       break;
     case 39: //right
-      console.log('right');
       var rightCol = parseInt($(".tile").attr("data-col").slice(-1)) + 1;
       if (rightCol <= 3) {
         tile[0].setAttribute("data-col", ("c" + rightCol));
@@ -40,6 +33,21 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
   }
 };
+
+Game.prototype.moveTileUp = function(tile, direction) {
+  var upRow = parseInt($(".tile").attr("data-row").slice(-1)) - 1;
+  var y = upRow;
+  var x = parseInt($(".tile").attr("data-col").slice(-1));
+  if (upRow >= 0) {
+    var newY = tile[0].setAttribute("data-row", ("r" + upRow));
+    console.log(this.board);
+    this.board[x][newY] = this.board[x][y];
+    this.board[x][y] = 0;
+    console.log(this.board);
+  }
+};
+
+
 
 $(document).ready(function() {
   console.log("ready to go!");
