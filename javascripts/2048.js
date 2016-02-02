@@ -8,12 +8,19 @@ Game.prototype.moveTile = function(tile, direction) {
     case 38: //up
       var dataRow = $(".tile").attr("data-row").slice(1);
           dataInt = parseInt(dataRow, 10);
-          dataInt -= 1;
+          if(dataInt > 0){
+            dataInt -= 1;
+          }
           $(".tile")[0].setAttribute("data-row", ("r" + dataInt));
         // subtract from data-row, if cell is empty
       break;
     case 40: //down
-      console.log('down');
+      var dataRow = $(".tile").attr("data-row").slice(1);
+          dataInt = parseInt(dataRow, 10);
+          if(dataInt < 3){
+            dataInt += 1;
+          }
+          $(".tile")[0].setAttribute("data-row", ("r" + dataInt));
       break;
     case 37: //left
       console.log('left');
