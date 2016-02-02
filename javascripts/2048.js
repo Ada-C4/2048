@@ -40,16 +40,28 @@ Game.prototype.moveTile = function(tile, direction) {
     case 37: //left
       row = tile[0].dataset.row;
       column = tile[0].dataset.col;
-      if (column[1] - 1 >= 0) {
+      while (this.board[row[1]][column[1] - 1] === 0) {
+        this.removeFromBoard(tile);
         tile[0].dataset.col = column[0] + (parseInt(column[1]) - 1);
+        this.addToBoard(tile);
+        column = tile[0].dataset.col;
+        if (column[1] -1 < 0) {
+          break;
+        }
       }
       game.newTile();
       break;
     case 39: //right
       row = tile[0].dataset.row;
       column = tile[0].dataset.col;
-      if (parseInt(column[1]) + 1 <= 3) {
+      while (this.board[row[1]][parseInt(column[1]) + 1] === 0) {
+        this.removeFromBoard(tile);
         tile[0].dataset.col = column[0] + (parseInt(column[1]) + 1);
+        this.addToBoard(tile);
+        column = tile[0].dataset.col;
+        if (parseInt(column[1]) + 1 > 3) {
+          break;
+        }
       }
       game.newTile();
       break;
