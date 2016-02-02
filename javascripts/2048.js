@@ -4,6 +4,21 @@ var Game = function() {
   this.board = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
 };
 
+Game.prototype.addTile = function() {
+  var tilePlaced = false;
+  while (!tilePlaced) {
+    var col =  Math.floor(Math.random() * (4 - 0)),
+        row =  Math.floor(Math.random() * (4 - 0));
+    if (this.board[row][col] === 0) {
+      tilePlaced = true;
+      this.board[row][col] = 2;
+      // Update data-val when we add random 2 or 4
+      var $tileHTML = $('<div class="tile" data-row="r'+ row +'", data-col="c'+ col +'" data-val="2">2</div>');
+      $('#gameboard').append($tileHTML);
+    }
+  }
+};
+
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   switch(direction) {
@@ -55,13 +70,17 @@ $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
   var game = new Game();
-
+  game.addTile();
+  game.addTile();
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
+      // console.log(tile);
+      // $(tile).attr('data-row', 'r0');
       
       game.moveTile(tile, event.which);
     }
+
   });
 });
