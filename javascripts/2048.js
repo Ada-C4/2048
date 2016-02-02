@@ -19,7 +19,6 @@ Game.prototype.moveTile = function(tile, direction) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (row[1] - 1 >= 0) {
-          console.log("move stuff");
           while (this.board[row[1] - 1][column[1]] === 0) {
             this.removeFromBoard(tile[i]);
             tile[i].dataset.row = row[0] + (parseInt(row[1]) - 1);
@@ -28,6 +27,18 @@ Game.prototype.moveTile = function(tile, direction) {
             if (row[1] - 1 < 0) {
               break;
             }
+          }
+          if (this.board[row[1] - 1][column[1]] == tile[i].dataset.val) {
+            console.log("collide!");
+            //update array board
+            this.board[row[1] - 1][column[1]] *= 2;
+            //delete tile
+            tile[i].remove();
+            //update tile with data-row = row[1] - 1 and data-col = column[1]
+            var updateTile = $(".tile[data-row=\"r" + (row[1] - 1) + "\"][data-col=\"c" + column[1] + "\"]");
+            var newVal = updateTile[0].dataset.val *= 2;
+            updateTile[0].dataset.val = newVal;
+            updateTile[0].innerHTML = newVal;
           }
         }
       }
@@ -100,6 +111,11 @@ Game.prototype.moveTile = function(tile, direction) {
       }
       break;
     }
+};
+
+
+Game.prototype.combineTiles = function() {
+
 };
 
 Game.prototype.removeFromBoard = function(tile) {
@@ -182,7 +198,7 @@ $(document).ready(function() {
     if (game.arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
       game.moveTile(tile, event.which);
-      setTimeout(function() { game.newTile(); }, 200);
+      // setTimeout(function() { game.newTile(); }, 200);
     }
   });
 });
