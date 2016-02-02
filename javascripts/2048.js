@@ -7,7 +7,8 @@ var Game = function() {
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
-  var game = new Game();
+  // var this = new Game();
+  console.log(this.board);
   switch(direction) {
     case 38: //up
       var row = tile[0].dataset.row;
@@ -21,7 +22,7 @@ Game.prototype.moveTile = function(tile, direction) {
           break;
         }
       }
-      game.newTile();
+      this.newTile();
       break;
     case 40: //down
       row = tile[0].dataset.row;
@@ -35,25 +36,37 @@ Game.prototype.moveTile = function(tile, direction) {
           break;
         }
       }
-      game.newTile();
+      this.newTile();
       break;
     case 37: //left
       row = tile[0].dataset.row;
       column = tile[0].dataset.col;
-      if (column[1] - 1 >= 0) {
+      while (this.board[row[1]][column[1] - 1] === 0) {
+        this.removeFromBoard(tile);
         tile[0].dataset.col = column[0] + (parseInt(column[1]) - 1);
+        this.addToBoard(tile);
+        column = tile[0].dataset.col;
+        if (column[1] -1 < 0) {
+          break;
+        }
       }
-      game.newTile();
+      this.newTile();
       break;
     case 39: //right
       row = tile[0].dataset.row;
       column = tile[0].dataset.col;
-      if (parseInt(column[1]) + 1 <= 3) {
+      while (this.board[row[1]][parseInt(column[1]) + 1] === 0) {
+        this.removeFromBoard(tile);
         tile[0].dataset.col = column[0] + (parseInt(column[1]) + 1);
+        this.addToBoard(tile);
+        column = tile[0].dataset.col;
+        if (parseInt(column[1]) + 1 > 3) {
+          break;
+        }
       }
-      game.newTile();
+      this.newTile();
       break;
-  }
+    }
 };
 
 Game.prototype.removeFromBoard = function(tile) {
@@ -71,6 +84,7 @@ Game.prototype.addToBoard = function(tile) {
 Game.prototype.newTile = function() {
   var randCol = Math.floor(Math.random() * 4);
   var randRow = Math.floor(Math.random() * 4);
+
   $("#gameboard").append("<div class='tile' data-row='r" + randRow + "', data-col='c" + randCol + "' data-val='2'>2</div>");
   this.board[randRow][randCol] = 2;
 };
