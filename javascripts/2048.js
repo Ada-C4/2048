@@ -35,6 +35,7 @@ Game.prototype.getPositions = function(){
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
+  var self = this;
   var tileLength = tile.length;
   switch(direction) {
     case 38: //up  // subtract from data-row, TODO: if cell is empty (?)
@@ -58,6 +59,7 @@ Game.prototype.moveTile = function(tile, direction) {
         }
       break;
     case 37: //left
+    self.moveLeft();
       for (var i = 0; i < $(".tile").length; i++){
         var dataColumn = $(".tile").attr("data-col").slice(1);
             var dataInt = parseInt(dataColumn, 10);
@@ -80,12 +82,26 @@ Game.prototype.moveTile = function(tile, direction) {
   }
 };
 
+Game.prototype.moveLeft = function() {
+  console.log("hi");
+  var board = this.board;
+  for (var r = 0; r < 4; r++) {
+    for (var c = 0; c < 4; c++) {
+      if (board[r][c] !== 0) {
+        if (board[r][c - 1] === 0) {
+          board[r][c - 1] = board[r][c];
+          board[r][c] = board[r][c + 1];
+        }
+      }
+    }
+  }
+};
+
 $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
   var game = new Game();
   var f = game.addRandomTile();
-
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
