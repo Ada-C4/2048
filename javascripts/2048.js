@@ -20,7 +20,9 @@ Game.prototype.addRandomTile = function(){
   // using the length of this array, choose a random one()
   var randIndex = array[Math.floor(Math.random()* array.length)];
   // insert a 2 or 4 into that position on the board
-  this.board[randIndex[0]][randIndex[1]] = 2;
+  var startNumArray = [2,2,2,2,2,2,4];
+  var randTile = startNumArray[Math.floor(Math.random()*startNumArray.length)];
+  this.board[randIndex[0]][randIndex[1]] = randTile;
 }
 
 Game.prototype.getPositions = function(){
