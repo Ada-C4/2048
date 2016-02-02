@@ -62,6 +62,26 @@ Game.prototype.moveLeft = function(tile) {
   return this.board;
 };
 
+Game.prototype.moveRight = function(tile) {
+  // tile[0] is the row
+  // tile[1] is the column position
+  var row = tile[0];
+  var col = tile[1];
+  var value = this.board[row][col];
+  var board_row = this.board[tile[0]];
+
+  for(j= 3; j > col; j--) {
+    if (board_row[j] === 0) {
+      this.board[row][j] = value;
+      this.board[row][col] = 0;
+      break;
+    }
+  }
+  return this.board;
+};
+
+
+
 
 
 
@@ -83,5 +103,6 @@ Game.prototype.moveLeft = function(tile) {
 //
 var game = new Game();
 var f = game.randTile();
-game.moveLeft(f);
+// game.moveLeft(f);
+game.moveRight(f);
 //game.randTile([[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]);
