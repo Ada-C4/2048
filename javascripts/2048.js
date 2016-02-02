@@ -30,8 +30,6 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       }
-      this.newTile();
-      console.log(this.board);
       break;
     case 40: //down
       tile = Array.from(tile);
@@ -56,7 +54,6 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       }
-      // this.newTile();
       break;
     case 37: //left
       tile = tile.sort(function(a,b){
@@ -79,7 +76,6 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       }
-      // this.newTile();
       break;
     case 39: //right
       tile = tile.sort(function(a,b){
@@ -101,8 +97,7 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       }
-        // this.newTile();
-      break;
+        break;
     }
 };
 
@@ -119,12 +114,65 @@ Game.prototype.addToBoard = function(tile) {
 };
 
 Game.prototype.newTile = function() {
+  var randValue = Math.random() < 0.9 ? 2 : 4;
   var randCol = Math.floor(Math.random() * 4);
   var randRow = Math.floor(Math.random() * 4);
 
-  $("#gameboard").append("<div class='tile' data-row='r" + randRow + "', data-col='c" + randCol + "' data-val='2'>2</div>");
-  this.board[randRow][randCol] = 2;
+  if (this.board[randRow][randCol] === 0) {
+    $("#gameboard").append("<div class='tile' data-row='r" + randRow + "', data-col='c" + randCol + "' data-val='" + randValue + "'>" + randValue + "</div>");
+    this.board[randRow][randCol] = randValue;
+    console.log(this.board[randRow][randCol]);
+  } else {
+    this.newTile();
+    this.gameOver();
+  }
 };
+
+
+
+Game.prototype.gameOver = function(){
+  var loser;
+  var board = this.board;
+  var zeros = new Array;
+
+  for (var i = 0; i < board.length; i++) {
+    for (var j = 0; j < board[i].length; j++) {
+      if (board[i][j] === 0){
+        zeros.push(board[i][j]);
+      }
+    };
+  };
+
+  if (zeros.length === 0){
+    loser = true; 
+  } else {
+    loser = false;
+  }
+
+  var gameOverAlert = function() {
+    swal({
+      title: "Game Over!", 
+      text: "Do you want to play again?", 
+      type: "info",
+      showCancelButton: false,
+      closeOnConfirm: true,
+      confirmButtonText: "Yes, play again!",
+      confirmButtonColor: "#ec6c62"
+    }, function() {
+        window.location.reload();
+    });
+  }
+
+  if (loser) { 
+    gameOverAlert();
+    this.board = [[0, 2, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 2, 0]];
+    // window.location.reload();
+  }
+}
+
+Game.prototype.availableMove = function(){
+
+}
 
 $(document).ready(function() {
   console.log("ready to go!");
@@ -135,6 +183,7 @@ $(document).ready(function() {
     if (game.arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
       game.moveTile(tile, event.which);
+      game.newTile();
     }
   });
 });
