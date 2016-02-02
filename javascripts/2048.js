@@ -1,5 +1,7 @@
 var Game = function() {
   // Game logic and initialization here
+  this.gameOver = false;
+  this.board = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
 };
 
 Game.prototype.moveTile = function(tile, direction) {
@@ -17,6 +19,35 @@ Game.prototype.moveTile = function(tile, direction) {
     case 39: //right
       console.log('right');
       break;
+  }
+};
+
+Game.prototype.updateGameOver = function(){
+  // has free spaces
+  var noZeroes = true,
+      pairFound = false;
+  this.board.forEach(function(row) {
+    noZeroes = noZeroes && row.every(function(val) {
+      return val !== 0;
+    });
+  });
+  // if there are no zeroes, the game is not over
+  if (!noZeroes) {
+    return;
+  } else {
+    var i = 0;
+    while (!pairFound && i < 4) {
+      var j = 0;
+      while (!pairFound && j < 4) {
+        if (this.board[i][j] == this.board[i][j+1] ||
+           (this.board[i+1] && this.board[i][j] == this.board[i+1][j])) { 
+            pairFound = true; 
+        }
+        j++;
+      }
+      i++;
+    }
+    if (!pairFound) { this.gameOver = true; }
   }
 };
 
