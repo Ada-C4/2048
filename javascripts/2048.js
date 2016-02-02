@@ -6,7 +6,11 @@ Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   switch(direction) {
     case 38: //up
-      console.log('up');
+      var dataRow = $(".tile").attr("data-row").slice(1);
+          dataInt = parseInt(dataRow, 10);
+          dataInt -= 1;
+          $(".tile")[0].setAttribute("data-row", ("r" + dataInt));
+        // subtract from data-row, if cell is empty
       break;
     case 40: //down
       console.log('down');
@@ -29,7 +33,7 @@ $(document).ready(function() {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
-      
+
       game.moveTile(tile, event.which);
     }
   });
