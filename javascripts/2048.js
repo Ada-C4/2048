@@ -12,7 +12,7 @@ var Tile = function (row, col) {
   this.col = col;
   // update so it can also be 4
   this.val = 2;
-  this.tileId = tileCount++;
+  this.tileId = String(tileCount++);
 };
 
 
@@ -41,6 +41,11 @@ Game.prototype.moveTile = function(tile, direction) {
   switch(direction) {
     case 38: //up
       console.log('up');
+      this.board.forEach(function (tile) {
+        tile.row = 0;
+        $("." + tile.tileId).attr("data-row", "r " + tile.row);
+      });
+      console.log(this.board);
       break;
     case 40: //down
       console.log('down');
