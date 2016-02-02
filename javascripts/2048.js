@@ -6,6 +6,16 @@ var Game = function() {
                [0,0,0,0]];
 };
 
+//generate random tile
+Game.prototype.addRandomTile = function(){
+  //find a 0, replace with a 2, sometimes a 4 (1 out of 5?)
+  // Math.floor(Math.random()* self.board.length)
+
+  //find all the 0s in board, put their positions in separate array
+  // using the length of this array, choose a random one() and insert a 2 or 4
+  //into that position on the board
+}
+
 Game.prototype.getPositions = function(){
   var tileRows = $(".tile").map(function(){
     return $(this).data("row");
@@ -17,7 +27,7 @@ Game.prototype.getPositions = function(){
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
-  var tileLength = $(".tile").length;
+  var tileLength = tile.length;
   switch(direction) {
     case 38: //up  // subtract from data-row, TODO: if cell is empty (?)
       for (var i = 0; i < $(".tile").length; i++){
