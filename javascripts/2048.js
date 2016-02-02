@@ -38,14 +38,17 @@ Game.prototype.moveTile = function(tile, direction) {
 };
 
 Game.prototype.moveTileUp = function(tile) {
-  var upRow = parseInt($(".tile").attr("data-row").slice(-1)) - 1;
-  var y = upRow;
+  var y = parseInt($(".tile").attr("data-row").slice(-1));
+  var newY = parseInt($(".tile").attr("data-row").slice(-1)) - 1;
   var x = parseInt($(".tile").attr("data-col").slice(-1));
-  if (upRow >= 0) {
-    tile[0].setAttribute("data-row", ("r" + upRow));
+  if (newY >= 0) {
+    tile[0].setAttribute("data-row", ("r" + newY));
     console.log(this.board);
-    this.board[x][newY] = this.board[x][y];
-    this.board[x][y] = 0;
+    console.log(y);
+    console.log(newY);
+    console.log(x)
+    this.board[newY][x] = this.board[y][x];
+    this.board[y][x] = 0;
     console.log(this.board);
   }
 };
@@ -56,7 +59,8 @@ Game.prototype.setRandoTile = function() {
   $("div").last().attr("data-row", "r0");
   $("div").last().attr("data-col", "c0");
   $("div").last().attr("data-val", "2");
-  $("div").last().text("2048");
+  $("div").last().text("2");
+  this.board[0][0] = 2;
 };
 
 
