@@ -2,8 +2,6 @@ var Game = function() {
   this.board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
 };
 
-// Game.prototype.board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
-
 Game.prototype.randTile = function() {
   var arr = [];
   for(var i = 0; i < 4; i++) {
@@ -83,7 +81,6 @@ Game.prototype.moveDown = function(tile) {
   var row = tile[0];
   var col = tile[1];
   var value = this.board[row][col];
-  // var board_col = this.board[tile[1]];
   for(var i = 3; i > row ; i--) {
     if ((this.board[i][col]) === 0) {
       this.board[i][col] = value;
@@ -98,7 +95,6 @@ Game.prototype.moveUp = function(tile) {
   var row = tile[0];
   var col = tile[1];
   var value = this.board[row][col];
-
   for(var i = 0; i < row ; i++) {
     if ((this.board[i][col]) === 0) {
       this.board[i][col] = value;
@@ -108,11 +104,6 @@ Game.prototype.moveUp = function(tile) {
   }
   return this.board;
 };
-
-
-
-
-
 
 
 // $(document).ready(function() {
