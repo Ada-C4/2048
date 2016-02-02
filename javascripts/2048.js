@@ -5,6 +5,7 @@ var Game = function() {
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
+  var self = this;
   switch(direction) {
     case 38: //up
       console.log('up');
@@ -17,15 +18,31 @@ Game.prototype.moveTile = function(tile, direction) {
     case 37: //left
       console.log('left');
       var movePlaces = 0;
-      console.log(movePlaces);
-
+      this.gameBoard.forEach(function(row, rowIndex){
+        row.forEach(function(column, columnIndex){
+          if(column != 0 && columnIndex != 0){
+            console.log('column: ' + column);
+            console.log('columnIndex' + columnIndex);
+            console.log('row: ' + row);
+            console.log('rowIndex: ' + rowIndex);
+            for (var i = columnIndex; i >= 0; i--) {
+              console.log('i: ' + i);
+              console.log(self.gameBoard[rowIndex]);
+              if (self.gameBoard[rowIndex][i-1] === 0) {
+                movePlaces += 135;
+              }
+            $('.tile[data-row=r' + rowIndex + ']' + ', .tile[data-col=c' + columnIndex + ']').animate({ left: '-=' + movePlaces }, 100);
+            console.log('.tile[data-row=r' + rowIndex + ']' + ', .tile[data-col=c' + columnIndex + ']');
+            }
+          }
+        });
+      });
       for (var i = 0; i >= 0; i--) {
         if (this.gameBoard[0][i] === 0) {
           movePlaces += 135;
         }
       }
       console.log(movePlaces);
-      $('.tile').animate({ left: '-=' + movePlaces }, 100);
 
       break;
     case 39: //right
