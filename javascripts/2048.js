@@ -1,6 +1,9 @@
 var Game = function() {
   // Game logic and initialization here
-  this.board = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+  this.board = [[0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0]];
 };
 
 Game.prototype.play = function() {
@@ -34,17 +37,26 @@ Game.prototype.moveTile = function(tile, direction) {
   }
 };
 
-Game.prototype.moveTileUp = function(tile, direction) {
+Game.prototype.moveTileUp = function(tile) {
   var upRow = parseInt($(".tile").attr("data-row").slice(-1)) - 1;
   var y = upRow;
   var x = parseInt($(".tile").attr("data-col").slice(-1));
   if (upRow >= 0) {
-    var newY = tile[0].setAttribute("data-row", ("r" + upRow));
+    tile[0].setAttribute("data-row", ("r" + upRow));
     console.log(this.board);
     this.board[x][newY] = this.board[x][y];
     this.board[x][y] = 0;
     console.log(this.board);
   }
+};
+
+Game.prototype.setRandoTile = function() {
+  $("#gameboard").append("<div></div>");
+  $("div").last().addClass("tile");
+  $("div").last().attr("data-row", "r0");
+  $("div").last().attr("data-col", "c0");
+  $("div").last().attr("data-val", "2");
+  $("div").last().text("2048");
 };
 
 
@@ -53,7 +65,7 @@ $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
   var game = new Game();
-
+  game.setRandoTile();
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
