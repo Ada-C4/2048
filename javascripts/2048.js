@@ -21,7 +21,7 @@ Game.prototype.randTile = function() {
       this.board[i_board][j_board] = 4;
     } else { this.board[i_board][j_board] = 2; }
   // return this.board;
-  console.log(this.board)
+  console.log(this.board);
   return [i_board, j_board];
 };
 
@@ -91,8 +91,23 @@ Game.prototype.moveDown = function(tile) {
       break;
     }
   }
-  return this.board
-}
+  return this.board;
+};
+
+Game.prototype.moveUp = function(tile) {
+  var row = tile[0];
+  var col = tile[1];
+  var value = this.board[row][col];
+
+  for(var i = 0; i < row ; i++) {
+    if ((this.board[i][col]) === 0) {
+      this.board[i][col] = value;
+      this.board[row][col] = 0;
+      break;
+    }
+  }
+  return this.board;
+};
 
 
 
@@ -117,4 +132,4 @@ Game.prototype.moveDown = function(tile) {
 //
 var game = new Game();
 var f = game.randTile();
-  game.moveDown(f);
+game.moveUp(f);
