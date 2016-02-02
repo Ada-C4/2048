@@ -6,10 +6,10 @@ var Game = function() {
   this.availableSquares = 15;
 };
 
-Game.prototype.moveTile = function(tile, direction) {
+Game.prototype.moveTiles = function(tiles, direction) {
   // Game method here
-  var currentRow = parseInt(tile[0].dataset.row.charAt(1));
-  var currentCol = parseInt(tile[0].dataset.col.charAt(1));
+  var currentRow = parseInt(tiles[0].dataset.row.charAt(1));
+  var currentCol = parseInt(tiles[0].dataset.col.charAt(1));
   switch(direction) {
     case 38: //up
       // console.log(tile.attr("data-row"));
@@ -20,15 +20,15 @@ Game.prototype.moveTile = function(tile, direction) {
       // console.log(tile[0].dataset.col);
       // console.log(tile[0].dataset.val);
       if (currentRow > 0) {
-        tile[0].dataset.row = "r" + (currentRow - 1);
-        tile.animate({top: '-=135px'}, 50);
+        tiles[0].dataset.row = "r" + (currentRow - 1);
+        tiles.animate({top: '-=135px'}, 50);
       }
       // check to see if the space above is empty, if Yes, move to that space
       break;
     case 40: //down
       if (currentRow < 3) {
-        tile[0].dataset.row = "r" + (currentRow + 1);
-        tile.animate({top: '+=135px'}, 50);
+        tiles[0].dataset.row = "r" + (currentRow + 1);
+        tiles.animate({top: '+=135px'}, 50);
       }
       break;
     case 37: //left
@@ -47,14 +47,14 @@ Game.prototype.moveTile = function(tile, direction) {
         this.updateBoard(beginningTilesArray,i);
       }
       if (currentCol > 0) {
-        tile[0].dataset.col = "c" + (currentCol - 1);
-        tile.animate({left: '-=135px'}, 50);
+        tiles[0].dataset.col = "c" + (currentCol - 1);
+        tiles.animate({left: '-=135px'}, 50);
       }
       break;
     case 39: //right
       if (currentCol < 3) {
-        tile[0].dataset.col = "c" + (currentCol + 1);
-        tile.animate({left: '+=135px'}, 50);
+        tiles[0].dataset.col = "c" + (currentCol + 1);
+        tiles.animate({left: '+=135px'}, 50);
       }
       break;
   }
@@ -121,8 +121,8 @@ $(document).ready(function() {
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
-      var tile = $('.tile');
-      game.moveTile(tile, event.which);
+      var tiles = $('.tile');
+      game.moveTiles(tiles, event.which);
     }
   });
 
