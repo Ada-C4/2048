@@ -8,6 +8,7 @@ var Game = function() {
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   // var this = new Game();
+  console.log(this.board);
   switch(direction) {
     case 38: //up
       var row = tile[0].dataset.row;
@@ -83,7 +84,7 @@ Game.prototype.addToBoard = function(tile) {
 Game.prototype.newTile = function(cell, direction) {
   var randCol = Math.floor(Math.random() * 4);
   var randRow = Math.floor(Math.random() * 4);
-
+  this.board[randRow][randCol] = 2;
   $("#gameboard").append("<div class='tile' data-row='r" + randRow + "', data-col='c" + randCol + "' data-val='2'>2</div>");
 };
 
