@@ -1,11 +1,35 @@
 var Game = function() {
   this.board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
   this.score = 0;
+  this.win = false;
 };
 
 Game.prototype.scoring = function(tile) {
   this.score += tile;
-  console.log(this.score)
+  if (this.score == 2048) {
+    this.win = true;
+  }
+}
+
+Game.prototype.lost = function() {
+  var count = 0;
+  board = this.board;
+  //check col
+  for (var i = 0; i < 4; i++) {
+    for (var j = 0; j < 3; j ++) {
+      if (borad[i][j] === [i+1][j])
+      { return false;
+    }
+  }
+  //check row
+  for (var x = 0; x < 3; i++) {
+    for (var y = 0; y < 4; y ++) {
+      if (borad[x][y] === [x][y+1]) {
+        return false;
+      }
+    }
+    return true;
+  }
 }
 
 
