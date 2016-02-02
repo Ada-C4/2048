@@ -15,7 +15,6 @@ Game.prototype.moveTile = function(tile, direction) {
       tile = tile.sort(function(a,b){
         return a.dataset.row[1] - b.dataset.row[1];
       });
-
       for (var i = 0; i < tile.length; i++) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
@@ -31,7 +30,8 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       }
-      // this.newTile();
+      this.newTile();
+      console.log(this.board);
       break;
     case 40: //down
       tile = Array.from(tile);
@@ -118,13 +118,13 @@ Game.prototype.addToBoard = function(tile) {
   this.board[row][column] = tile.dataset.val;
 };
 
-// Game.prototype.newTile = function() {
-//   var randCol = Math.floor(Math.random() * 4);
-//   var randRow = Math.floor(Math.random() * 4);
+Game.prototype.newTile = function() {
+  var randCol = Math.floor(Math.random() * 4);
+  var randRow = Math.floor(Math.random() * 4);
 
-//   $("#gameboard").append("<div class='tile' data-row='r" + randRow + "', data-col='c" + randCol + "' data-val='2'>2</div>");
-//   this.board[randRow][randCol] = 2;
-// };
+  $("#gameboard").append("<div class='tile' data-row='r" + randRow + "', data-col='c" + randCol + "' data-val='2'>2</div>");
+  this.board[randRow][randCol] = 2;
+};
 
 $(document).ready(function() {
   console.log("ready to go!");
