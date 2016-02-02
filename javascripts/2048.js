@@ -1,5 +1,9 @@
 var Game = function() {
   // Game logic and initialization here
+  this.board =[[0,0,0,0],
+               [0,0,0,0],
+               [0,0,0,0],
+               [0,0,0,0]];
 };
 
 Game.prototype.getPositions = function(){
@@ -67,7 +71,6 @@ $(document).ready(function() {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
-      game.getPositions();
       game.moveTile(tile, event.which);
     }
   });
