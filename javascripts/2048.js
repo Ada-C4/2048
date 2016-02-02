@@ -28,7 +28,8 @@ Game.prototype.addTile = function () {
       if (!currentTiles.includes([row, col])) {
         tilePlaced = true;
         this.board.push(new Tile(row, col));
-        // make tile display on front end?
+        var $tileHTML = $('<div class="tile" data-row="r'+ row +'", data-col="c'+ col +'" data-val="2">2</div>');
+        $('#gameboard').append($tileHTML);
       }
   }
 };
