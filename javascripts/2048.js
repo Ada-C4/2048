@@ -9,7 +9,7 @@ Game.prototype.scoring = function(tile) {
   if (this.score == 2048) {
     this.win = true;
   }
-}
+};
 
 Game.prototype.lost = function() {
   var count = 0;
@@ -31,7 +31,7 @@ Game.prototype.lost = function() {
   }
   console.log("Game Over!");
   return true;
-}
+};
 
 
 Game.prototype.randTile = function() {
@@ -55,23 +55,25 @@ Game.prototype.randTile = function() {
   return [i_board, j_board];
 };
 
-Game.prototype.moveTile = function(tile, direction) {
+Game.prototype.moveTile = function(direction) {
   // Game method here
-  switch(direction) {
-    case 38: //up
-      console.log('up');
-      break;
-    case 40: //down
-      console.log('down');
-      break;
-    case 37: //left
-      console.log('left');
-      break;
-    case 39: //right
-      console.log('right');
-      // this.moveRight(tile);
-      // this.collideRight(tile);
-      break;
+  board = this.board;
+  self = this;
+      switch(direction) {
+        case 38: //up
+          console.log('up');
+          break;
+        case 40: //down
+          console.log('down');
+          break;
+        case 37: //left
+          console.log('left');
+          break;
+        case 39: //right
+          console.log('right');
+          //this.moveRight(tile);
+          //this.collideRight(tile);
+          break;
   }
 };
 
@@ -81,6 +83,7 @@ Game.prototype.moveLeft = function(tile) {
   var row = tile[0];
   var col = tile[1];
   var value = this.board[row][col];
+
   var board_row = this.board[tile[0]];
 
   for(var j=0; j < col; j++) {
@@ -92,6 +95,7 @@ Game.prototype.moveLeft = function(tile) {
   }
   return this.board;
 };
+
 
 Game.prototype.collideLeft = function() {
   self = this;
@@ -136,6 +140,17 @@ Game.prototype.moveRight = function(tile) {
   }
   return this.board;
 };
+
+Game.prototype.moveBoardRight = function() {
+  self = this;
+  for (var row=0; row < 4; row++) {
+    for (var col=3; col >= 0; col--) {
+      self.moveRight([row, col]);
+    }
+  }
+  return this.board;
+};
+
 
 Game.prototype.collideRight = function() {
   self = this;
@@ -259,5 +274,5 @@ Game.prototype.collideUp = function() {
 //
 var game = new Game();
 var f = game.randTile();
-game.moveLeft(f);
-game.collideLeft();
+game.moveBoardRight();
+game.collideRight();
