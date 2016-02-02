@@ -60,7 +60,6 @@ Game.prototype.moveTile = function(tile, direction) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (row[1] - 1 >= 0) {
-          console.log("move stuff");
           while (this.board[row[1] - 1][column[1]] === 0) {
             this.removeFromBoard(tile[i]);
             tile[i].dataset.row = row[0] + (parseInt(row[1]) - 1);
@@ -69,7 +68,7 @@ Game.prototype.moveTile = function(tile, direction) {
             if (row[1] - 1 < 0) {
               break;
             }
-          }
+          }; 
         }
       }
       break;
@@ -79,7 +78,6 @@ Game.prototype.moveTile = function(tile, direction) {
         return (b.dataset.row[1] - a.dataset.row[1]);
       });
 
-      console.log(tile[0]);
 
       for (i = 0; i < tile.length; i++) {
         row = tile[i].dataset.row;
@@ -103,7 +101,6 @@ Game.prototype.moveTile = function(tile, direction) {
       });
 
       for (i = 0; i < tile.length; i++) {
-        console.log(i);
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (column[1] - 1 >= 0) {
@@ -156,7 +153,6 @@ Game.prototype.addToBoard = function(tile) {
 };
 
 Game.prototype.newTile = function() {
-  console.log("new tile");
   var randValue = Math.random() < 0.9 ? 2 : 4;
   var randCol = Math.floor(Math.random() * 4);
   var randRow = Math.floor(Math.random() * 4);
@@ -164,7 +160,6 @@ Game.prototype.newTile = function() {
   if (this.board[randRow][randCol] === 0) {
     $("#gameboard").append("<div class='tile' data-row='r" + randRow + "', data-col='c" + randCol + "' data-val='" + randValue + "'>" + randValue + "</div>");
     this.board[randRow][randCol] = randValue;
-    console.log(this.board[randRow][randCol]);
   } else {
     this.newTile();
     this.gameOver();
@@ -210,8 +205,18 @@ Game.prototype.gameOver = function(){
   }
 };
 
-Game.prototype.noAvailableMoves = function(){
-
+Game.prototype.isMoveAvailable = function(tile){
+  // for (var i = 0; i < tile.length; i++) {
+  //   row = tile[i].dataset.row;
+  //   column = tile[i].dataset.col;
+  //   if (row[1] - 1 >= 0) {
+  //     console.log("move stuff");
+      
+  //       }
+  //     }; 
+  //   }
+  // }
+  return true
 };
 
 $(document).ready(function() {
@@ -221,7 +226,9 @@ $(document).ready(function() {
     if (game.arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
       game.moveTile(tile, event.which);
-      setTimeout(function() { game.newTile(); }, 200);
+      if (game.isMoveAvailable()){
+        setTimeout(function() { game.newTile(); }, 200);
+      };
     }
   });
 });
