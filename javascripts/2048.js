@@ -14,6 +14,15 @@ Game.prototype.addRandomTile = function(){
   //find all the 0s in board, put their positions in separate array
   // using the length of this array, choose a random one() and insert a 2 or 4
   //into that position on the board
+  var array = [];
+  for (var r = 0; r < 4; r++) {
+    for (var c = 0; c < 4; c++) {
+      if (this.board[r][c] === 0) {
+        array.push([r, c]);
+      }
+    }
+  }
+  console.log(array);
 }
 
 Game.prototype.getPositions = function(){
@@ -23,7 +32,7 @@ Game.prototype.getPositions = function(){
   var tileColumns = $(".tile").map(function(){
     return $(this).data("col");
   }).get();
-}
+};
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
@@ -76,6 +85,7 @@ $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
   var game = new Game();
+  var f = game.addRandomTile();
 
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
