@@ -1,6 +1,20 @@
 var Game = function() {
   this.board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+  this.score = 0;
 };
+
+Game.prototype.scoring = function() {
+  var currentScore = 0;
+  for (var i = 0; i < 4; i++) {
+    for (var j = 0; j < 4; j++ ) {
+      currentScore += this.board[i][j];
+    }
+  }
+  this.score = currentScore;
+  console.log(this.score)
+  return this.score;
+}
+
 
 Game.prototype.randTile = function() {
   var arr = [];
