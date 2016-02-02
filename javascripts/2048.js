@@ -60,16 +60,18 @@ Game.prototype.moveTile = function(tile, direction) {
       self.gameBoard.forEach(function(row, rowIndex){
         // iterate through each "column" (each item within a row)
         row.forEach(function(column, columnIndex){
+          var numSpaces = 0;
           // don't look at tiles that don't have a a value to them, AND don't look left if column is farthest left
           if (column !== 0 && columnIndex !== 0) {
             // iterate through each item further left of current item
             for (var i = columnIndex; i >= 0; i--) {
               // increment numSpaces to move left by 1 if the next left over is 0
               if (self.gameBoard[rowIndex][i-1] === 0) {
-                row[columnIndex - 1] = column;
-                row[columnIndex] = 0;
+                numSpaces += 1;
               }
             }
+            row[columnIndex - numSpaces] = column;
+            row[columnIndex] = 0;
           }
         });
       });
