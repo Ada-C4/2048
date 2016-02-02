@@ -2,15 +2,17 @@ var Game = function() {
   // Game logic and initialization here
 };
 
-Game.prototype.moveTile = function(tile, direction) {
-  // Game method here
+Game.prototype.getPositions = function(){
   var tileRows = $(".tile").map(function(){
     return $(this).data("row");
   }).get();
   var tileColumns = $(".tile").map(function(){
     return $(this).data("col");
   }).get();
-  console.log(tileColumns);
+}
+
+Game.prototype.moveTile = function(tile, direction) {
+  // Game method here
   var tileLength = $(".tile").length;
   switch(direction) {
     case 38: //up  // subtract from data-row, TODO: if cell is empty (?)
@@ -65,7 +67,7 @@ $(document).ready(function() {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
-
+      game.getPositions();
       game.moveTile(tile, event.which);
     }
   });
