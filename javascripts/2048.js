@@ -29,7 +29,7 @@ Game.prototype.addTile = function () {
         tilePlaced = true;
         newTile = new Tile(row, col);
         this.board.push(newTile);
-        var $tileHTML = $('<div class="tile '+ newTile.tileId +'" data-row="r'+ row +'", data-col="c'+ col +'" data-val="2">2</div>');
+        var $tileHTML = $('<div class="tile" id="' + newTile.tileId + '" data-row="r'+ row +'", data-col="c'+ col +'" data-val="2">2</div>');
         $('#gameboard').append($tileHTML);
       }
   }
@@ -51,7 +51,13 @@ Game.prototype.moveTile = function(tile, direction) {
           if (colArray[row].val === colArray[row+1].val) {
             colArray[row+1].val *= 2;
             colArray[row+1].row = row;
-            // delete current value
+            // change HTML of tile
+            $("#" + colArray[row+1].tileId).attr("data-row", "r" + row);
+            $("#" + colArray[row+1].tileId).attr("data-val", colArray[row+1].val);
+            $("#" + colArray[row+1].tileId).html(colArray[row+1].val);
+            // delete current html object
+            $("#" + colArray[row].tileId).remove();
+            // delete current value (tile object)
             colArray.splice(row, 1);
             // if not combining
           } else {
@@ -106,18 +112,18 @@ Game.prototype.updateGameOver = function(){
 $(document).ready(function() {
   // Any interactive jQuery functionality
   var game = new Game();
-  var t1 = new Tile(1, 0),
-      t2 = new Tile(3, 0),
+  var t1 = new Tile(0, 0),
+      t2 = new Tile(1, 0),
       t3 = new Tile(2, 0),
-      t4 = new Tile(4, 0);
+      t4 = new Tile(3, 0);
   game.board = [t1, t2, t3, t4];
-  var $t1HTML = $('<div class="tile '+ t1.tileId +'" data-row="r'+ t1.row +'", data-col="c'+ t1.col +'" data-val="2">2</div>');
+  var $t1HTML = $('<div class="tile" id="'+ t1.tileId +'" data-row="r'+ t1.row +'", data-col="c'+ t1.col +'" data-val="2">2</div>');
   $('#gameboard').append($t1HTML);
-  var $t2HTML = $('<div class="tile '+ t2.tileId +'" data-row="r'+ t2.row +'", data-col="c'+ t2.col +'" data-val="2">2</div>');
+  var $t2HTML = $('<div class="tile" id="'+ t2.tileId +'" data-row="r'+ t2.row +'", data-col="c'+ t2.col +'" data-val="2">2</div>');
   $('#gameboard').append($t2HTML);
-  var $t3HTML = $('<div class="tile '+ t3.tileId +'" data-row="r'+ t3.row +'", data-col="c'+ t3.col +'" data-val="2">2</div>');
+  var $t3HTML = $('<div class="tile" id="'+ t3.tileId +'" data-row="r'+ t3.row +'", data-col="c'+ t3.col +'" data-val="2">2</div>');
   $('#gameboard').append($t3HTML);
-  var $t4HTML = $('<div class="tile '+ t4.tileId +'" data-row="r'+ t4.row +'", data-col="c'+ t4.col +'" data-val="2">2</div>');
+  var $t4HTML = $('<div class="tile" id="'+ t4.tileId +'" data-row="r'+ t4.row +'", data-col="c'+ t4.col +'" data-val="2">2</div>');
   $('#gameboard').append($t4HTML);
 
   $('body').keydown(function(event){
