@@ -9,27 +9,41 @@ Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   switch(direction) {
     case 38: //up
-      console.log(tile);
       var row = tile[0].dataset.row;
-      if (row[1] - 1 >= 0) {
+      var column = tile[0].dataset.col;
+      while (this.board[row[1] - 1][column[1]] === 0) {
+        this.removeFromBoard(tile);
         tile[0].dataset.row = row[0] + (parseInt(row[1]) - 1);
-        this.updateBoard(tile);
+        this.addToBoard(tile);
+        row = tile[0].dataset.row;
+        if (row[1] - 1 < 0) {
+          break;
+        }
       }
       break;
     case 40: //down
-      var row = tile[0].dataset.row;
-      if (parseInt(row[1]) + 1 <= 3) {
+      row = tile[0].dataset.row;
+      column = tile[0].dataset.col;
+      while (this.board[parseInt(row[1]) + 1][column[1]] === 0) {
+        this.removeFromBoard(tile);
         tile[0].dataset.row = row[0] + (parseInt(row[1]) + 1);
+        this.addToBoard(tile);
+        row = tile[0].dataset.row;
+        if (parseInt(row[1]) + 1 > 3) {
+          break;
+        }
       }
       break;
     case 37: //left
-      var column = tile[0].dataset.col;
+      row = tile[0].dataset.row;
+      column = tile[0].dataset.col;
       if (column[1] - 1 >= 0) {
         tile[0].dataset.col = column[0] + (parseInt(column[1]) - 1);
       }
       break;
     case 39: //right
-      var column = tile[0].dataset.col;
+      row = tile[0].dataset.row;
+      column = tile[0].dataset.col;
       if (parseInt(column[1]) + 1 <= 3) {
         tile[0].dataset.col = column[0] + (parseInt(column[1]) + 1);
       }
@@ -37,11 +51,16 @@ Game.prototype.moveTile = function(tile, direction) {
   }
 };
 
-Game.prototype.updateBoard = function(tile, game) {
+Game.prototype.removeFromBoard = function(tile) {
+  var row = tile[0].dataset.row[1];
+  var column = tile[0].dataset.col[1];
+  this.board[row][column] = 0;
+};
+
+Game.prototype.addToBoard = function(tile) {
   var row = tile[0].dataset.row[1];
   var column = tile[0].dataset.col[1];
   this.board[row][column] = tile[0].dataset.val;
-  console.log(this.board);
 };
 
 Game.prototype.newTile = function(tile, direction) {
