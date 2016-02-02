@@ -166,7 +166,6 @@ Game.prototype.gameOver = function(){
   if (loser) { 
     gameOverAlert();
     this.board = [[0, 2, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 2, 0]];
-    // window.location.reload();
   }
 }
 
@@ -183,7 +182,7 @@ $(document).ready(function() {
     if (game.arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
       game.moveTile(tile, event.which);
-      game.newTile();
+      setTimeout(function() { game.newTile(); }, 200);
     }
   });
 });
