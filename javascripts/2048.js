@@ -1,6 +1,6 @@
 var Game = function() {
   // Game logic and initialization here
-  this.gameBoard = [[0, 0, 0, 0], [0, 2, 4, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+  this.gameBoard = [[0, 0, 0, 0], [0, 2, 0, 0], [0, 0, 4, 0], [0, 0, 0, 0]];
 };
 
 Game.prototype.moveTile = function(tile, direction) {
@@ -43,6 +43,31 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
     case 39: //right
       console.log('right');
+      // iterate through each "row" (each array within gameboard array)
+      self.gameBoard.forEach(function(row, rowIndex){
+        // iterate through each "column" (each item within a row)
+        row.forEach(function(column, columnIndex){
+          var numSpaces = 0;
+          // don't look at tiles that don't have a a value to them, AND don't look right if column is farthest right
+          if(column !== 0 && columnIndex !== 3) {
+            // iterate through each item further right of current item
+            for (var i = columnIndex; i <= 3; i++) {
+              // increment numSpaces to move right by 1 if the next right over is 0
+              if (self.gameBoard[rowIndex][i+1] === 0) {
+                row[columnIndex + 1] = column;
+                row[columnIndex] = 0;
+                // numSpaces += 1;
+              }
+            }
+
+            // slect current tile and move it appropriate num spaces right
+            console.log(numSpaces + 'row: ' + rowIndex);
+            $('.tile[data-row=r' + rowIndex + ']' + ', .tile[data-col=c' + columnIndex + ']').animate({ left: '+=' + 135 }, 100);
+          }
+        });
+      });
+      console.log(self.gameBoard);
+
       $('.tile').animate({ left: '+=135'}, 100);
       break;
   }
