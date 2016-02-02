@@ -7,7 +7,7 @@ var Game = function() {
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
-  var game = new Game();
+  // var this = new Game();
   switch(direction) {
     case 38: //up
       var row = tile[0].dataset.row;
@@ -21,7 +21,7 @@ Game.prototype.moveTile = function(tile, direction) {
           break;
         }
       }
-      game.newTile();
+      this.newTile();
       break;
     case 40: //down
       row = tile[0].dataset.row;
@@ -35,7 +35,7 @@ Game.prototype.moveTile = function(tile, direction) {
           break;
         }
       }
-      game.newTile();
+      this.newTile();
       break;
     case 37: //left
       row = tile[0].dataset.row;
@@ -49,7 +49,7 @@ Game.prototype.moveTile = function(tile, direction) {
           break;
         }
       }
-      game.newTile();
+      this.newTile();
       break;
     case 39: //right
       row = tile[0].dataset.row;
@@ -63,9 +63,9 @@ Game.prototype.moveTile = function(tile, direction) {
           break;
         }
       }
-      game.newTile();
+      this.newTile();
       break;
-  }
+    }
 };
 
 Game.prototype.removeFromBoard = function(tile) {
