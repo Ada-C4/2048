@@ -13,22 +13,30 @@ Game.prototype.moveTile = function(tile, direction) {
     case 38: //up
       console.log('up');
       var upRow = parseInt($(".tile").attr("data-row").slice(-1)) - 1;
-      tile[0].setAttribute("data-row", ("r" + upRow));
+      if (upRow >= 0) {
+        tile[0].setAttribute("data-row", ("r" + upRow));
+      }
       break;
     case 40: //down
       console.log('down');
       var downRow = parseInt($(".tile").attr("data-row").slice(-1)) + 1;
-      tile[0].setAttribute("data-row", ("r" + downRow));
+      if (downRow <= 3) {
+        tile[0].setAttribute("data-row", ("r" + downRow));
+      }
       break;
     case 37: //left
       console.log('left');
       var leftCol = parseInt($(".tile").attr("data-col").slice(-1)) - 1;
-      tile[0].setAttribute("data-col", ("c" + leftCol));
+      if (leftCol >= 0) {
+        tile[0].setAttribute("data-col", ("c" + leftCol));
+      }
       break;
     case 39: //right
       console.log('right');
       var rightCol = parseInt($(".tile").attr("data-col").slice(-1)) + 1;
-      tile[0].setAttribute("data-col", ("c" + rightCol));
+      if (rightCol <= 3) {
+        tile[0].setAttribute("data-col", ("c" + rightCol));
+      }
       break;
   }
 };
