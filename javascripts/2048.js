@@ -31,7 +31,6 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       }
-      this.newTile();
       break;
     case 40: //down
       tile = Array.from(tile);
@@ -99,7 +98,7 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       }
-        break;
+      break;
     }
 };
 
@@ -130,8 +129,6 @@ Game.prototype.newTile = function() {
     this.gameOver();
   }
 };
-
-
 
 Game.prototype.gameOver = function(){
   var loser;
