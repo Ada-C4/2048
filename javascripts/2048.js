@@ -8,12 +8,7 @@ var Game = function() {
 
 //generate random tile
 Game.prototype.addRandomTile = function(){
-  //find a 0, replace with a 2, sometimes a 4 (1 out of 5?)
-  // Math.floor(Math.random()* self.board.length)
-
   //find all the 0s in board, put their positions in separate array
-  // using the length of this array, choose a random one() and insert a 2 or 4
-  //into that position on the board
   var array = [];
   for (var r = 0; r < 4; r++) {
     for (var c = 0; c < 4; c++) {
@@ -22,7 +17,10 @@ Game.prototype.addRandomTile = function(){
       }
     }
   }
-  console.log(array);
+  // using the length of this array, choose a random one()
+  var randIndex = array[Math.floor(Math.random()* array.length)];
+  // insert a 2 or 4 into that position on the board
+  this.board[randIndex[0]][randIndex[1]] = 2;
 }
 
 Game.prototype.getPositions = function(){
