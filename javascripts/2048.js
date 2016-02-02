@@ -1,9 +1,9 @@
 var Game = function() {
   // Game logic and initialization here
-  this.board = [[0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0]];
+  this.board = [[9, 9, 9, 9],
+                [9, 9, 9, 9],
+                [9, 9, 9, 9],
+                [9, 9, 9, 9]];
 };
 
 Game.prototype.play = function() {
@@ -44,11 +44,18 @@ Game.prototype.moveTileUp = function(tile) {
   if (newY >= 0) {
     tile[0].setAttribute("data-row", ("r" + newY));
     console.log(this.board);
-    console.log(y);
-    console.log(newY);
-    console.log(x)
+    console.log("before board reassignment:");
+    console.log(this.board[y][x]);
+    console.log(this.board[newY][x]);
     this.board[newY][x] = this.board[y][x];
+    console.log("after board reassignment:");
+    console.log(this.board[y][x]);
+    console.log(this.board[newY][x]);
     this.board[y][x] = 0;
+    console.log("after zeroing out previous square:");
+    console.log(this.board[y][x]);
+    console.log(this.board[newY][x]);
+
     console.log(this.board);
   }
 };
@@ -56,11 +63,11 @@ Game.prototype.moveTileUp = function(tile) {
 Game.prototype.setRandoTile = function() {
   $("#gameboard").append("<div></div>");
   $("div").last().addClass("tile");
-  $("div").last().attr("data-row", "r0");
-  $("div").last().attr("data-col", "c0");
+  $("div").last().attr("data-row", "r1");
+  $("div").last().attr("data-col", "c1");
   $("div").last().attr("data-val", "2");
   $("div").last().text("2");
-  this.board[0][0] = 2;
+  this.board[1][1] = 2;
 };
 
 
@@ -74,6 +81,7 @@ $(document).ready(function() {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
+      console.log(game.board);
 
       game.moveTile(tile, event.which);
     }
