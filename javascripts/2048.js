@@ -9,7 +9,6 @@ Game.prototype.moveTile = function(tile, direction) {
     case 38: //up
       console.log('up');
       this.gameBoard = [[0, 2, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
-      $('.tile').animate({ top: '-=135'}, 100);
       break;
     case 40: //down
       console.log('down');
@@ -17,7 +16,17 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
     case 37: //left
       console.log('left');
-      $('.tile').animate({ left: '-=135'}, 100);
+      var movePlaces = 0;
+      console.log(movePlaces);
+
+      for (var i = 0; i >= 0; i--) {
+        if (this.gameBoard[0][i] === 0) {
+          movePlaces += 135;
+        }
+      }
+      console.log(movePlaces);
+      $('.tile').animate({ left: '-=' + movePlaces }, 100);
+
       break;
     case 39: //right
       console.log('right');
