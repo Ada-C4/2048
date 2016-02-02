@@ -253,6 +253,16 @@ Game.prototype.moveUp = function(tile) {
   return this.board;
 };
 
+Game.prototype.moveBoardUp = function() {
+  self = this;
+  for (var row = 1; row < 4; row++) {
+    for (var col = 0; col < 4; col++) {
+      self.moveUp([row, col]);
+    }
+  }
+  return this.board;
+};
+
 Game.prototype.collideUp = function() {
   self = this;
   board = this.board;
@@ -295,5 +305,5 @@ Game.prototype.collideUp = function() {
 //
 var game = new Game();
 var f = game.randTile();
-game.moveBoardDown();
-game.collideDown();
+game.moveBoardUp();
+game.collideUp();
