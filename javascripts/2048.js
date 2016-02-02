@@ -4,39 +4,47 @@ var Game = function() {
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
+  var tileLength = $(".tile").length;
   switch(direction) {
-    case 38: //up
-      var dataRow = $(".tile").attr("data-row").slice(1);
-          var dataInt = parseInt(dataRow, 10);
-          if(dataInt > 0){
-            dataInt -= 1;
-          }
-          $(".tile")[0].setAttribute("data-row", ("r" + dataInt));
-        // subtract from data-row, if cell is empty
+    case 38: //up  // subtract from data-row, TODO: if cell is empty (?)
+      for (var i = 0; i < $(".tile").length; i++){
+        var dataRow = $(".tile").attr("data-row").slice(1);
+            var dataInt = parseInt(dataRow, 10);
+            if(dataInt > 0){
+              dataInt -= 1;
+            }
+            $(".tile")[i].setAttribute("data-row", ("r" + dataInt));
+        }
       break;
     case 40: //down
-      var dataRow = $(".tile").attr("data-row").slice(1);
-          var dataInt = parseInt(dataRow, 10);
-          if(dataInt < 3){
-            dataInt += 1;
-          }
-          $(".tile")[0].setAttribute("data-row", ("r" + dataInt));
+      for (var i = 0; i < $(".tile").length; i++){
+        var dataRow = $(".tile").attr("data-row").slice(1);
+            var dataInt = parseInt(dataRow, 10);
+            if(dataInt < 3){
+              dataInt += 1;
+            }
+            $(".tile")[i].setAttribute("data-row", ("r" + dataInt));
+        }
       break;
     case 37: //left
-      var dataColumn = $(".tile").attr("data-col").slice(1);
-          var dataInt = parseInt(dataColumn, 10);
-          if(dataInt > 0){
-            dataInt -= 1;
-          }
-          $(".tile")[0].setAttribute("data-col", ("c" + dataInt));
+      for (var i = 0; i < $(".tile").length; i++){
+        var dataColumn = $(".tile").attr("data-col").slice(1);
+            var dataInt = parseInt(dataColumn, 10);
+            if(dataInt > 0){
+              dataInt -= 1;
+            }
+            $(".tile")[i].setAttribute("data-col", ("c" + dataInt));
+      }
       break;
     case 39: //right
-    var dataColumn = $(".tile").attr("data-col").slice(1);
-        var dataInt = parseInt(dataColumn, 10);
-        if(dataInt < 3){
-          dataInt += 1;
+      for (var i = 0; i < $(".tile").length; i++){
+        var dataColumn = $(".tile").attr("data-col").slice(1);
+            var dataInt = parseInt(dataColumn, 10);
+            if(dataInt < 3){
+              dataInt += 1;
+            }
+            $(".tile")[i].setAttribute("data-col", ("c" + dataInt));
         }
-        $(".tile")[0].setAttribute("data-col", ("c" + dataInt));
       break;
   }
 };
