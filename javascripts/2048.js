@@ -35,10 +35,7 @@ Game.prototype.moveTiles = function(tiles, direction) {
           }
         }
         this.updateBoard(beginningTilesArray,i);
-      }
-      if (currentCol > 0) {
-        tiles[0].dataset.col = "c" + (currentCol - 1);
-        tiles.animate({left: '-=135px'}, 50);
+        this.animateTile(tiles);
       }
       break;
     case 39: //right
@@ -47,6 +44,16 @@ Game.prototype.moveTiles = function(tiles, direction) {
         tiles.animate({left: '+=135px'}, 50);
       }
       break;
+  }
+};
+
+Game.prototype.animateTile = function(tileArray) {
+  for (var i = 0; i < tileArray.length; i++) {
+    var column = tileArray[i].dataset.col.charAt(1);
+    if (column > 0) {
+      tileArray[i].dataset.col = "c" + (column - 1);
+      tileArray[i].animate({left: '-=135px'}, 50);
+    }
   }
 };
 
