@@ -6,7 +6,6 @@ var Game = function() {
                [0,0,0,0]];
 };
 
-//generate random tile
 Game.prototype.addRandomTile = function(){
   //find all the 0s in board, put their positions in separate array
   var array = [];
@@ -17,7 +16,7 @@ Game.prototype.addRandomTile = function(){
       }
     }
   }
-  // using the length of this array, choose a random one()
+  // using the length of this array, choose a random empty (0 containing) position
   var randIndex = array[Math.floor(Math.random()* array.length)];
   // insert a 2 or 4 into that position on the board
   var startNumArray = [2,2,2,2,2,2,4];
