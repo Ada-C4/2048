@@ -19,8 +19,6 @@ Game.prototype.moveTile = function(tile, direction) {
       // console.log(tile[0].dataset.row);
       // console.log(tile[0].dataset.col);
       // console.log(tile[0].dataset.val);
-
-
       if (currentRow > 0) {
         tile[0].dataset.row = "r" + (currentRow - 1);
         tile.animate({top: '-=135px'}, 50);
@@ -37,27 +35,17 @@ Game.prototype.moveTile = function(tile, direction) {
     // look at board and figure out where tile should go by iterating backwards through the board
     // start with innerArray[4] and compare it to each other element in that array
     // looping through this.board array
-    for (var i = 0; i < 4; i++) {
-      var innerArray = this.board[i];
-      console.log("innerArray" + innerArray);
-      var beginningTilesArray = [];
-      for (var j = 0; j < 4; j++) {
-        if (innerArray[j] !== 0) {
-          beginningTilesArray.push(innerArray[j]);
+      for (var i = 0; i < 4; i++) {
+        var innerArray = this.board[i];
+        var beginningTilesArray = [];
+        for (var j = 0; j < 4; j++) {
+          if (innerArray[j] !== 0) {
+            beginningTilesArray.push(innerArray[j]);
           // bTA now looks like [2,4] if you started with [2,0,4,0]
-        }
-        console.log("beginningTilesArray" + beginningTilesArray);
+          }
         }
         this.updateBoard(beginningTilesArray,i);
-      // switch statement for beginningTilesArray goes here
-
-      // looping through the inner arrays
-      // comparison of the numbers in the inner arrays
-      // inputs 4 nums that represent the position of the tiles at the beginning of the turn for that row
-      // outputs 4 nums that represent the position of the tiles at the end of the turn for that row
-    }
-    console.log("the board" + this.board);
-
+      }
       if (currentCol > 0) {
         tile[0].dataset.col = "c" + (currentCol - 1);
         tile.animate({left: '-=135px'}, 50);
@@ -72,25 +60,20 @@ Game.prototype.moveTile = function(tile, direction) {
   }
 };
 
+// used inside the moveTile function
 Game.prototype.updateBoard = function(arr,rowIndex) {
-  console.log("inside the updateBoard function");
-  console.log(arr);
   switch(arr.length) {
     case 1:
-      console.log("case 1");
       this.board[rowIndex] = [arr[0],0,0,0];
       break;
     case 2:
       this.board[rowIndex] = [arr[0],arr[1],0,0];
-      console.log("case 2");
       break;
     case 3:
       this.board[rowIndex] = [arr[0],arr[1],arr[2],0];
-      console.log("case 3");
       break;
     case 4:
       this.board[rowIndex] = arr;
-      console.log("case 3");
       break;
   }
 };
