@@ -51,7 +51,8 @@ Game.prototype.randTile = function() {
       this.board[i_board][j_board] = 4;
     } else { this.board[i_board][j_board] = 2; }
   // return this.board;
-  console.log(this.board);
+  var val = this.board[i_board][j_board];
+  $('#gameboard').append('<div class="tile" data-row="r'+i_board+'" data-col="c'+j_board+'" data-val="'+ val +'">'+ val +'</div>')
   return [i_board, j_board];
 };
 
@@ -61,15 +62,23 @@ Game.prototype.moveTile = function(direction) {
   self = this;
       switch(direction) {
         case 38: //up
+          self.moveBoardUp();
+          self.collideUp();
           console.log('up');
           break;
         case 40: //down
+          self.moveBoardDown();
+          self.collideDown();
           console.log('down');
           break;
         case 37: //left
+          self.moveBoardLeft();
+          self.collideLeft();
           console.log('left');
           break;
         case 39: //right
+          self.moveBoardRight();
+          self.collideRight();
           console.log('right');
           //this.moveRight(tile);
           //this.collideRight(tile);
@@ -288,22 +297,21 @@ Game.prototype.collideUp = function() {
 };
 
 
-// $(document).ready(function() {
-//   console.log("ready to go!");
-//   // Any interactive jQuery functionality
-//   var game = new Game();
-//
-//   $('body').keydown(function(event){
-//     var arrows = [37, 38, 39, 40];
-//     if (arrows.indexOf(event.which) > -1) {
-//       var tile = $('.tile');
-//
-//       game.moveTile(tile, event.which);
-//     }
-//   });
-// });
+$(document).ready(function() {
+  console.log("ready to go!");
+  // Any interactive jQuery functionality
+  var game = new Game();
+  game.randTile();
+  game.randTile();
+
+  $('body').keydown(function(event){
+    var arrows = [37, 38, 39, 40];
+    if (arrows.indexOf(event.which) > -1) {
+      // var tile = $('.tile');
+      game.moveTile(event.which);
+    }
+  });
+});
 //
 var game = new Game();
 var f = game.randTile();
-game.moveBoardUp();
-game.collideUp();
