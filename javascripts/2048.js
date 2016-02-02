@@ -7,7 +7,10 @@ Game.prototype.moveTile = function(tile, direction) {
   var tileRows = $(".tile").map(function(){
     return $(this).data("row");
   }).get();
-  console.log(tileRows);
+  var tileColumns = $(".tile").map(function(){
+    return $(this).data("col");
+  }).get();
+  console.log(tileColumns);
   var tileLength = $(".tile").length;
   switch(direction) {
     case 38: //up  // subtract from data-row, TODO: if cell is empty (?)
