@@ -35,17 +35,32 @@ Game.prototype.addTile = function () {
   }
 };
 
-
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   switch(direction) {
     case 38: //up
-      console.log('up');
-      this.board.forEach(function (tile) {
-        tile.row = 0;
-        $("." + tile.tileId).attr("data-row", "r " + tile.row);
+      var groupedTiles = _.groupBy(this.board, function(tile) {
+          return tile.col;
+        });
+      console.log(groupedTiles, Object.keys(groupedTiles));
+      // iterate through each column
+      Object.keys(groupedTiles).forEach(function(key){
+        var colArray = groupedTiles[key];
+        for (var row = 0; row < colArray.length; row++) {
+          // if combining
+          if (colArray[row].val === colArray[row+1].val) {
+            colArray[row+1].val *= 2;
+            colArray[row+1].row = row;
+            // delete current value
+            colArray.splice(row, 1);
+            // if not combining
+          } else {
+            colArray[row].row = row;
+          }
+        }
+        console.log(colArray);
       });
-      console.log(this.board);
+      
       break;
     case 40: //down
       console.log('down');
@@ -89,12 +104,22 @@ Game.prototype.updateGameOver = function(){
 };
 
 $(document).ready(function() {
-  console.log("ready to go!");
   // Any interactive jQuery functionality
   var game = new Game();
-  game.addTile();
-  game.addTile();
-  console.dir(game.board);
+  var t1 = new Tile(1, 0),
+      t2 = new Tile(3, 0),
+      t3 = new Tile(2, 0),
+      t4 = new Tile(4, 0);
+  game.board = [t1, t2, t3, t4];
+  var $t1HTML = $('<div class="tile '+ t1.tileId +'" data-row="r'+ t1.row +'", data-col="c'+ t1.col +'" data-val="2">2</div>');
+  $('#gameboard').append($t1HTML);
+  var $t2HTML = $('<div class="tile '+ t2.tileId +'" data-row="r'+ t2.row +'", data-col="c'+ t2.col +'" data-val="2">2</div>');
+  $('#gameboard').append($t2HTML);
+  var $t3HTML = $('<div class="tile '+ t3.tileId +'" data-row="r'+ t3.row +'", data-col="c'+ t3.col +'" data-val="2">2</div>');
+  $('#gameboard').append($t3HTML);
+  var $t4HTML = $('<div class="tile '+ t4.tileId +'" data-row="r'+ t4.row +'", data-col="c'+ t4.col +'" data-val="2">2</div>');
+  $('#gameboard').append($t4HTML);
+
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
