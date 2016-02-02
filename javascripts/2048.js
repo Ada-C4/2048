@@ -28,6 +28,7 @@ Game.prototype.addTile = function () {
       if (!currentTiles.includes([row, col])) {
         tilePlaced = true;
         this.board.push(new Tile(row, col));
+        // make tile display on front end?
       }
   }
 };
