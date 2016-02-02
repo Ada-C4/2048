@@ -63,17 +63,23 @@ Game.prototype.createRandomTile = function() {
     }
     // randomly pick one
     var rando = getRando(0,this.availableSquares);
- // assign a value to the tile
+ // assign the tile's value to the board
+    // calculates the index of the intter array
     var innerArr = ((rando/4).toString()).charAt(0);
+    // calculates the index in the innerArray that the tile should ba assiged to
     var innerArrIndex = (rando - (innerArr * 4)) - 1;
+    // looks at the index in the inner Array and if no empty moves to the next index
     while (this.board[innerArr][innerArrIndex] != 0) {
       innerArrIndex++;
     }
+    // assigns the tile value to the board
     this.board[innerArr][innerArrIndex] = 2;
 
  // assign a tile there
+    $(".cells").after('<div class="tile" data-row="r3", data-col="c1" data-val="2">2</div>');
 
- // assign the tile's value to the board
+    $(".cells").after('<div class="tile" data-row="r0", data-col="c2" data-val="2">2</div>');
+
 };
 
 
@@ -82,7 +88,8 @@ $(document).ready(function() {
   // Any interactive jQuery functionality
   var game = new Game();
   // randomly assign two tiles
-
+  game.createRandomTile();
+  game.createRandomTile();
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
