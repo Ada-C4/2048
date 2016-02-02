@@ -37,6 +37,8 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
     case 39: //right
       console.log('right');
+      // this.moveRight(tile);
+      // this.collideRight(tile);
       break;
   }
 };
@@ -49,7 +51,7 @@ Game.prototype.moveLeft = function(tile) {
   var value = this.board[row][col];
   var board_row = this.board[tile[0]];
 
-  for(j=0; j < col; j++) {
+  for(var j=0; j < col; j++) {
     if (board_row[j] === 0) {
       this.board[row][j] = value;
       this.board[row][col] = 0;
@@ -76,6 +78,31 @@ Game.prototype.moveRight = function(tile) {
   }
   return this.board;
 };
+
+Game.prototype.collideRight = function() {
+  self = this;
+  for (var brow = 0; brow < 4; brow++) {
+    var row = this.board[brow];
+    for (var x = 3; x > 0; x--) {
+      //console.log(row[x-1]);
+      if ((row[x] === row[x-1]) && row[x] !== 0) {
+        row[x] = (row[x] + row[x-1]);
+        row[x-1] = 0;
+        switch(x) {
+          case 3:
+            self.moveRight([brow, x-2]);
+            self.moveRight([brow, x-3]);
+            break;
+          case 2:
+            self.moveRight([brow, x-2]);
+            break;
+          }
+        }
+    }
+  }
+  return this.board;
+};
+
 
 Game.prototype.moveDown = function(tile) {
   var row = tile[0];
@@ -123,4 +150,5 @@ Game.prototype.moveUp = function(tile) {
 //
 var game = new Game();
 var f = game.randTile();
-game.moveUp(f);
+game.moveRight(f);
+game.collideRight();
