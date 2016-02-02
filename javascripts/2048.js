@@ -2,7 +2,7 @@ var Game = function() {
   // Game logic and initialization here
   this.board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
   this.score = 0;
-  // 15 because squares are counted based on the board array which stars at 0
+  // 15 because squares are counted based on the board array which starts at 0
   this.availableSquares = 15;
 };
 
@@ -12,18 +12,10 @@ Game.prototype.moveTiles = function(tiles, direction) {
   var currentCol = parseInt(tiles[0].dataset.col.charAt(1));
   switch(direction) {
     case 38: //up
-      // console.log(tile.attr("data-row"));
-      // console.log(tile.attr("data-col"));
-      // console.log(tile);
-      // console.log(tile[0]);
-      // console.log(tile[0].dataset.row);
-      // console.log(tile[0].dataset.col);
-      // console.log(tile[0].dataset.val);
       if (currentRow > 0) {
         tiles[0].dataset.row = "r" + (currentRow - 1);
         tiles.animate({top: '-=135px'}, 50);
       }
-      // check to see if the space above is empty, if Yes, move to that space
       break;
     case 40: //down
       if (currentRow < 3) {
@@ -32,8 +24,6 @@ Game.prototype.moveTiles = function(tiles, direction) {
       }
       break;
     case 37: //left
-    // look at board and figure out where tile should go by iterating backwards through the board
-    // start with innerArray[4] and compare it to each other element in that array
     // looping through this.board array
       for (var i = 0; i < 4; i++) {
         var innerArray = this.board[i];
@@ -85,7 +75,6 @@ Game.prototype.createRandomTile = function() {
     }
     // randomly pick one
     var rando = getRando(0,this.availableSquares);
- // assign the tile's value to the board
     // calculates the index of the intter array
     var innerArr = ((rando/4).toString()).charAt(0);
     // calculates the index in the innerArray that the tile should ba assiged to
@@ -102,11 +91,8 @@ Game.prototype.createRandomTile = function() {
     } else {
       tileVal = 2;
     }
-
     this.board[innerArr][innerArrIndex] = tileVal;
-
- // assign a tile there
-
+    // assign a tile there in the HTML
     $(".cells").after('<div class="tile" data-row="r' + innerArr +'", data-col="c' + innerArrIndex + '" data-val="' + tileVal + '">' + tileVal + '</div>');
 };
 
