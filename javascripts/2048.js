@@ -4,6 +4,10 @@ var Game = function() {
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
+  var tileRows = $(".tile").map(function(){
+    return $(this).data("row");
+  }).get();
+  console.log(tileRows);
   var tileLength = $(".tile").length;
   switch(direction) {
     case 38: //up  // subtract from data-row, TODO: if cell is empty (?)
@@ -11,7 +15,7 @@ Game.prototype.moveTile = function(tile, direction) {
         var dataRow = $(".tile").attr("data-row").slice(1);
             var dataInt = parseInt(dataRow, 10);
             if(dataInt > 0){
-              dataInt -= 1;
+              dataInt = 0;
             }
             $(".tile")[i].setAttribute("data-row", ("r" + dataInt));
         }
