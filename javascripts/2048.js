@@ -19,6 +19,7 @@ Game.prototype.moveTile = function(tile, direction) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (row[1] - 1 >= 0) {
+          console.log("move stuff");
           while (this.board[row[1] - 1][column[1]] === 0) {
             this.removeFromBoard(tile[i]);
             tile[i].dataset.row = row[0] + (parseInt(row[1]) - 1);
@@ -30,6 +31,7 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       }
+      this.newTile();
       break;
     case 40: //down
       tile = Array.from(tile);
@@ -114,6 +116,7 @@ Game.prototype.addToBoard = function(tile) {
 };
 
 Game.prototype.newTile = function() {
+  console.log("new tile");
   var randValue = Math.random() < 0.9 ? 2 : 4;
   var randCol = Math.floor(Math.random() * 4);
   var randRow = Math.floor(Math.random() * 4);
@@ -133,26 +136,26 @@ Game.prototype.newTile = function() {
 Game.prototype.gameOver = function(){
   var loser;
   var board = this.board;
-  var zeros = new Array;
+  var zeros = [];
 
   for (var i = 0; i < board.length; i++) {
     for (var j = 0; j < board[i].length; j++) {
       if (board[i][j] === 0){
         zeros.push(board[i][j]);
       }
-    };
-  };
+    }
+  }
 
   if (zeros.length === 0){
-    loser = true; 
+    loser = true;
   } else {
     loser = false;
   }
 
   var gameOverAlert = function() {
     swal({
-      title: "Game Over!", 
-      text: "Do you want to play again?", 
+      title: "Game Over!",
+      text: "Do you want to play again?",
       type: "info",
       showCancelButton: false,
       closeOnConfirm: true,
@@ -161,17 +164,17 @@ Game.prototype.gameOver = function(){
     }, function() {
         window.location.reload();
     });
-  }
+  };
 
-  if (loser) { 
+  if (loser) {
     gameOverAlert();
     this.board = [[0, 2, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 2, 0]];
   }
-}
+};
 
 Game.prototype.availableMove = function(){
 
-}
+};
 
 $(document).ready(function() {
   console.log("ready to go!");
