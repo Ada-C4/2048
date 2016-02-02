@@ -19,6 +19,7 @@ Game.prototype.moveTile = function(tile, direction) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (row[1] - 1 >= 0) {
+          console.log("move stuff");
           while (this.board[row[1] - 1][column[1]] === 0) {
             this.removeFromBoard(tile[i]);
             tile[i].dataset.row = row[0] + (parseInt(row[1]) - 1);
@@ -31,7 +32,6 @@ Game.prototype.moveTile = function(tile, direction) {
         }
       }
       this.newTile();
-      console.log(this.board);
       break;
     case 40: //down
       tile = Array.from(tile);
@@ -119,6 +119,7 @@ Game.prototype.addToBoard = function(tile) {
 };
 
 Game.prototype.newTile = function() {
+  console.log("new tile");
   var randCol = Math.floor(Math.random() * 4);
   var randRow = Math.floor(Math.random() * 4);
 
