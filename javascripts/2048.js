@@ -82,11 +82,12 @@ Game.prototype.addToBoard = function(tile) {
   this.board[row][column] = tile[0].dataset.val;
 };
 
-Game.prototype.newTile = function(cell, direction) {
+Game.prototype.newTile = function() {
   var randCol = Math.floor(Math.random() * 4);
   var randRow = Math.floor(Math.random() * 4);
-  this.board[randRow][randCol] = 2;
+
   $("#gameboard").append("<div class='tile' data-row='r" + randRow + "', data-col='c" + randCol + "' data-val='2'>2</div>");
+  this.board[randRow][randCol] = 2;
 };
 
 $(document).ready(function() {
