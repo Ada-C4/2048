@@ -1,5 +1,4 @@
 var Game = function() {
-  // Game logic and initialization here
   this.board = this.newBoard();
   this.score = 0;
   this.arrows = [37, 38, 39, 40];
@@ -206,12 +205,12 @@ Game.prototype.gameOver = function(){
   };
 
   if (loser) {
+    this.newBoard();
     gameOverAlert();
-    this.board = [[0, 2, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 2, 0]];
   }
 };
 
-Game.prototype.availableMove = function(){
+Game.prototype.noAvailableMoves = function(){
 
 };
 
