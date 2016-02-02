@@ -33,7 +33,6 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
     case 40: //down
       console.log('down');
-
       // iterate through each "row" (each array within gameboard array)
       self.gameBoard.forEach(function(row, rowIndex){
         // iterate through each "column" (each item within a row)
@@ -43,8 +42,7 @@ Game.prototype.moveTile = function(tile, direction) {
           if (column !== 0 && rowIndex < 3) {
             // iterate through each item further up of current item
             for (var i = rowIndex; i < 3; i++) {
-              // increment numSpaces to move up by 1 if the next num up is 0
-              console.log(self.gameBoard[i + 1][columnIndex]);
+              // increment numSpaces to move down by 1 if the next num down is 0
               if (self.gameBoard[i + 1][columnIndex] === 0) {
                 numSpaces += 1;
               }
@@ -55,7 +53,6 @@ Game.prototype.moveTile = function(tile, direction) {
         });
       });
       console.log(self.gameBoard);
-
       break;
     case 37: //left
       console.log('left');
