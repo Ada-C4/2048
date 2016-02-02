@@ -8,6 +8,8 @@ var Game = function() {
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
+  var currentRow = parseInt(tile[0].dataset.row.charAt(1));
+  var currentCol = parseInt(tile[0].dataset.col.charAt(1));
   switch(direction) {
     case 38: //up
       console.log('up');
@@ -18,7 +20,8 @@ Game.prototype.moveTile = function(tile, direction) {
       // console.log(tile[0].dataset.row);
       // console.log(tile[0].dataset.col);
       // console.log(tile[0].dataset.val);
-      var currentRow = parseInt(tile[0].dataset.row.charAt(1));
+
+
       if (currentRow > 0) {
         tile[0].dataset.row = "r" + (currentRow - 1);
         tile.animate({top: '-=135px'}, 50);
@@ -27,8 +30,6 @@ Game.prototype.moveTile = function(tile, direction) {
       // check to see if the space above is empty, if Yes, move to that space
       break;
     case 40: //down
-
-      var currentRow = parseInt(tile[0].dataset.row.charAt(1));
       if (currentRow < 3) {
         tile[0].dataset.row = "r" + (currentRow + 1);
         tile.animate({top: '+=135px'}, 50);
@@ -37,7 +38,19 @@ Game.prototype.moveTile = function(tile, direction) {
       console.log('down');
       break;
     case 37: //left
-      var currentCol = parseInt(tile[0].dataset.col.charAt(1));
+    // look at board and figure out where tile should go by iterating backwards through the board
+    // start with innerArray[4] and compare it to each other element in that array
+    // looping through this.board array
+    for (var i = 0; i < 3; i++) {
+      var innerArray = this.board[i];
+      // looping through the inner arrays
+      for (var j = 3; j > 0; j--) {
+        // comparison of the numbers in the inner arrays
+        // inputs 4 nums that represent the position of the tiles at the beginning of the turn for that row
+        // outputs 4 nums that represent the position of the tiles at the end of the turn for that row
+      }
+    }
+
       if (currentCol > 0) {
         tile[0].dataset.col = "c" + (currentCol - 1);
         tile.animate({left: '-=135px'}, 50);
@@ -46,7 +59,6 @@ Game.prototype.moveTile = function(tile, direction) {
       console.log('left');
       break;
     case 39: //right
-      var currentCol = parseInt(tile[0].dataset.col.charAt(1));
       if (currentCol < 3) {
         tile[0].dataset.col = "c" + (currentCol + 1);
         tile.animate({left: '+=135px'}, 50);
@@ -73,15 +85,16 @@ Game.prototype.createRandomTile = function() {
     var innerArrIndex = (rando - (innerArr * 4));
     // looks at the index in the inner Array and if no empty moves to the next index
     console.log(innerArrIndex);
-    while (this.board[innerArr][innerArrIndex] != 0) {
+    while (this.board[innerArr][innerArrIndex] !== 0) {
       innerArrIndex++;
     }
     // assigns the tile value to the board
     var twoOrFour = getRando(0,9);
-    if (twoOrFour == 0) {
-      var tileVal = 4;
+    var tileVal;
+    if (twoOrFour === 0) {
+      tileVal = 4;
     } else {
-      var tileVal = 2;
+      tileVal = 2;
     }
 
     this.board[innerArr][innerArrIndex] = tileVal;
