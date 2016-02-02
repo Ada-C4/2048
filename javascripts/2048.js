@@ -7,6 +7,7 @@ var Game = function() {
 
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
+  var game = new Game();
   switch(direction) {
     case 38: //up
       console.log('up');
@@ -15,13 +16,15 @@ Game.prototype.moveTile = function(tile, direction) {
       if (row[1] - 1 >= 0) {
         tile[0].dataset.row = row[0] + (parseInt(row[1]) - 1);
       }
+      game.newTile();
       break;
     case 40: //down
       console.log('down');
       var row = tile[0].dataset.row;
       if (parseInt(row[1]) + 1 <= 3) {
         tile[0].dataset.row = row[0] + (parseInt(row[1]) + 1);
-      }
+      };
+      game.newTile();
       break;
     case 37: //left
       console.log('left');
@@ -29,6 +32,7 @@ Game.prototype.moveTile = function(tile, direction) {
       if (column[1] - 1 >= 0) {
         tile[0].dataset.col = column[0] + (parseInt(column[1]) - 1);
       };
+      game.newTile();
       break;
     case 39: //right
       console.log('right');
@@ -36,12 +40,16 @@ Game.prototype.moveTile = function(tile, direction) {
       if (parseInt(column[1]) + 1 <= 3) {
         tile[0].dataset.col = column[0] + (parseInt(column[1]) + 1);
       };
+      game.newTile();
       break;
   }
 };
 
-Game.prototype.newTile = function(tile, direction) {
+Game.prototype.newTile = function(cell, direction) {
+  var randCol = Math.floor(Math.random() * 4)
+  var randRow = Math.floor(Math.random() * 4)
 
+  $("#gameboard").append("<div class='tile' data-row='r" + randRow + "', data-col='c" + randCol + "' data-val='2'>2</div>");
 }
 
 $(document).ready(function() {
