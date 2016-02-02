@@ -27,8 +27,9 @@ Game.prototype.addTile = function () {
           row =  Math.floor(Math.random() * (4 - 0));
       if (!currentTiles.includes([row, col])) {
         tilePlaced = true;
-        this.board.push(new Tile(row, col));
-        var $tileHTML = $('<div class="tile" data-row="r'+ row +'", data-col="c'+ col +'" data-val="2">2</div>');
+        newTile = new Tile(row, col);
+        this.board.push(newTile);
+        var $tileHTML = $('<div class="tile '+ newTile.tileId +'" data-row="r'+ row +'", data-col="c'+ col +'" data-val="2">2</div>');
         $('#gameboard').append($tileHTML);
       }
   }
