@@ -38,6 +38,16 @@ html {
   width: 4rem;
 }
 
+/*.tile[data-col=c0] { top: 0; }
+.tile[data-col=c1] { top: 4.5rem; }
+.tile[data-col=c2] { top: 9rem; }
+.tile[data-col=c3] { top: 13.5rem; }
+
+.tile[data-row=r0] { left: 0; }
+.tile[data-row=r1] { left: 4.5rem; }
+.tile[data-row=r2] { left: 9rem; }
+.tile[data-row=r3] { left: 13.5rem; }*/
+
 .tile[data-row=r0] { top: 0; }
 .tile[data-row=r1] { top: 4.5rem; }
 .tile[data-row=r2] { top: 9rem; }
