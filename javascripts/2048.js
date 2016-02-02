@@ -61,6 +61,31 @@ Game.prototype.moveLeft = function(tile) {
   return this.board;
 };
 
+Game.prototype.collideLeft = function() {
+  self = this;
+  for (var brow = 0; brow < 4; brow++) {
+    var row = this.board[brow];
+    for (var x = 0; x < 4; x++) {
+      //console.log(row[x-1]);
+      if ((row[x] === row[x+1]) && row[x] !== 0) {
+        row[x] = (row[x] + row[x+1]);
+        row[x+1] = 0;
+        switch(x) {
+          case 0:
+            self.moveRight([brow, x+2]);
+            self.moveRight([brow, x+3]);
+            break;
+          case 1:
+            self.moveRight([brow, x+2]);
+            break;
+          }
+        }
+    }
+  }
+  return this.board;
+};
+
+
 Game.prototype.moveRight = function(tile) {
   // tile[0] is the row
   // tile[1] is the column position
@@ -150,5 +175,5 @@ Game.prototype.moveUp = function(tile) {
 //
 var game = new Game();
 var f = game.randTile();
-game.moveRight(f);
-game.collideRight();
+game.moveLeft(f);
+game.collideLeft();
