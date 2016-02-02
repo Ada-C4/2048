@@ -1,6 +1,6 @@
 var Game = function() {
   // Game logic and initialization here
-  this.gameBoard = [[0, 0, 0, 0], [0, 2, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+  this.gameBoard = [[0, 0, 0, 0], [0, 2, 4, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
 };
 
 Game.prototype.moveTile = function(tile, direction) {
@@ -9,7 +9,6 @@ Game.prototype.moveTile = function(tile, direction) {
   switch(direction) {
     case 38: //up
       console.log('up');
-      this.gameBoard = [[0, 2, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
       break;
     case 40: //down
       console.log('down');
@@ -17,24 +16,29 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
     case 37: //left
       console.log('left');
-      var movePlaces = 0;
-      this.gameBoard.forEach(function(row, rowIndex){
+      // iterate through each "row" (each array within gameboard array)
+      self.gameBoard.forEach(function(row, rowIndex){
+        // iterate through each "column" (each item within a row)
         row.forEach(function(column, columnIndex){
+          var numSpaces = 0;
+          // don't look at tiles that don't have a a value to them, AND don't look left if column is farthest left
           if(column !== 0 && columnIndex !== 0) {
+            // iterate through each item further left of current item
             for (var i = columnIndex; i >= 0; i--) {
+              // increment numSpaces to move left by 1 if the next left over is 0
               if (self.gameBoard[rowIndex][i-1] === 0) {
-                movePlaces += 135;
+                row[columnIndex - 1] = column;
+                row[columnIndex] = 0;
+                numSpaces += 1;
               }
-            $('.tile[data-row=r' + rowIndex + ']' + ', .tile[data-col=c' + columnIndex + ']').animate({ left: '-=' + movePlaces }, 100);            }
+            }
+
+            // slect current tile and move it appropriate num spaces left
+            $('.tile[data-row=r' + rowIndex + ']' + ', .tile[data-col=c' + columnIndex + ']').animate({ left: '-=' + (numSpaces * 135) }, 100);
           }
         });
       });
-      for (var i = 0; i >= 0; i--) {
-        if (this.gameBoard[0][i] === 0) {
-          movePlaces += 135;
-        }
-      }
-      console.log(movePlaces);
+      console.log(self.gameBoard);
 
       break;
     case 39: //right
