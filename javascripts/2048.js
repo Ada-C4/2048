@@ -66,6 +66,7 @@ Game.prototype.moveTile = function(tile, direction) {
             // if not combining
           } else {
             colArray[row].row = row;
+            $("#" + colArray[row].tileId).attr("data-row", "r" + row);
           }
         }
       };
@@ -106,7 +107,7 @@ $(document).ready(function() {
   game.addTile();
   game.addTile();
   game.addTile();
-  game.addTile();
+  // game.addTile();
 
   // hard coding for moveTile tests
   //
