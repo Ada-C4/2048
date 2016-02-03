@@ -127,6 +127,8 @@ Game.prototype.moveBoardLeft = function() {
 
 
 Game.prototype.collideLeft = function() {
+  var $tile1;
+  var $tile2;
   self = this;
   for (var brow = 0; brow < 4; brow++) {
     var row = this.board[brow];
@@ -134,6 +136,11 @@ Game.prototype.collideLeft = function() {
       //console.log(row[x-1]);
       if ((row[x] === row[x+1]) && row[x] !== 0) {
         row[x] = (row[x] + row[x+1]);
+        $tile1 = $('.tile[data-row="r' + brow + '"][data-col="c' + x + '"]');
+        $tile2 = $('.tile[data-row="r' + brow + '"][data-col="c' + x+1 + '"]');
+        $tile1.attr('data-val', row[x]);
+        $tile1.innerHTML(row[x]);
+        $tile2.remove();
         self.scoring(row[x]);
         row[x+1] = 0;
         switch(x) {
