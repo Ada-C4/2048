@@ -26,10 +26,14 @@ Game.prototype.moveTiles = function(direction) {
       this.moveTileDown(tile);
       break;
     case 37: //left
-      this.moveTileLeft(tile);
+    for (var i = 0; i < this.dims[0]; i++) {
+      this.moveRowLeft(i);
+    }
       break;
     case 39: //right
-      this.moveTileRight(tile);
+    for (var i = 0; i < this.dims[0]; i++) {
+      this.moveRowRight(i);
+    }
       break;
   }
 };
@@ -167,6 +171,64 @@ Game.prototype.moveColumnUp = function(columnIndex) {
 // }
 };
 
+Game.prototype.moveRowRight = function(rowIndex) {
+  console.log("moving column " + rowIndex);
+  var valsAndIndicesIn = this.getValsByDim(0, rowIndex);
+  console.log(valsAndIndicesIn);
+  var valsIn = valsAndIndicesIn[0];
+  var indicesIn = valsAndIndicesIn[1];
+  var valsandIndicesOut = this.smash(valsIn);
+  console.log(valsandIndicesOut);
+  var valsOut = valsandIndicesOut[0];
+  var indicesOut = valsandIndicesOut[1];
+  this.setValsByDim(0, rowIndex, valsOut);
+  //loop over indices in and indices out to see if they are the same. if they are, then nothing has moved!
+  for (var i = 0; i < indicesIn.length; i++){
+    var tileQuery = $(tileSelect(indicesIn[i], rowIndex));
+    //if I am smashed into, delete myself
+    if (i < indicesIn.length - 1) {
+      if (indicesOut[i] === indicesOut[i+1]) {
+        tileQuery[0].remove();
+      }
+    }
+    // if i smashed into someone
+    if (i >= 1) {
+      if (indicesOut[i] === indicesOut[i-1]) {
+        var newVal = valsOut[indicesOut[i]];
+        console.log("I smashed and am now a " + newVal);
+        console.log(tileQuery);
+        console.log(tileQuery[0]);
+        tileQuery.text(newVal);
+        tileQuery[0].setAttribute("data-val", newVal);
+      }
+    }
+    if (indicesIn[i] !== indicesOut[i]) {
+      console.log(tileQuery);
+      console.log(tileQuery[0]);
+      tileQuery[0].setAttribute("data-col", ("c" + indicesOut[i]));
+      this.hasMoved = true;
+    }
+  }
+
+  //
+  // Game.prototype.moveTileRight = function(tile) {
+  //   var valid = true;
+  //   while (valid) {
+  //     var y = parseInt($(".tile").attr("data-row").slice(-1));
+  //     var newY = parseInt($(".tile").attr("data-col").slice(-1)) + 1;
+  //     var x = parseInt($(".tile").attr("data-col").slice(-1));
+  //     if (newY <= 3 && this.board[x][newY] === 0) {
+  //       tile[0].setAttribute("data-col", ("c" + newY));
+  //       this.board[x][newY] = this.board[x][y];
+  //       this.board[x][y] = 0;
+  //     } else {
+  //       valid = false;
+  //     }
+  //   }
+  //
+  // };
+};
+
 Game.prototype.moveTileDown = function(tile) {
   var valid = true;
   while (valid) {
@@ -183,39 +245,64 @@ Game.prototype.moveTileDown = function(tile) {
   }
 };
 
-Game.prototype.moveTileRight = function(tile) {
-  var valid = true;
-  while (valid) {
-    var y = parseInt($(".tile").attr("data-row").slice(-1));
-    var newY = parseInt($(".tile").attr("data-col").slice(-1)) + 1;
-    var x = parseInt($(".tile").attr("data-col").slice(-1));
-    if (newY <= 3 && this.board[x][newY] === 0) {
-      tile[0].setAttribute("data-col", ("c" + newY));
-      this.board[x][newY] = this.board[x][y];
-      this.board[x][y] = 0;
-    } else {
-      valid = false;
+
+
+Game.prototype.moveRowLeft = function(rowIndex) {
+
+  console.log("moving column " + rowIndex);
+  var valsAndIndicesIn = this.getValsByDim(0, rowIndex);
+  console.log(valsAndIndicesIn);
+  var valsIn = valsAndIndicesIn[0];
+  var indicesIn = valsAndIndicesIn[1];
+  var valsandIndicesOut = this.smash(valsIn);
+  console.log(valsandIndicesOut);
+  var valsOut = valsandIndicesOut[0];
+  var indicesOut = valsandIndicesOut[1];
+  this.setValsByDim(0, rowIndex, valsOut);
+  //loop over indices in and indices out to see if they are the same. if they are, then nothing has moved!
+  for (var i = 0; i < indicesIn.length; i++){
+    var tileQuery = $(tileSelect(indicesIn[i], rowIndex));
+    //if I am smashed into, delete myself
+    if (i < indicesIn.length - 1) {
+      if (indicesOut[i] === indicesOut[i+1]) {
+        tileQuery[0].remove();
+      }
+    }
+    // if i smashed into someone
+    if (i >= 1) {
+      if (indicesOut[i] === indicesOut[i-1]) {
+        var newVal = valsOut[indicesOut[i]];
+        console.log("I smashed and am now a " + newVal);
+        console.log(tileQuery);
+        console.log(tileQuery[0]);
+        tileQuery.text(newVal);
+        tileQuery[0].setAttribute("data-val", newVal);
+      }
+    }
+    if (indicesIn[i] !== indicesOut[i]) {
+      console.log(tileQuery);
+      console.log(tileQuery[0]);
+      tileQuery[0].setAttribute("data-col", ("c" + indicesOut[i]));
+      this.hasMoved = true;
     }
   }
 
+
+  // var valid = true;
+  // while (valid) {
+  //   var y = parseInt($(".tile").attr("data-row").slice(-1));
+  //   var newY = parseInt($(".tile").attr("data-col").slice(-1)) - 1;
+  //   var x = parseInt($(".tile").attr("data-col").slice(-1));
+  //   if (newY >= 0 && this.board[x][newY]) {
+  //     tile[0].setAttribute("data-col", ("c" + newY));
+  //     this.board[x][newY] = this.board[x][y];
+  //     this.board[x][y] = 0;
+  //   } else {
+  //     valid = false;
+  //   }
+  // }
 };
 
-Game.prototype.moveTileLeft = function(tile) {
-  var valid = true;
-  while (valid) {
-    var y = parseInt($(".tile").attr("data-row").slice(-1));
-    var newY = parseInt($(".tile").attr("data-col").slice(-1)) - 1;
-    var x = parseInt($(".tile").attr("data-col").slice(-1));
-    if (newY >= 0 && this.board[x][newY]) {
-      tile[0].setAttribute("data-col", ("c" + newY));
-      this.board[x][newY] = this.board[x][y];
-      this.board[x][y] = 0;
-    } else {
-      valid = false;
-    }
-  }
-
-};
 
 Game.prototype.addRandoTile = function() {
   var tile = $("<div data-row='' data-col='' data-val=''></div>");

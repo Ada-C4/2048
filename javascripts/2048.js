@@ -10,11 +10,13 @@ Game.prototype.play = function() {
 
 };
 
-Game.prototype.moveTile = function(tile, direction) {
+Game.prototype.moveTile = function(direction) {
   // Game method here
   switch(direction) {
     case 38: //up
-      this.moveTileUp(tile);
+    for (var i = 0; i < 4; i++) {
+      this.moveColumnUp(i);
+    }
       break;
     case 40: //down
       this.moveTileDown(tile);
@@ -28,7 +30,16 @@ Game.prototype.moveTile = function(tile, direction) {
   }
 };
 
-Game.prototype.moveTileUp = function(tile) {
+Game.prototype.moveColumnUp = function(columnIndex) {
+
+  for (var i = 0; i < 4; i++) {
+    while (this.board[columnIndex][i] === 0) {
+      console.log(this.board[columnIndex][i]);
+      console.log(this.board[columnIndex][i + 1]);
+      this.board[columnIndex][i] = this.board[columnIndex][i + 1];
+      this.board[columnIndex][i+1] = 0;
+    }
+  }
   var valid = true;
   while (valid) {
     var y = parseInt($(".tile").attr("data-row").slice(-1));
@@ -136,7 +147,7 @@ $(document).ready(function() {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
-      game.moveTile(tile, event.which);
+      game.moveTile(event.which);
       game.addRandoTile();
     }
   });
