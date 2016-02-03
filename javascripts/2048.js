@@ -20,14 +20,15 @@ Game.prototype.moveTile = function(tile, direction) {
               // increment numSpaces to move up by 1 if the next tile up is 0
               if (self.gameBoard[i][columnIndex] === 0) {
                 self.gameBoard[i][columnIndex] = column;
-                row[columnIndex] = 0;
+                self.gameBoard[i + 1][columnIndex] = 0;
               }
             }
           }
         });
       });
-      console.log(self.gameBoard);
       // self.upTileCollision();
+      console.log(self.gameBoard);
+
       break;
     case 40: //down
       console.log('down');
@@ -52,7 +53,6 @@ Game.prototype.moveTile = function(tile, direction) {
         }
       }
       console.log(self.gameBoard);
-      self.downTileCollision();
       break;
     case 37: //left
       console.log('left');
@@ -86,7 +86,7 @@ Game.prototype.moveTile = function(tile, direction) {
         // iterate through each "column" (each item within a row)
         var row = self.gameBoard[m], rowIndex = m;
 
-        for (var j = 0; j < row.length; j++) {
+        for (var j = 3; j >= 0; j--) {
           var column = row[j], columnIndex = j;
           // don't look at tiles that don't have a a value to them, AND don't look right if column is farthest right
 
@@ -110,17 +110,17 @@ Game.prototype.moveTile = function(tile, direction) {
 
 Game.prototype.upTileCollision = function(){
   var self = this;
-  for(var i = 0; i <= 3; i++){
+  for(var i = 3; i >= 1; i--){
     for(var j = 0; j <= 3; j++){
       if(self.gameBoard[i][j] > 0){
-        if(self.gameBoard[i + 1][j] === self.gameBoard[i][j]){
-          self.gameBoard[i][j] *= 2;
-          self.gameBoard[i + 1][j] = 0;
+        if(self.gameBoard[i - 1][j] === self.gameBoard[i][j]){
+          self.gameBoard[i - 1][j] *= 2;
+          self.gameBoard[i][j] = 0;
         }
       }
     }
   }
-  // console.log(self.gameBoard);
+  console.log(self.gameBoard);
 };
 
 Game.prototype.downTileCollision = function(){
@@ -142,6 +142,7 @@ $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
   var game = new Game();
+  console.log(game.gameBoard);
 
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
