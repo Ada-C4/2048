@@ -2,6 +2,12 @@ html {
   font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
+.scorebox {
+  margin: auto;
+  width: 150px;
+
+}
+
 #gameboard {
   background: #bbada0;
   border-radius: 0.5rem;

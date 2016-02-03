@@ -89,6 +89,8 @@ Game.prototype.moveTile = function(tile, direction) {
                 updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
                 updateTile[0].dataset.val = newVal;
                 updateTile[0].innerHTML = newVal;
+              // update score
+                this.updateScore(newVal);
               //  }, 200);
             }
           }
@@ -129,6 +131,8 @@ Game.prototype.moveTile = function(tile, direction) {
                 updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
                 updateTile[0].dataset.val = newVal;
                 updateTile[0].innerHTML = newVal;
+              // update score
+                this.updateScore(newVal);
               //  }, 200);
             }
           }
@@ -169,6 +173,8 @@ Game.prototype.moveTile = function(tile, direction) {
                 updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
                 updateTile[0].dataset.val = newVal;
                 updateTile[0].innerHTML = newVal;
+              // update score
+                this.updateScore(newVal);
               //  }, 200);
             }
           }
@@ -209,6 +215,8 @@ Game.prototype.moveTile = function(tile, direction) {
                 updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
                 updateTile[0].dataset.val = newVal;
                 updateTile[0].innerHTML = newVal;
+              // update score
+                this.updateScore(newVal);
               //  }, 200);
             }
           }
@@ -220,8 +228,9 @@ Game.prototype.moveTile = function(tile, direction) {
 };
 
 
-Game.prototype.combineTiles = function() {
-
+Game.prototype.updateScore = function(value) {
+  this.score += value;
+  $(".scorebox")[0].innerHTML = "score: " + this.score;
 };
 
 Game.prototype.removeFromBoard = function(tile) {
