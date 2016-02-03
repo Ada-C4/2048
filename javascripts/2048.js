@@ -40,12 +40,12 @@ Game.prototype.addTile = function () {
 Game.prototype.moveTile = function(tile, direction) {
   var addTileCallback = function () { this.addTile(); }.bind(this) ;
   // Game method here
+  var initMoves = this.board.map(function(tile) {return tile.moveCount;});
   switch(direction) {
     case 38: //up
       var groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.col;
-        }),
-          initMoves = this.board.map(function(tile) {return tile.moveCount;});
+        });
       // iterate through each column
       var func = function(key){
         var colArray = groupedTiles[key];
@@ -75,20 +75,12 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       };
-      func = _.bind(func, this);
-      Object.keys(groupedTiles).forEach(function(key) { return func(key); });
-      var afterMoves = this.board.map(function(tile) {return tile.moveCount;}),
-          matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
-      if (!matching) {
-        setTimeout(addTileCallback, 200);
-      }
       break;
 
     case 40: //down
     groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.col;
         });
-    initMoves = this.board.map(function(tile) {return tile.moveCount;});
       // iterate through each column
       func = function(key){
         var colArray = groupedTiles[key];
@@ -120,20 +112,12 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       };
-      func = _.bind(func, this);
-      Object.keys(groupedTiles).forEach(function(key) { return func(key); });
-      afterMoves = this.board.map(function(tile) {return tile.moveCount;});
-      matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
-      if (!matching) {
-        setTimeout(addTileCallback, 200);
-      }
       break;
 
     case 37: //left
       groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.row;
         });
-      initMoves = this.board.map(function(tile) {return tile.moveCount;});
       // iterate through each row
       func = function(key){
         var rowArray = groupedTiles[key];
@@ -163,19 +147,12 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       };
-      func = _.bind(func, this);
-      Object.keys(groupedTiles).forEach(function(key) { return func(key); });
-      afterMoves = this.board.map(function(tile) {return tile.moveCount;});
-      matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
-      if (!matching) {
-        setTimeout(addTileCallback, 200);
-      }      break;
+    break;
 
     case 39: //right
     groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.row;
         });
-    initMoves = this.board.map(function(tile) {return tile.moveCount;});
       // iterate through each column
       func = function(key){
         var rowArray = groupedTiles[key];
@@ -207,15 +184,15 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       };
-
-      func = _.bind(func, this);
-      Object.keys(groupedTiles).forEach(function(key) { return func(key); });
-      afterMoves = this.board.map(function(tile) {return tile.moveCount;});
-      matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
-      if (!matching) {
-        setTimeout(addTileCallback, 200);
-      }
       break;
+  }
+
+  func = _.bind(func, this);
+  Object.keys(groupedTiles).forEach(function(key) { return func(key); });
+  afterMoves = this.board.map(function(tile) {return tile.moveCount;});
+  matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
+  if (!matching) {
+    setTimeout(addTileCallback, 200);
   }
 };
 
