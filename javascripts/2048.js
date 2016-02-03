@@ -21,7 +21,7 @@ Game.prototype.addRandomTile = function(){
   // insert a 2 or 4 into that position on the board
   var startNumArray = [2,2,2,2,2,2,4];
   var randTile = startNumArray[Math.floor(Math.random()*startNumArray.length)];
-  this.board[randIndex[0]][randIndex[1]] = randTile;
+  this.board[randIndex[0]][3] = randTile; //TODO: replace 3 with randIndex[1] after testing
 }
 
 Game.prototype.getPositions = function(){
@@ -59,7 +59,7 @@ Game.prototype.moveTile = function(tile, direction) {
         }
       break;
     case 37: //left
-    self.moveLeft();
+      self.moveLeft();
       for (var i = 0; i < $(".tile").length; i++){
         var dataColumn = $(".tile").attr("data-col").slice(1);
             var dataInt = parseInt(dataColumn, 10);
@@ -83,19 +83,31 @@ Game.prototype.moveTile = function(tile, direction) {
 };
 
 Game.prototype.moveLeft = function() {
+  var self = this;
   var board = this.board;
-  console.log(board);
+  // console.log(board);
+  // first go through each row top to bottom
   for (var r = 0; r < 4; r++) {
-    for (var c = 1; c < 4; c++) {
+    // go through each column left to right, starting at the 2nd column
+    var emptyCols = [];
+    for (var c = 0; c < 4; c++) { /// should C be 0???
+      //if c is empty, store c position in an array
+      if (board[r][c] === 0) {
+        // store in 0s array
+        emptyCols.push(c);
+      }
+      // if c not empty, shift content to the left as far as possible up to index c0
       if (board[r][c] !== 0) {
-        if (board[r][c - 1] === 0) {
-          var cVal = c + 1;
-          if(c === 3){
-            cVal = 0;
-          }
+        // if (board[r][c - 1] === 0) {
+        if(emptyCols.length){
+          // var cVal = c + 1;
+          // if(c === 3){
+          //   cVal = 0;
+          // }
           // shift to the left
-          board[r][c - 1] = board[r][c];
-          board[r][c] = board[r][cVal];
+          board[r][emptyCols[0]] = board[r][c]; //content moves to leftmost empty col
+          emptyCols.shift(); //delete that entry in the empty array
+          board[r][c] = 0; //empty col where content was
         }
       }
     }
@@ -106,8 +118,10 @@ $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
   var game = new Game();
+  var board = game.board;
   var f = game.addRandomTile();
   $('body').keydown(function(event){
+    console.log(board);
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
