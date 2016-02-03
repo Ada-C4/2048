@@ -62,15 +62,15 @@ Game.prototype.moveTile = function(direction) {
   self = this;
       switch(direction) {
         case 38: //up
-          self.moveBoardUp();
-          self.collideUp();
-          self.randTile();
+          // self.moveBoardUp();
+          // self.collideUp();
+          // self.randTile();
           console.log('up');
           break;
         case 40: //down
-          self.moveBoardDown();
-          self.collideDown();
-          self.randTile();
+          // self.moveBoardDown();
+          // self.collideDown();
+          // self.randTile();
           console.log('down');
           break;
         case 37: //left
@@ -80,9 +80,9 @@ Game.prototype.moveTile = function(direction) {
           console.log('left');
           break;
         case 39: //right
-          self.moveBoardRight();
-          self.collideRight();
-          self.randTile();
+          // self.moveBoardRight();
+          // self.collideRight();
+          // self.randTile();
           console.log('right');
           //this.moveRight(tile);
           //this.collideRight(tile);
@@ -101,7 +101,6 @@ Game.prototype.moveLeft = function(tile) {
   var newCol;
   $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
   var board_row = this.board[tile[0]];
-
   for(var j=0; j < col; j++) {
     if (board_row[j] === 0) {
       newCol = j;
@@ -125,6 +124,11 @@ Game.prototype.moveBoardLeft = function() {
   return this.board;
 };
 
+Game.prototype.selectTile = function(row, col) {
+  var $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
+  return $tile;
+};
+
 
 Game.prototype.collideLeft = function() {
   var $tile1;
@@ -136,11 +140,12 @@ Game.prototype.collideLeft = function() {
       //console.log(row[x-1]);
       if ((row[x] === row[x+1]) && row[x] !== 0) {
         row[x] = (row[x] + row[x+1]);
-        $tile1 = $('.tile[data-row="r' + brow + '"][data-col="c' + x + '"]');
-        $tile2 = $('.tile[data-row="r' + brow + '"][data-col="c' + x+1 + '"]');
+        $tile1 = self.selectTile(brow, x);
+        $tile2 = self.selectTile(brow, x+1);
         $tile1.attr('data-val', row[x]);
-        $tile1.innerHTML(row[x]);
+        $tile1.html(row[x]);
         $tile2.remove();
+        console.log($tile2);
         self.scoring(row[x]);
         row[x+1] = 0;
         switch(x) {
@@ -201,6 +206,8 @@ Game.prototype.collideRight = function() {
       //console.log(row[x-1]);
       if ((row[x] === row[x-1]) && row[x] !== 0) {
         row[x] = (row[x] + row[x-1]);
+        $tile1 = self.selectTile(brow, x);
+        $tile2 = self.selectTile(brow, x-1);
         self.scoring(row[x]);
         row[x-1] = 0;
         switch(x) {
