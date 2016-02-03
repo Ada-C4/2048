@@ -333,6 +333,14 @@ Game.prototype.isMoveAvailable = function(tile){
   return true;
 };
 
+Game.prototype.resetGame = function() {
+  console.log("reset!");
+  this.score = 0;
+  this.updateScore(this.score);
+  this.board = this.newBoard();
+  // $(".tile").
+};
+
 $(document).ready(function() {
   var game = new Game();
 
@@ -344,5 +352,9 @@ $(document).ready(function() {
         setTimeout(function() { game.newTile(); }, 200);
       }
     }
+  });
+
+  $(".new-game-btn").click(function() {
+    game.resetGame();
   });
 });

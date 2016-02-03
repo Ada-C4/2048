@@ -24,6 +24,16 @@ html {
   font-size: 100px;
 }
 
+.new-game-btn {
+  text-align: center;
+  margin: auto;
+}
+
+.btn-container {
+  margin: auto;
+  width: 100px;
+}
+
 #gameboard {
   background: #bbada0;
   border-radius: 0.5rem;
