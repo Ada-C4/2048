@@ -230,7 +230,7 @@ Game.prototype.moveTile = function(tile, direction) {
 
 Game.prototype.updateScore = function(value) {
   this.score += value;
-  $(".scorebox")[0].innerHTML = "score: " + this.score;
+  $(".score-val")[0].innerHTML = this.score;
 };
 
 Game.prototype.removeFromBoard = function(tile) {

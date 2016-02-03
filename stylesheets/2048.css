@@ -5,7 +5,23 @@ html {
 .scorebox {
   margin: auto;
   width: 150px;
+  height: 120px;
+  text-align: center;
+  background-color: #bbada0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 0.5rem;
+  font-size: 24px;
+  color: #FFFFFF;
+}
 
+.score-val {
+  font-size: 32px;
+}
+
+.header {
+  text-align: center;
+  font-size: 100px;
 }
 
 #gameboard {
