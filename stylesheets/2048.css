@@ -2,6 +2,41 @@ html {
   font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
+.scorebox {
+  margin: auto;
+  width: 150px;
+  height: 120px;
+  text-align: center;
+  background-color: #bbada0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 0.5rem;
+  font-size: 24px;
+  color: #FFFFFF;
+}
+
+.score-val {
+  font-size: 32px;
+}
+
+.header {
+  text-align: center;
+  font-size: 100px;
+}
+
+.new-game-btn {
+  text-align: center;
+  margin: auto;
+  border-style: none;
+  background-color: #999999;
+  font-size: 20px;
+}
+
+.btn-container {
+  margin: auto;
+  width: 100px;
+}
+
 #gameboard {
   background: #bbada0;
   border-radius: 0.5rem;
