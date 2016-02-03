@@ -123,15 +123,13 @@ Game.prototype.rightMoveTiles = function(){
     for (var j = 3; j >= 0; j--) {
       var column = row[j], columnIndex = j;
       // don't look at tiles that don't have a a value to them, AND don't look right if column is farthest right
-
       if (column !== 0) {
-        if (columnIndex <= 3) {
-
+        for (var i = columnIndex + 1; i <= 3; i++) {
           // increment numSpaces to move right by 1 if the next right over is 0
-          if (self.gameBoard[rowIndex][columnIndex + 1] === 0) {
+          if (row[i] === 0) {
             // select current tile and move it appropriate num spaces right
-            row[columnIndex + 1] = column;
-            row[columnIndex] = 0;
+            row[i] = column;
+            row[i - 1] = 0;
           }
         }
       }
