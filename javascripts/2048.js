@@ -75,7 +75,40 @@ Game.prototype.moveTile = function(tile, direction) {
       
       break;
     case 40: //down
-      console.log('down');
+    groupedTiles = _.groupBy(this.board, function(tile) {
+          return tile.col;
+        });
+      // iterate through each column
+      func = function(key){
+        var colArray = groupedTiles[key];
+        colArray = _.sortBy(colArray, function(tile){ return tile.row; });
+        for (var i = 0; i < colArray.length; i++) {
+          // if combining
+          var arrayIndex = colArray.length - i - 1,
+              row = 3 - i;
+          if (colArray[arrayIndex] && colArray[arrayIndex-1] && colArray[arrayIndex].val === colArray[arrayIndex-1].val) {
+            colArray[arrayIndex-1].val *= 2;
+            colArray[arrayIndex-1].row = row;
+            // change HTML of tile
+            $("#" + colArray[arrayIndex-1].tileId).attr("data-row", "r" + row);
+            $("#" + colArray[arrayIndex-1].tileId).attr("data-val", colArray[arrayIndex-1].val);
+            $("#" + colArray[arrayIndex-1].tileId).html(colArray[arrayIndex-1].val);
+            // delete from board
+            var deleteTileIndex = _.indexOf(this.board, colArray[arrayIndex]);
+            this.board.splice(deleteTileIndex, 1);
+            // delete current html object
+            $("#" + colArray[arrayIndex].tileId).remove();
+            // delete current value (tile object)
+            colArray.splice(arrayIndex, 1);
+            // if not combining
+          } else {
+            colArray[arrayIndex].row = row;
+            $("#" + colArray[arrayIndex].tileId).attr("data-row", "r" + row);
+          }
+        }
+      };
+      func = _.bind(func, this);
+      Object.keys(groupedTiles).forEach(function(key) { return func(key); });
       break;
     case 37: //left
       console.log('left');
