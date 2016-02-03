@@ -79,13 +79,18 @@ Game.prototype.moveTile = function(tile, direction) {
       var afterMoves = this.board.map(function(tile) {return tile.moveCount;}),
           matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
       console.log(matching, initMoves, afterMoves);
-      if (!matching) { this.addTile(); }
+
+      if (!matching) {
+          game.addTile();
+      }
       
       break;
+
     case 40: //down
     groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.col;
         });
+    initMoves = this.board.map(function(tile) {return tile.moveCount;});
       // iterate through each column
       func = function(key){
         var colArray = groupedTiles[key];
@@ -97,6 +102,7 @@ Game.prototype.moveTile = function(tile, direction) {
           if (colArray[arrayIndex] && colArray[arrayIndex-1] && colArray[arrayIndex].val === colArray[arrayIndex-1].val) {
             colArray[arrayIndex-1].val *= 2;
             colArray[arrayIndex-1].row = row;
+            colArray[arrayIndex-1].moveCount++;
             // change HTML of tile
             $("#" + colArray[arrayIndex-1].tileId).attr("data-row", "r" + row);
             $("#" + colArray[arrayIndex-1].tileId).attr("data-val", colArray[arrayIndex-1].val);
@@ -111,12 +117,19 @@ Game.prototype.moveTile = function(tile, direction) {
             // if not combining
           } else {
             colArray[arrayIndex].row = row;
+            colArray[arrayIndex].moveCount++;
             $("#" + colArray[arrayIndex].tileId).attr("data-row", "r" + row);
           }
         }
       };
+
       func = _.bind(func, this);
       Object.keys(groupedTiles).forEach(function(key) { return func(key); });
+      afterMoves = this.board.map(function(tile) {return tile.moveCount;});
+      matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
+      console.log(matching, initMoves, afterMoves);
+      if (!matching) { this.addTile(); }
+
       break;
 
     case 37: //left
@@ -124,6 +137,7 @@ Game.prototype.moveTile = function(tile, direction) {
       groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.row;
         });
+      initMoves = this.board.map(function(tile) {return tile.moveCount;});
       // iterate through each row
       func = function(key){
         var rowArray = groupedTiles[key];
@@ -133,6 +147,7 @@ Game.prototype.moveTile = function(tile, direction) {
           if (rowArray[col] && rowArray[col+1] && rowArray[col].val === rowArray[col+1].val) {
             rowArray[col+1].val *= 2;
             rowArray[col+1].col = col;
+            rowArray[col+1].moveCount++;
             // change HTML of tile
             $("#" + rowArray[col+1].tileId).attr("data-col", "c" + col);
             $("#" + rowArray[col+1].tileId).attr("data-val", rowArray[col+1].val);
@@ -147,18 +162,24 @@ Game.prototype.moveTile = function(tile, direction) {
             // if not combining
           } else {
             rowArray[col].col = col;
+            rowArray[col].moveCount++;
             $("#" + rowArray[col].tileId).attr("data-col", "c" + col);
           }
         }
       };
       func = _.bind(func, this);
       Object.keys(groupedTiles).forEach(function(key) { return func(key); });
+      afterMoves = this.board.map(function(tile) {return tile.moveCount;});
+      matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
+      console.log(matching, initMoves, afterMoves);
+      if (!matching) { this.addTile(); }
       break;
 
     case 39: //right
     groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.row;
         });
+    initMoves = this.board.map(function(tile) {return tile.moveCount;});
       // iterate through each column
       func = function(key){
         var rowArray = groupedTiles[key];
@@ -170,6 +191,7 @@ Game.prototype.moveTile = function(tile, direction) {
           if (rowArray[arrayIndex] && rowArray[arrayIndex-1] && rowArray[arrayIndex].val === rowArray[arrayIndex-1].val) {
             rowArray[arrayIndex-1].val *= 2;
             rowArray[arrayIndex-1].col = col;
+            rowArray[arrayIndex-1].moveCount++;
             // change HTML of tile
             $("#" + rowArray[arrayIndex-1].tileId).attr("data-col", "c" + col);
             $("#" + rowArray[arrayIndex-1].tileId).attr("data-val", rowArray[arrayIndex-1].val);
@@ -184,12 +206,19 @@ Game.prototype.moveTile = function(tile, direction) {
             // if not combining
           } else {
             rowArray[arrayIndex].col = col;
+            rowArray[arrayIndex].moveCount++;
             $("#" + rowArray[arrayIndex].tileId).attr("data-col", "c" + col);
           }
         }
       };
+
       func = _.bind(func, this);
       Object.keys(groupedTiles).forEach(function(key) { return func(key); });
+      afterMoves = this.board.map(function(tile) {return tile.moveCount;});
+      matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
+      console.log(matching, initMoves, afterMoves);
+      if (!matching) { this.addTile(); }
+
       break;
   }
 };
