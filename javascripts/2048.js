@@ -40,12 +40,12 @@ Game.prototype.moveTile = function(tile, direction) {
       self.leftMoveTiles();
       self.leftTileCollision();
       self.leftMoveTiles();
-      console.log(self.gameBoard);
-
       break;
     case 39: //right
       console.log('right');
       self.rightMoveTiles();
+      self.rightTileCollision();
+      console.log(self.gameBoard);
       break;
   }
 };
@@ -178,6 +178,20 @@ Game.prototype.leftTileCollision = function(){
         if (self.gameBoard[i][j - 1] === self.gameBoard[i][j]) {
           self.gameBoard[i][j] *= 2;
           self.gameBoard[i][j - 1] = 0;
+        }
+      }
+    }
+  }
+};
+
+Game.prototype.rightTileCollision = function(){
+  var self = this;
+  for (var i = 0; i <= 3; i++) { // iterate through each row
+    for (var j = 0; j < 3; j++) { // iterate through each tile in each row
+      if (self.gameBoard[i][j] > 0) {
+        if (self.gameBoard[i][j + 1] === self.gameBoard[i][j]) {
+          self.gameBoard[i][j] *= 2;
+          self.gameBoard[i][j + 1] = 0;
         }
       }
     }
