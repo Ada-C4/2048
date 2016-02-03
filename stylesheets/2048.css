@@ -2,8 +2,14 @@ html {
   font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
-.scorebox {
+.container {
+  width: 550px;
   margin: auto;
+  margin-bottom: -20px;
+}
+
+.scorebox {
+  margin-left: 102px;
   width: 150px;
   height: 120px;
   text-align: center;
@@ -13,6 +19,7 @@ html {
   border-radius: 0.5rem;
   font-size: 24px;
   color: #FFFFFF;
+  display: inline-block;
 }
 
 .score-val {
@@ -21,7 +28,8 @@ html {
 
 .header {
   text-align: center;
-  font-size: 100px;
+  font-size: 130px;
+  display: inline-block;
 }
 
 .new-game-btn {
@@ -29,12 +37,15 @@ html {
   margin: auto;
   border-style: none;
   background-color: #999999;
-  font-size: 20px;
+  font-size: 22px;
+  height: 45px;
+  width: 180px;
+  border-radius: 0.25rem;
 }
 
 .btn-container {
   margin: auto;
-  width: 100px;
+  width: 180px;
 }
 
 #gameboard {
