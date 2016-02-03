@@ -4,6 +4,8 @@ var Game = function() {
                [0,0,0,0],
                [0,0,0,0],
                [0,0,0,0]];
+  this.addRandomTile();
+  this.addRandomTile();
 };
 
 Game.prototype.addRandomTile = function(){
@@ -113,9 +115,7 @@ $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
   var game = new Game();
-  var board = game.board;
-  console.log(board);
-  game.addRandomTile();
+  console.log(game.board);
   $('body').keydown(function(event){
     console.log(board);
     var arrows = [37, 38, 39, 40];
