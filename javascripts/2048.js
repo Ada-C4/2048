@@ -22,12 +22,10 @@ Game.prototype.addTile = function () {
   this.board.forEach(function (tile) {
     currentTiles.push([tile.row, tile.col]);
   });
-  console.log(currentTiles);
   while (!tilePlaced) {
       var col =  Math.floor(Math.random() * (4 - 0)),
           row =  Math.floor(Math.random() * (4 - 0));
       var sameTile = _.find(this.board, function(tile) { return tile.col === col && tile.row === row; });
-      console.log(sameTile);
       if (!sameTile) {
         tilePlaced = true;
         newTile = new Tile(row, col);
@@ -45,9 +43,7 @@ Game.prototype.moveTile = function(tile, direction) {
       var groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.col;
         });
-      console.log(groupedTiles, Object.keys(groupedTiles), this.board);
       // iterate through each column
-      
       var func = function(key){
         var colArray = groupedTiles[key];
         for (var row = 0; row < colArray.length; row++) {
@@ -71,7 +67,6 @@ Game.prototype.moveTile = function(tile, direction) {
             colArray[row].row = row;
           }
         }
-        console.log(this.board);
       };
       func = _.bind(func, this);
       Object.keys(groupedTiles).forEach(function(key) { return func(key); });
@@ -90,32 +85,6 @@ Game.prototype.moveTile = function(tile, direction) {
 };
 
 Game.prototype.updateGameOver = function(){
-  // has free spaces
-  var noZeroes = true,
-      pairFound = false;
-  this.board.forEach(function(row) {
-    noZeroes = noZeroes && row.every(function(val) {
-      return val !== 0;
-    });
-  });
-  // if there are no zeroes, the game is not over
-  if (!noZeroes) {
-    return;
-  } else {
-    var i = 0;
-    while (!pairFound && i < 4) {
-      var j = 0;
-      while (!pairFound && j < 4) {
-        if (this.board[i][j] == this.board[i][j+1] ||
-           (this.board[i+1] && this.board[i][j] == this.board[i+1][j])) { 
-            pairFound = true; 
-        }
-        j++;
-      }
-      i++;
-    }
-    if (!pairFound) { this.gameOver = true; }
-  }
 };
 
 $(document).ready(function() {
@@ -158,9 +127,6 @@ $(document).ready(function() {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
-      // console.log(tile);
-      // $(tile).attr('data-row', 'r0');
-      
       game.moveTile(tile, event.which);
     }
 
