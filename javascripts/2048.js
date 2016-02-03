@@ -28,18 +28,24 @@ Game.prototype.moveTile = function(tile, direction) {
               break;
             }
           }
-          if (this.board[row[1] - 1][column[1]] == tile[i].dataset.val) {
-            console.log("collide!");
-            //update array board
-            this.board[row[1] - 1][column[1]] *= 2;
-            //delete tile
-            tile[i].remove();
-            //update tile with data-row = row[1] - 1 and data-col = column[1]
-            var updateTile = $(".tile[data-row=\"r" + (row[1] - 1) + "\"][data-col=\"c" + column[1] + "\"]");
-            var newVal = updateTile[0].dataset.val *= 2;
-            updateTile[0].dataset.val = newVal;
-            updateTile[0].innerHTML = newVal;
+          if (row[1] - 1 >= 0) {
+            if (this.board[row[1] - 1][column[1]] == tile[i].dataset.val) {
+              //update array board
+              this.board[row[1] - 1][column[1]] *= 2;
+              this.board[row[1]][column[1]] = 0;
+              //delete extra tile and update value
+              var tileToDelete = tile[i];
+              setTimeout(function() {
+                tileToDelete.remove();
+                var updateTile = $(".tile[data-row=\"r" + (row[1] - 1) + "\"][data-col=\"c" + column[1] + "\"]");
+                console.log(updateTile);
+                var newVal = updateTile[0].dataset.val * 2;
+                updateTile[0].dataset.val = newVal;
+                updateTile[0].innerHTML = newVal;
+               }, 200);
+            }
           }
+          console.log(this.board);
         }
       }
       break;
@@ -48,8 +54,6 @@ Game.prototype.moveTile = function(tile, direction) {
       tile.sort(function(a,b){
         return (b.dataset.row[1] - a.dataset.row[1]);
       });
-
-      console.log(tile[0]);
 
       for (i = 0; i < tile.length; i++) {
         row = tile[i].dataset.row;
@@ -66,6 +70,7 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       }
+      console.log(this.board);
       break;
     case 37: //left
       tile = tile.sort(function(a,b){
@@ -73,7 +78,6 @@ Game.prototype.moveTile = function(tile, direction) {
       });
 
       for (i = 0; i < tile.length; i++) {
-        console.log(i);
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (column[1] - 1 >= 0) {
@@ -88,6 +92,7 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       }
+      console.log(this.board);
       break;
     case 39: //right
       tile = tile.sort(function(a,b){
@@ -109,6 +114,7 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       }
+      console.log(this.board);
       break;
     }
 };
@@ -131,7 +137,7 @@ Game.prototype.addToBoard = function(tile) {
 };
 
 Game.prototype.newTile = function() {
-  console.log("new tile");
+  // console.log("new tile");
   var randValue = Math.random() < 0.9 ? 2 : 4;
   var randCol = Math.floor(Math.random() * 4);
   var randRow = Math.floor(Math.random() * 4);
@@ -139,7 +145,7 @@ Game.prototype.newTile = function() {
   if (this.board[randRow][randCol] === 0) {
     $("#gameboard").append("<div class='tile' data-row='r" + randRow + "', data-col='c" + randCol + "' data-val='" + randValue + "'>" + randValue + "</div>");
     this.board[randRow][randCol] = randValue;
-    console.log(this.board[randRow][randCol]);
+    // console.log(this.board[randRow][randCol]);
   } else {
     this.newTile();
     this.gameOver();
@@ -198,7 +204,7 @@ $(document).ready(function() {
     if (game.arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
       game.moveTile(tile, event.which);
-      // setTimeout(function() { game.newTile(); }, 200);
+      setTimeout(function() { game.newTile(); }, 200);
     }
   });
 });
