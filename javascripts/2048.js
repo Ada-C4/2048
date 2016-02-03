@@ -79,12 +79,9 @@ Game.prototype.moveTile = function(tile, direction) {
       Object.keys(groupedTiles).forEach(function(key) { return func(key); });
       var afterMoves = this.board.map(function(tile) {return tile.moveCount;}),
           matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
-      console.log(matching, initMoves, afterMoves);
-      
       if (!matching) {
         setTimeout(addTileCallback, 200);
       }
-
       break;
 
     case 40: //down
@@ -123,21 +120,16 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       };
-
       func = _.bind(func, this);
       Object.keys(groupedTiles).forEach(function(key) { return func(key); });
       afterMoves = this.board.map(function(tile) {return tile.moveCount;});
       matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
-      console.log(matching, initMoves, afterMoves);
-
       if (!matching) {
         setTimeout(addTileCallback, 200);
       }
-      
       break;
 
     case 37: //left
-      // console.log('left');
       groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.row;
         });
@@ -175,8 +167,6 @@ Game.prototype.moveTile = function(tile, direction) {
       Object.keys(groupedTiles).forEach(function(key) { return func(key); });
       afterMoves = this.board.map(function(tile) {return tile.moveCount;});
       matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
-      console.log(matching, initMoves, afterMoves);
-
       if (!matching) {
         setTimeout(addTileCallback, 200);
       }      break;
@@ -222,8 +212,6 @@ Game.prototype.moveTile = function(tile, direction) {
       Object.keys(groupedTiles).forEach(function(key) { return func(key); });
       afterMoves = this.board.map(function(tile) {return tile.moveCount;});
       matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
-      console.log(matching, initMoves, afterMoves);
-
       if (!matching) {
         setTimeout(addTileCallback, 200);
       }
