@@ -41,6 +41,7 @@ Game.prototype.moveTile = function(tile, direction) {
   var tileLength = tile.length;
   switch(direction) {
     case 38: //up  // subtract from data-row, TODO: if cell is empty (?)
+    self.moveUp();
       for (var i = 0; i < $(".tile").length; i++){
         var dataRow = $(".tile").attr("data-row").slice(1);
             var dataInt = parseInt(dataRow, 10);
@@ -133,6 +134,32 @@ Game.prototype.moveRight = function() {
           board[r][emptyCols[0]] = board[r][c]; //content moves to rightmost empty col
           emptyCols.shift(); //delete that entry in the empty array
           board[r][c] = 0; //empty col where content was
+        }
+      }
+    }
+  }
+};
+
+Game.prototype.moveUp = function() {
+  var self = this;
+  var board = this.board;
+  // first go through each column right to left
+  for (var c = 3; c >= 0; c--) {
+    // go through each row top to bottom
+    var emptyRows = [];
+    for (var r = 0; r < 4; r++) {
+      //if r is empty, store r position in an array
+      if (board[r][c] === 0) {
+        // store in 0s array
+        emptyRows.push(r);
+      }
+      // if r not empty, shift content up as far as possible up to index r0
+      if (board[r][c] !== 0) {
+        if(emptyRows.length){
+          // if there are empty spaces above tile, shift up
+          board[emptyRows[0]][c] = board[r][c]; //content moves to topmost empty row in that col
+          emptyRows.shift(); //delete that entry in the empty array
+          board[r][c] = 0; //empty the tile space where content was
         }
       }
     }
