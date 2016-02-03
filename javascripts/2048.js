@@ -35,8 +35,9 @@ Game.prototype.moveTiles = function(tiles, direction) {
           }
         }
         this.updateBoard(beginningTilesArray,i);
-        this.animateTile(tiles);
+
       }
+      this.animateTile(tiles);
       break;
     case 39: //right
       if (currentCol < 3) {
@@ -49,12 +50,25 @@ Game.prototype.moveTiles = function(tiles, direction) {
 
 Game.prototype.animateTile = function(tileArray) {
   for (var i = 0; i < tileArray.length; i++) {
-    var column = tileArray[i].dataset.col.charAt(1);
-    if (column > 0) {
-      tileArray[i].dataset.col = "c" + (column - 1);
-      tileArray[i].animate({left: '-=135px'}, 50);
+    var oldColumn = tileArray[i].dataset.col.charAt(1);
+    console.log("oldColumn: " + oldColumn);
+    var tileRow = tileArray[i].dataset.row.charAt(1);
+    console.log("tileRow: " +tileRow);
+    console.log("i: " +i);
+    // moveTo should be the index of the column that we are going to move the tile too
+    var moveTo = 0
+    var newColumn = moveTo;
+    console.log("newColumn: " + newColumn);
+    var colDiff = oldColumn - newColumn;
+    console.log("colDiff: " + colDiff);
+    if (oldColumn > 0) {
+      tileArray[i].dataset.col = "c" + (oldColumn - colDiff);
+      var moveAmt = (135 * colDiff);
+      console.log("moveAmt: " + moveAmt);
+      tileArray[i].animate({left: '-=' + moveAmt + 'px'}, 50);
     }
   }
+  console.log(tileArray.length);
 };
 
 // used inside the moveTile function
