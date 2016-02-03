@@ -46,6 +46,7 @@ Game.prototype.moveTile = function(tile, direction) {
       // iterate through each column
       var func = function(key){
         var colArray = groupedTiles[key];
+        colArray = _.sortBy(colArray, function(tile){ return tile.row; });
         for (var row = 0; row < colArray.length; row++) {
           // if combining
           if (colArray[row] && colArray[row+1] && colArray[row].val === colArray[row+1].val) {
