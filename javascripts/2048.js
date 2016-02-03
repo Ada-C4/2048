@@ -72,18 +72,19 @@ Game.prototype.moveTile = function(tile, direction) {
           if (row[1] - 1 >= 0) {
             if (this.board[row[1] - 1][column[1]] == tile[i].dataset.val) {
               //update array board
-              this.board[row[1] - 1][column[1]] *= 2;
+              this.board[(row[1] - 1)][column[1]] *= 2;
+              var newVal = this.board[(row[1] - 1)][column[1]];
               this.board[row[1]][column[1]] = 0;
               //delete extra tile and update value
               var tileToDelete = tile[i];
-              setTimeout(function() {
+              var rowToUpdate = (row[1] - 1);
+              var columnToUpdate = column[1];
+              // setTimeout(function() {
                 tileToDelete.remove();
-                var updateTile = $(".tile[data-row=\"r" + (row[1] - 1) + "\"][data-col=\"c" + column[1] + "\"]");
-                console.log(updateTile);
-                var newVal = updateTile[0].dataset.val * 2;
+                var updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
                 updateTile[0].dataset.val = newVal;
                 updateTile[0].innerHTML = newVal;
-               }, 200);
+              //  }, 200);
             }
           }
           console.log(this.board);
