@@ -1,6 +1,6 @@
 var Game = function() {
   // Game logic and initialization here
-  this.gameBoard = [[0, 0, 0, 0], [0, 2, 0, 0], [0, 2, 4, 0], [0, 0, 0, 0]];
+  this.gameBoard = [[0, 0, 0, 0], [0, 2, 0, 0], [0, 4, 4, 0], [0, 0, 0, 0]];
 };
 
 Game.prototype.moveTile = function(tile, direction) {
@@ -30,12 +30,13 @@ Game.prototype.moveTile = function(tile, direction) {
         });
       });
       console.log(self.gameBoard);
-      self.tileCollision();
+      self.upTileCollision();
       break;
     case 40: //down
       console.log('down');
       // iterate through each "row" (each array within gameboard array)
-      self.gameBoard.forEach(function(row, rowIndex){
+      for (var k = 3; k <= 0; k--) {
+        var row = self.gameboard[k], rowIndex = k;
         // iterate through each "column" (each item within a row)
         row.forEach(function(column, columnIndex){
           var numSpaces = 0;
@@ -52,8 +53,9 @@ Game.prototype.moveTile = function(tile, direction) {
             row[columnIndex] = 0;
           }
         });
-      });
+      }
       console.log(self.gameBoard);
+      self.downTileCollision();
       break;
     case 37: //left
       console.log('left');
@@ -109,21 +111,34 @@ Game.prototype.moveTile = function(tile, direction) {
   }
 };
 
-Game.prototype.tileCollision = function(){
+Game.prototype.upTileCollision = function(){
   var self = this;
   for(var i = 0; i <= 3; i++){
     for(var j = 0; j <= 3; j++){
-
       if(self.gameBoard[i][j] > 0){
-        console.log(self.gameBoard[i][j]);
         if(self.gameBoard[i + 1][j] === self.gameBoard[i][j]){
-          self.gameBoard[i][j] = self.gameBoard[i][j] * 2;
+          self.gameBoard[i][j] *= 2;
           self.gameBoard[i + 1][j] = 0;
         }
       }
-    };
-  };
-  console.log(this.gameBoard);
+    }
+  }
+  console.log(self.gameBoard);
+};
+
+Game.prototype.downTileCollision = function(){
+  var self = this;
+  for(var i = 3; i >= 3; i--){
+    for(var j = 0; j <= 3; j++){
+      if(self.gameBoard[i][j] > 0){
+        if(self.gameBoard[i - 1][j] === self.gameBoard[i][j]){
+          self.gameBoard[i][j] *= 2;
+          self.gameBoard[i - 1][j] = 0;
+        }
+      }
+    }
+  }
+  console.log(self.gameBoard);
 };
 
 $(document).ready(function() {
