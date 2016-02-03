@@ -110,9 +110,43 @@ Game.prototype.moveTile = function(tile, direction) {
       func = _.bind(func, this);
       Object.keys(groupedTiles).forEach(function(key) { return func(key); });
       break;
+
     case 37: //left
-      console.log('left');
+      // console.log('left');
+      var groupedTiles = _.groupBy(this.board, function(tile) {
+          return tile.row;
+        });
+      // iterate through each row
+      var func = function(key){
+        var rowArray = groupedTiles[key];
+        rowArray = _.sortBy(rowArray, function(tile){ return tile.col; });
+        for (var col = 0; col < rowArray.length; col++) {
+          // if combining
+          if (rowArray[col] && rowArray[col+1] && rowArray[col].val === rowArray[col+1].val) {
+            rowArray[col+1].val *= 2;
+            rowArray[col+1].col = col;
+            // change HTML of tile
+            $("#" + rowArray[col+1].tileId).attr("data-col", "c" + col);
+            $("#" + rowArray[col+1].tileId).attr("data-val", rowArray[col+1].val);
+            $("#" + rowArray[col+1].tileId).html(rowArray[col+1].val);
+            // delete from board
+            var deleteTileIndex = _.indexOf(this.board, rowArray[col]);
+            this.board.splice(deleteTileIndex, 1);
+            // delete current html object
+            $("#" + rowArray[col].tileId).remove();
+            // delete current tile object)
+            rowArray.splice(col, 1);
+            // if not combining
+          } else {
+            rowArray[col].col = col;
+            $("#" + rowArray[col].tileId).attr("data-col", "c" + col);
+          }
+        }
+      };
+      func = _.bind(func, this);
+      Object.keys(groupedTiles).forEach(function(key) { return func(key); });
       break;
+
     case 39: //right
       console.log('right');
       break;
