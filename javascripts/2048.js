@@ -64,21 +64,25 @@ Game.prototype.moveTile = function(direction) {
         case 38: //up
           self.moveBoardUp();
           self.collideUp();
+          self.randTile();
           console.log('up');
           break;
         case 40: //down
           self.moveBoardDown();
           self.collideDown();
+          self.randTile();
           console.log('down');
           break;
         case 37: //left
           self.moveBoardLeft();
           self.collideLeft();
+          self.randTile();
           console.log('left');
           break;
         case 39: //right
           self.moveBoardRight();
           self.collideRight();
+          self.randTile();
           console.log('right');
           //this.moveRight(tile);
           //this.collideRight(tile);
