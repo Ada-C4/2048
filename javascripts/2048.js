@@ -26,11 +26,15 @@ Game.prototype.moveTile = function(tile, direction) {
     case 38: //up
       console.log('up');
       self.upMoveTiles();
-      // self.upTileCollision();
+      self.upTileCollision();
+      self.upMoveTiles();
       break;
     case 40: //down
       console.log('down');
       self.downMoveTiles();
+      self.downTileCollision();
+      // self.downMoveTiles();
+      console.log(self.gameBoard);
       break;
     case 37: //left
       console.log('left');
@@ -39,7 +43,6 @@ Game.prototype.moveTile = function(tile, direction) {
     case 39: //right
       console.log('right');
       self.rightMoveTiles();
-      console.log(self.gameBoard);
       break;
   }
 };
@@ -81,7 +84,7 @@ Game.prototype.downMoveTiles = function(){
           // increment numSpaces to move down by 1 if the next num down is 0
           if (self.gameBoard[i + 1][columnIndex] === 0) {
             self.gameBoard[rowIndex + 1][columnIndex] = column;
-            row[columnIndex] = 0;
+            self.gameBoard[i][columnIndex] = 0;
           }
         }
       }
@@ -115,7 +118,6 @@ Game.prototype.leftMoveTiles = function(){
 Game.prototype.rightMoveTiles = function(){
   var self = this;
   // iterate through each "row" (each array within gameboard array)
-  // self.gameBoard.forEach(function(row, rowIndex){
   for (var m = 0; m < self.gameBoard.length; m++) {
     // iterate through each "column" (each item within a row)
     var row = self.gameBoard[m], rowIndex = m;
@@ -153,10 +155,10 @@ Game.prototype.upTileCollision = function(){
 
 Game.prototype.downTileCollision = function(){
   var self = this;
-  for(var i = 3; i >= 3; i--){
-    for(var j = 0; j <= 3; j++){
-      if(self.gameBoard[i][j] > 0){
-        if(self.gameBoard[i - 1][j] === self.gameBoard[i][j]){
+  for (var i = 3; i >= 0; i--) { // iterate through each row
+    for (var j = 0; j < 3; j++) { // iterate through each tile in each row
+      if (self.gameBoard[i][j] > 0) {
+        if (self.gameBoard[i - 1][j] === self.gameBoard[i][j]) {
           self.gameBoard[i][j] *= 2;
           self.gameBoard[i - 1][j] = 0;
         }
