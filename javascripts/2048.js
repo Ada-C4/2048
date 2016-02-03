@@ -334,11 +334,17 @@ Game.prototype.isMoveAvailable = function(tile){
 };
 
 Game.prototype.resetGame = function() {
-  console.log("reset!");
+  // Reset score
   this.score = 0;
   this.updateScore(this.score);
+  // Reset tiles on board
+  var tiles = $('.tile');
+  tiles = Array.from(tiles);
+  tiles.forEach(function(tile) {
+    tile.remove();
+  });
+  // Generate two new random tiles;
   this.board = this.newBoard();
-  // $(".tile").
 };
 
 $(document).ready(function() {
