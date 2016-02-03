@@ -22,10 +22,13 @@ Game.prototype.addTile = function () {
   this.board.forEach(function (tile) {
     currentTiles.push([tile.row, tile.col]);
   });
+  console.log(currentTiles);
   while (!tilePlaced) {
       var col =  Math.floor(Math.random() * (4 - 0)),
           row =  Math.floor(Math.random() * (4 - 0));
-      if (!currentTiles.includes([row, col])) {
+      var sameTile = _.find(this.board, function(tile) { return tile.col === col && tile.row === row; });
+      console.log(sameTile);
+      if (!sameTile) {
         tilePlaced = true;
         newTile = new Tile(row, col);
         this.board.push(newTile);
@@ -118,19 +121,38 @@ Game.prototype.updateGameOver = function(){
 $(document).ready(function() {
   // Any interactive jQuery functionality
   var game = new Game();
-  var t1 = new Tile(0, 0),
-      t2 = new Tile(1, 0),
-      t3 = new Tile(2, 0),
-      t4 = new Tile(3, 0);
-  game.board = [t1, t2, t3, t4];
-  var $t1HTML = $('<div class="tile" id="'+ t1.tileId +'" data-row="r'+ t1.row +'", data-col="c'+ t1.col +'" data-val="2">2</div>');
-  $('#gameboard').append($t1HTML);
-  var $t2HTML = $('<div class="tile" id="'+ t2.tileId +'" data-row="r'+ t2.row +'", data-col="c'+ t2.col +'" data-val="2">2</div>');
-  $('#gameboard').append($t2HTML);
-  var $t3HTML = $('<div class="tile" id="'+ t3.tileId +'" data-row="r'+ t3.row +'", data-col="c'+ t3.col +'" data-val="2">2</div>');
-  $('#gameboard').append($t3HTML);
-  var $t4HTML = $('<div class="tile" id="'+ t4.tileId +'" data-row="r'+ t4.row +'", data-col="c'+ t4.col +'" data-val="2">2</div>');
-  $('#gameboard').append($t4HTML);
+
+  game.addTile();
+  game.addTile();
+  game.addTile();
+  game.addTile();
+  game.addTile();
+  game.addTile();
+  game.addTile();
+  game.addTile();
+  game.addTile();
+  game.addTile();
+  game.addTile();
+  game.addTile();
+  game.addTile();
+  game.addTile();
+  game.addTile();
+
+  // hard coding for moveTile tests
+  //
+  // var t1 = new Tile(0, 0),
+  //     t2 = new Tile(1, 0),
+  //     t3 = new Tile(2, 0),
+  //     t4 = new Tile(3, 0);
+  // game.board = [t1, t2, t3, t4];
+  // var $t1HTML = $('<div class="tile" id="'+ t1.tileId +'" data-row="r'+ t1.row +'", data-col="c'+ t1.col +'" data-val="2">2</div>');
+  // $('#gameboard').append($t1HTML);
+  // var $t2HTML = $('<div class="tile" id="'+ t2.tileId +'" data-row="r'+ t2.row +'", data-col="c'+ t2.col +'" data-val="2">2</div>');
+  // $('#gameboard').append($t2HTML);
+  // var $t3HTML = $('<div class="tile" id="'+ t3.tileId +'" data-row="r'+ t3.row +'", data-col="c'+ t3.col +'" data-val="2">2</div>');
+  // $('#gameboard').append($t3HTML);
+  // var $t4HTML = $('<div class="tile" id="'+ t4.tileId +'" data-row="r'+ t4.row +'", data-col="c'+ t4.col +'" data-val="2">2</div>');
+  // $('#gameboard').append($t4HTML);
 
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
