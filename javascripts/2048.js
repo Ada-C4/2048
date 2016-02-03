@@ -1,15 +1,56 @@
 var Game = function() {
-  // Game logic and initialization here
-  this.board = [[0, 2, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 2, 0]];
+  this.board = this.newBoard();
   this.score = 0;
   this.arrows = [37, 38, 39, 40];
+};
+
+Game.prototype.newBoard = function(){
+  var rand = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Math.random() < 0.9 ? 2 : 4, Math.random() < 0.9 ? 2 : 4];
+
+  function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  }
+
+  rand = shuffleArray(rand);
+  var board = [];
+  for (var i = 0; i < 4; i++) {
+    board.push(rand.splice(0,4));
+  }
+
+  set = new Set();
+
+  for ( i = 0; i < board.length; i++) {
+    for (var j = 0; j < board[i].length; j++) {
+      if (board[i][j] > 0){
+        set.add([i, j, board[i][j]]);
+      }
+    }
+  }
+
+  var array = Array.from(set);
+  var rowNum1 = array[0][0];
+  var colNum1 = array[0][1];
+  var randValue1 = array[0][2];
+  var rowNum2 = array[1][0];
+  var colNum2 = array[1][1];
+  var randValue2 = array[1][2];
+
+  $("#gameboard").append("<div class='tile' data-row='r" + rowNum1 + "', data-col='c" + colNum1 + "' data-val='" + randValue1 + "'>" + randValue1 + "</div>");
+  $("#gameboard").append("<div class='tile' data-row='r" + rowNum2 + "', data-col='c" + colNum2 + "' data-val='" + randValue2 + "'>" + randValue2 + "</div>");
+
+  return board;
 };
 
 Game.prototype.moveTile = function(tile, direction) {
   var column;
   var row;
-  // Game method here
-  // console.log(this.board);
+
   switch(direction) {
     case 38: //up
       tile = tile.sort(function(a,b){
@@ -46,15 +87,14 @@ Game.prototype.moveTile = function(tile, direction) {
             }
           }
           console.log(this.board);
+          }
         }
-      }
       break;
     case 40: //down
       tile = Array.from(tile);
       tile.sort(function(a,b){
         return (b.dataset.row[1] - a.dataset.row[1]);
       });
-
       for (i = 0; i < tile.length; i++) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
@@ -145,7 +185,6 @@ Game.prototype.newTile = function() {
   if (this.board[randRow][randCol] === 0) {
     $("#gameboard").append("<div class='tile' data-row='r" + randRow + "', data-col='c" + randCol + "' data-val='" + randValue + "'>" + randValue + "</div>");
     this.board[randRow][randCol] = randValue;
-    // console.log(this.board[randRow][randCol]);
   } else {
     this.newTile();
     this.gameOver();
@@ -186,25 +225,35 @@ Game.prototype.gameOver = function(){
   };
 
   if (loser) {
+    this.newBoard();
     gameOverAlert();
-    this.board = [[0, 2, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 2, 0]];
   }
 };
 
-Game.prototype.availableMove = function(){
+Game.prototype.isMoveAvailable = function(tile){
+  // for (var i = 0; i < tile.length; i++) {
+  //   row = tile[i].dataset.row;
+  //   column = tile[i].dataset.col;
+  //   if (row[1] - 1 >= 0) {
+  //     console.log("move stuff");
 
+  //       }
+  //     };
+  //   }
+  // }
+  return true;
 };
 
 $(document).ready(function() {
-  console.log("ready to go!");
-  // Any interactive jQuery functionality
   var game = new Game();
 
   $('body').keydown(function(event){
     if (game.arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
       game.moveTile(tile, event.which);
-      setTimeout(function() { game.newTile(); }, 200);
+      if (game.isMoveAvailable()){
+        setTimeout(function() { game.newTile(); }, 200);
+      }
     }
   });
 });
