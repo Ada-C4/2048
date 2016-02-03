@@ -2,6 +2,7 @@ var Game = function() {
   // Game logic and initialization here
   this.gameOver = false;
   this.board = [];
+  this.score = 0;
 };
 
 var tileCount = 0;
@@ -54,6 +55,7 @@ Game.prototype.moveTile = function(tile, direction) {
           // if combining
           if (colArray[row] && colArray[row+1] && colArray[row].val === colArray[row+1].val) {
             colArray[row+1].val *= 2;
+            this.score += colArray[row+1].val;
             colArray[row+1].row = row;
             colArray[row+1].moveCount++;
             // change HTML of tile
@@ -91,6 +93,7 @@ Game.prototype.moveTile = function(tile, direction) {
               row = 3 - i;
           if (colArray[arrayIndex] && colArray[arrayIndex-1] && colArray[arrayIndex].val === colArray[arrayIndex-1].val) {
             colArray[arrayIndex-1].val *= 2;
+            this.score += colArray[arrayIndex-1].val;
             colArray[arrayIndex-1].row = row;
             colArray[arrayIndex-1].moveCount++;
             // change HTML of tile
@@ -126,6 +129,7 @@ Game.prototype.moveTile = function(tile, direction) {
           // if combining
           if (rowArray[col] && rowArray[col+1] && rowArray[col].val === rowArray[col+1].val) {
             rowArray[col+1].val *= 2;
+            this.score += rowArray[col+1].val;
             rowArray[col+1].col = col;
             rowArray[col+1].moveCount++;
             // change HTML of tile
@@ -163,6 +167,7 @@ Game.prototype.moveTile = function(tile, direction) {
               col = 3 - i;
           if (rowArray[arrayIndex] && rowArray[arrayIndex-1] && rowArray[arrayIndex].val === rowArray[arrayIndex-1].val) {
             rowArray[arrayIndex-1].val *= 2;
+            this.score += rowArray[arrayIndex-1].val;
             rowArray[arrayIndex-1].col = col;
             rowArray[arrayIndex-1].moveCount++;
             // change HTML of tile
@@ -202,19 +207,14 @@ Game.prototype.updateGameOver = function(){
 $(document).ready(function() {
   // Any interactive jQuery functionality
   var game = new Game();
-
   game.addTile();
   game.addTile();
-  game.addTile();
-  game.addTile();
-  game.addTile();
-  game.addTile();
-
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
       game.moveTile(tile, event.which);
+      $('#score').html('Score: ' + game.score);
     }
 
   });
