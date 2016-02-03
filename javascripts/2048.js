@@ -21,7 +21,7 @@ Game.prototype.addRandomTile = function(){
   // insert a 2 or 4 into that position on the board
   var startNumArray = [2,2,2,2,2,2,4];
   var randTile = startNumArray[Math.floor(Math.random()*startNumArray.length)];
-  this.board[randIndex[0]][3] = randTile; //TODO: replace 3 with randIndex[1] after testing
+  this.board[randIndex[0]][randIndex[1]] = randTile;
 }
 
 Game.prototype.getPositions = function(){
@@ -98,13 +98,8 @@ Game.prototype.moveLeft = function() {
       }
       // if c not empty, shift content to the left as far as possible up to index c0
       if (board[r][c] !== 0) {
-        // if (board[r][c - 1] === 0) {
         if(emptyCols.length){
-          // var cVal = c + 1;
-          // if(c === 3){
-          //   cVal = 0;
-          // }
-          // shift to the left
+          // if there are empty spaces before c, shift to the left
           board[r][emptyCols[0]] = board[r][c]; //content moves to leftmost empty col
           emptyCols.shift(); //delete that entry in the empty array
           board[r][c] = 0; //empty col where content was
@@ -119,7 +114,8 @@ $(document).ready(function() {
   // Any interactive jQuery functionality
   var game = new Game();
   var board = game.board;
-  var f = game.addRandomTile();
+  console.log(board);
+  game.addRandomTile();
   $('body').keydown(function(event){
     console.log(board);
     var arrows = [37, 38, 39, 40];
