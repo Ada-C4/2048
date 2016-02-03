@@ -42,6 +42,7 @@ Game.prototype.moveTile = function(tile, direction) {
   switch(direction) {
     case 38: //up  // subtract from data-row, TODO: if cell is empty (?)
     self.moveUp();
+    this.addRandomTile();
       for (var i = 0; i < $(".tile").length; i++){
         var dataRow = $(".tile").attr("data-row").slice(1);
             var dataInt = parseInt(dataRow, 10);
