@@ -50,6 +50,11 @@ Game.prototype.newBoard = function(){
 Game.prototype.moveTile = function(tile, direction) {
   var column;
   var row;
+  var tileToDelete;
+  var rowToUpdate;
+  var columnToUpdate;
+  var newVal;
+  var updateTile;
 
   switch(direction) {
     case 38: //up
@@ -73,15 +78,15 @@ Game.prototype.moveTile = function(tile, direction) {
             if (this.board[row[1] - 1][column[1]] == tile[i].dataset.val) {
               //update array board
               this.board[(row[1] - 1)][column[1]] *= 2;
-              var newVal = this.board[(row[1] - 1)][column[1]];
+              newVal = this.board[(row[1] - 1)][column[1]];
               this.board[row[1]][column[1]] = 0;
               //delete extra tile and update value
-              var tileToDelete = tile[i];
-              var rowToUpdate = (row[1] - 1);
-              var columnToUpdate = column[1];
+              tileToDelete = tile[i];
+              rowToUpdate = (row[1] - 1);
+              columnToUpdate = column[1];
               // setTimeout(function() {
                 tileToDelete.remove();
-                var updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
+                updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
                 updateTile[0].dataset.val = newVal;
                 updateTile[0].innerHTML = newVal;
               //  }, 200);
@@ -113,15 +118,15 @@ Game.prototype.moveTile = function(tile, direction) {
             if (this.board[parseInt(row[1]) + 1][column[1]] == tile[i].dataset.val) {
               //update array board
               this.board[parseInt(row[1]) + 1][column[1]] *= 2;
-              var newVal = this.board[parseInt(row[1]) + 1][column[1]];
+              newVal = this.board[parseInt(row[1]) + 1][column[1]];
               this.board[row[1]][column[1]] = 0;
               //delete extra tile and update value
-              var tileToDelete = tile[i];
-              var rowToUpdate = parseInt(row[1]) + 1;
-              var columnToUpdate = column[1];
+              tileToDelete = tile[i];
+              rowToUpdate = parseInt(row[1]) + 1;
+              columnToUpdate = column[1];
               // setTimeout(function() {
                 tileToDelete.remove();
-                var updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
+                updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
                 updateTile[0].dataset.val = newVal;
                 updateTile[0].innerHTML = newVal;
               //  }, 200);
@@ -153,15 +158,15 @@ Game.prototype.moveTile = function(tile, direction) {
             if (this.board[row[1]][column[1] - 1] == tile[i].dataset.val) {
               //update array board
               this.board[row[1]][column[1] - 1] *= 2;
-              var newVal = this.board[row[1]][column[1] - 1];
+              newVal = this.board[row[1]][column[1] - 1];
               this.board[row[1]][column[1]] = 0;
               //delete extra tile and update value
-              var tileToDelete = tile[i];
-              var rowToUpdate = row[1];
-              var columnToUpdate = column[1] - 1;
+              tileToDelete = tile[i];
+              rowToUpdate = row[1];
+              columnToUpdate = column[1] - 1;
               // setTimeout(function() {
                 tileToDelete.remove();
-                var updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
+                updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
                 updateTile[0].dataset.val = newVal;
                 updateTile[0].innerHTML = newVal;
               //  }, 200);
@@ -193,15 +198,15 @@ Game.prototype.moveTile = function(tile, direction) {
             if (this.board[row[1]][parseInt(column[1]) + 1] == tile[i].dataset.val) {
               //update array board
               this.board[row[1]][parseInt(column[1]) + 1] *= 2;
-              var newVal = this.board[row[1]][parseInt(column[1]) + 1];
+              newVal = this.board[row[1]][parseInt(column[1]) + 1];
               this.board[row[1]][column[1]] = 0;
               //delete extra tile and update value
-              var tileToDelete = tile[i];
-              var rowToUpdate = row[1];
-              var columnToUpdate = [parseInt(column[1]) + 1];
+              tileToDelete = tile[i];
+              rowToUpdate = row[1];
+              columnToUpdate = [parseInt(column[1]) + 1];
               // setTimeout(function() {
                 tileToDelete.remove();
-                var updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
+                updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
                 updateTile[0].dataset.val = newVal;
                 updateTile[0].innerHTML = newVal;
               //  }, 200);
