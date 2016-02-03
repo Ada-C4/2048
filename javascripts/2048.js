@@ -366,7 +366,7 @@ Game.prototype.isMoveAvailable = function(tile, direction) {
       for (var i = 0; i < tile.length; i++) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
-        if (parseInt(column[1]) + 1 >= 3) {
+        if (parseInt(column[1]) + 1 <= 3) {
           if ((this.board[row[1]][parseInt(column[1]) + 1] == 0) || (this.board[row[1]][parseInt(column[1]) + 1] == this.board[row[1]][parseInt(column[1])])) {
             move.push(true);
           } else {
