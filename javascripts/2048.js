@@ -32,28 +32,30 @@ Game.prototype.moveTile = function(direction) {
 
 Game.prototype.moveColumnUp = function(columnIndex) {
 
-  for (var i = 0; i < 4; i++) {
-    while (this.board[columnIndex][i] === 0) {
-      console.log(this.board[columnIndex][i]);
-      console.log(this.board[columnIndex][i + 1]);
-      this.board[columnIndex][i] = this.board[columnIndex][i + 1];
+  for (var i = 0; i < 3; i++) {
+    if (this.board[i][columnIndex] === 0) {
+      this.board[i][columnIndex] = this.board[i +1][columnIndex];
       this.board[columnIndex][i+1] = 0;
-    }
-  }
-  var valid = true;
-  while (valid) {
-    var y = parseInt($(".tile").attr("data-row").slice(-1));
-    var newY = parseInt($(".tile").attr("data-row").slice(-1)) - 1;
-    var x = parseInt($(".tile").attr("data-col").slice(-1));
-
-    if (newY >= 0 && this.board[newY][x] === 0) {
-      tile[0].setAttribute("data-row", ("r" + newY));
-      this.board[newY][x] = this.board[y][x];
-      this.board[y][x] = 0;
+      // console.log(this.board[columnIndex]);
     } else {
-      valid = false;
     }
-}
+    console.log(this.board);
+
+  }
+//   var valid = true;
+//   while (valid) {
+//     var y = parseInt($(".tile").attr("data-row").slice(-1));
+//     var newY = parseInt($(".tile").attr("data-row").slice(-1)) - 1;
+//     var x = parseInt($(".tile").attr("data-col").slice(-1));
+//
+//     if (newY >= 0 && this.board[newY][x] === 0) {
+//       tile[0].setAttribute("data-row", ("r" + newY));
+//       this.board[newY][x] = this.board[y][x];
+//       this.board[y][x] = 0;
+//     } else {
+//       valid = false;
+//     }
+// }
 };
 
 Game.prototype.moveTileDown = function(tile) {

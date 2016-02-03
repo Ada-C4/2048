@@ -23,7 +23,7 @@ Game.prototype.moveTiles = function(direction) {
       }
       break;
     case 40: //down
-      this.moveTileDown(tile);
+      this.moveColumnDown(tile);
       break;
     case 37: //left
     for (var i = 0; i < this.dims[0]; i++) {
