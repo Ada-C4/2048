@@ -1,6 +1,6 @@
 var Game = function() {
   // Game logic and initialization here
-  this.gameBoard = [[0, 1, 0, 0], [0, 2, 0, 0], [0, 4, 4, 0], [0, 0, 0, 0]];
+  this.gameBoard = [[0, 2, 0, 0], [0, 2, 0, 0], [0, 4, 4, 0], [0, 0, 0, 0]];
 };
 
 Game.prototype.moveTile = function(tile, direction) {
@@ -13,24 +13,21 @@ Game.prototype.moveTile = function(tile, direction) {
       self.gameBoard.forEach(function(row, rowIndex){
         // iterate through each "column" (each item within a row)
         row.forEach(function(column, columnIndex){
-          var numSpaces = 0;
           // don't look at tiles that don't have a a value to them, AND don't look left if column is farthest left
           if (column !== 0 && rowIndex !== 0) {
             // iterate through each item further left of current item
-            for (var i = rowIndex; i >= 0; i--) {
-              // increment numSpaces to move left by 1 if the next left over is 0
-              // for (self.gameBoard[rowIndex - i][columnIndex] === 0) {
-              if (self.gameBoard[rowIndex - i][columnIndex] === 0) {
-                numSpaces += 1;
+            for (var i = rowIndex - 1; i >= 0; i--) {
+              // increment numSpaces to move up by 1 if the next tile up is 0
+              if (self.gameBoard[i][columnIndex] === 0) {
+                self.gameBoard[i][columnIndex] = column;
+                row[columnIndex] = 0;
               }
             }
-            self.gameBoard[rowIndex - numSpaces][columnIndex] = column;
-            row[columnIndex] = 0;
           }
         });
       });
       console.log(self.gameBoard);
-      self.upTileCollision();
+      // self.upTileCollision();
       break;
     case 40: //down
       console.log('down');
@@ -40,20 +37,17 @@ Game.prototype.moveTile = function(tile, direction) {
         // iterate through each "column" (each item within a row)
         for (var j = 0; j <= 3; j++) {
         // row.forEach(function(column, columnIndex){
-          var column = row[j], columnIndex = j, numSpaces = 0;
+          var column = row[j], columnIndex = j;
           // don't look at tiles that don't have a a value to them, AND don't look left if column is farthest down already
           if (column !== 0) {
             // iterate through each item further up of current item
             for (var i = rowIndex; i < 3; i++) {
               // increment numSpaces to move down by 1 if the next num down is 0
               if (self.gameBoard[i + 1][columnIndex] === 0) {
-                numSpaces += 1;
                 self.gameBoard[rowIndex + 1][columnIndex] = column;
                 row[columnIndex] = 0;
               }
             }
-            // self.gameBoard[rowIndex + numSpaces][columnIndex] = column;
-            // row[columnIndex] = 0;
           }
         }
       }
