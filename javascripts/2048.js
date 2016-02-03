@@ -250,11 +250,14 @@ Game.prototype.gameOver = function(){
   var loser;
   var board = this.board;
   var zeros = [];
+  var winner = false;
 
   for (var i = 0; i < board.length; i++) {
     for (var j = 0; j < board[i].length; j++) {
       if (board[i][j] === 0){
         zeros.push(board[i][j]);
+      } else if (board[i][j] === 2048) {
+        winner = true;
       }
     }
   }
@@ -279,9 +282,26 @@ Game.prototype.gameOver = function(){
     });
   };
 
+  var gameWinAlert = function() {
+    swal({
+      title: "Congratulations! You won!",
+      text: "Do you want to play again?",
+      type: "info",
+      showCancelButton: false,
+      closeOnConfirm: true,
+      confirmButtonText: "Yes, play again!",
+      confirmButtonColor: "#ec6c62"
+    }, function() {
+        window.location.reload();
+    });
+  };
+
   if (loser) {
     this.newBoard();
     gameOverAlert();
+  } else if (winner) {
+    this.newBoard();
+    gameWinAlert();
   }
 };
 
