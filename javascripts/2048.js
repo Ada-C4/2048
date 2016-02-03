@@ -17,22 +17,13 @@ Game.prototype.moveTile = function(tile, direction) {
       this.moveTileUp(tile);
       break;
     case 40: //down
-      var downRow = parseInt($(".tile").attr("data-row").slice(-1)) + 1;
-      if (downRow <= 3) {
-        tile[0].setAttribute("data-row", ("r" + downRow));
-      }
+      this.moveTileDown(tile);
       break;
     case 37: //left
-      var leftCol = parseInt($(".tile").attr("data-col").slice(-1)) - 1;
-      if (leftCol >= 0) {
-        tile[0].setAttribute("data-col", ("c" + leftCol));
-      }
+      this.moveTileLeft(tile);
       break;
     case 39: //right
-      var rightCol = parseInt($(".tile").attr("data-col").slice(-1)) + 1;
-      if (rightCol <= 3) {
-        tile[0].setAttribute("data-col", ("c" + rightCol));
-      }
+      this.moveTileRight(tile);
       break;
   }
 };
@@ -47,6 +38,41 @@ Game.prototype.moveTileUp = function(tile) {
     this.board[y][x] = 0;
   }
 };
+
+Game.prototype.moveTileDown = function(tile) {
+  var y = parseInt($(".tile").attr("data-row").slice(-1));
+  var newY = parseInt($(".tile").attr("data-row").slice(-1)) + 1;
+  var x = parseInt($(".tile").attr("data-col").slice(-1));
+  if (newY <= 3) {
+    tile[0].setAttribute("data-row", ("r" + newY));
+    this.board[newY][x] = this.board[y][x];
+    this.board[y][x] = 0;
+  }
+};
+
+Game.prototype.moveTileRight = function(tile) {
+  var y = parseInt($(".tile").attr("data-row").slice(-1));
+  var newY = parseInt($(".tile").attr("data-col").slice(-1)) + 1;
+  var x = parseInt($(".tile").attr("data-col").slice(-1));
+  if (newY <= 3) {
+    tile[0].setAttribute("data-col", ("c" + newY));
+    this.board[x][newY] = this.board[x][y];
+    this.board[x][y] = 0;
+  }
+};
+
+Game.prototype.moveTileLeft = function(tile) {
+  var y = parseInt($(".tile").attr("data-row").slice(-1));
+  var newY = parseInt($(".tile").attr("data-col").slice(-1)) - 1;
+  var x = parseInt($(".tile").attr("data-col").slice(-1));
+  if (newY <= 3) {
+    tile[0].setAttribute("data-col", ("c" + newY));
+    this.board[x][newY] = this.board[x][y];
+    this.board[x][y] = 0;
+  }
+};
+
+
 
 Game.prototype.addRandoTile = function() {
   var tile = $("<div data-row='' data-col='' data-val=''></div>");
