@@ -52,7 +52,7 @@ Game.prototype.randTile = function() {
     } else { this.board[i_board][j_board] = 2; }
   // return this.board;
   var val = this.board[i_board][j_board];
-  $('#gameboard').append('<div class="tile" data-row="r'+i_board+'" data-col="c'+j_board+'" data-val="'+ val +'">'+ val +'</div>')
+  $('#gameboard').append('<div class="tile" data-row="r'+i_board+'" data-col="c'+j_board+'" data-val="'+ val +'">'+ val +'</div>');
   return [i_board, j_board];
 };
 
@@ -89,20 +89,26 @@ Game.prototype.moveTile = function(direction) {
 Game.prototype.moveLeft = function(tile) {
   // tile[0] is the row
   // tile[1] is the column position
+  self = this;
+  var $tile;
   var row = tile[0];
   var col = tile[1];
   var value = this.board[row][col];
-
+  var newCol;
+  $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
   var board_row = this.board[tile[0]];
 
   for(var j=0; j < col; j++) {
     if (board_row[j] === 0) {
+      newCol = j;
       this.board[row][j] = value;
       this.board[row][col] = 0;
       break;
     }
   }
-  return this.board;
+  $tile.attr('data-col', 'c' + newCol);
+  return [row, newCol];
+  //return this.board;
 };
 
 Game.prototype.moveBoardLeft = function() {
@@ -145,26 +151,31 @@ Game.prototype.collideLeft = function() {
 Game.prototype.moveRight = function(tile) {
   // tile[0] is the row
   // tile[1] is the column position
+  var $tile;
+  var newCol;
   var row = tile[0];
   var col = tile[1];
   var value = this.board[row][col];
   var board_row = this.board[tile[0]];
+  $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
 
   for(var j= 3; j > col; j--) {
     if (board_row[j] === 0) {
+      newCol = j;
       this.board[row][j] = value;
       this.board[row][col] = 0;
       break;
     }
   }
-  return this.board;
+  $tile.attr('data-col', 'c' + newCol);
+  return [row, newCol];
 };
 
 Game.prototype.moveBoardRight = function() {
   self = this;
   for (var row=0; row < 4; row++) {
     for (var col=3; col >= 0; col--) {
-      self.moveRight([row, col]);
+      array = self.moveRight([row, col]);
     }
   }
   return this.board;
@@ -198,16 +209,21 @@ Game.prototype.collideRight = function() {
 
 
 Game.prototype.moveDown = function(tile) {
+  var $tile;
+  var newRow;
   var row = tile[0];
   var col = tile[1];
   var value = this.board[row][col];
+  $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
   for(var i = 3; i > row ; i--) {
     if ((this.board[i][col]) === 0) {
+      newRow = i;
       this.board[i][col] = value;
       this.board[row][col] = 0;
       break;
     }
   }
+  $tile.attr('data-row', 'r' + newRow);
   return this.board;
 };
 
@@ -215,12 +231,12 @@ Game.prototype.moveBoardDown = function() {
   self = this;
   for (var row = 2; row >= 0; row--) {
     for (var col = 0; col < 4; col++) {
-
       self.moveDown([row, col]);
     }
   }
   return this.board;
 };
+
 
 Game.prototype.collideDown = function() {
   self = this;
@@ -249,16 +265,21 @@ Game.prototype.collideDown = function() {
 
 
 Game.prototype.moveUp = function(tile) {
+  var newRow;
+  var $tile;
   var row = tile[0];
   var col = tile[1];
+  $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
   var value = this.board[row][col];
   for(var i = 0; i < row ; i++) {
     if ((this.board[i][col]) === 0) {
+      newRow = i;
       this.board[i][col] = value;
       this.board[row][col] = 0;
       break;
     }
   }
+  $tile.attr('data-row', 'r' + newRow);
   return this.board;
 };
 
@@ -299,7 +320,6 @@ Game.prototype.collideUp = function() {
 
 $(document).ready(function() {
   console.log("ready to go!");
-  // Any interactive jQuery functionality
   var game = new Game();
   game.randTile();
   game.randTile();
@@ -307,9 +327,9 @@ $(document).ready(function() {
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
-      // var tile = $('.tile');
       game.moveTile(event.which);
     }
+
   });
 });
 //
