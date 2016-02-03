@@ -148,7 +148,40 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
 
     case 39: //right
-      console.log('right');
+    groupedTiles = _.groupBy(this.board, function(tile) {
+          return tile.row;
+        });
+      // iterate through each column
+      func = function(key){
+        var rowArray = groupedTiles[key];
+        rowArray = _.sortBy(rowArray, function(tile){ return tile.col; });
+        for (var i = 0; i < rowArray.length; i++) {
+          // if combining
+          var arrayIndex = rowArray.length - i - 1,
+              col = 3 - i;
+          if (rowArray[arrayIndex] && rowArray[arrayIndex-1] && rowArray[arrayIndex].val === rowArray[arrayIndex-1].val) {
+            rowArray[arrayIndex-1].val *= 2;
+            rowArray[arrayIndex-1].col = col;
+            // change HTML of tile
+            $("#" + rowArray[arrayIndex-1].tileId).attr("data-col", "c" + col);
+            $("#" + rowArray[arrayIndex-1].tileId).attr("data-val", rowArray[arrayIndex-1].val);
+            $("#" + rowArray[arrayIndex-1].tileId).html(rowArray[arrayIndex-1].val);
+            // delete from board
+            var deleteTileIndex = _.indexOf(this.board, rowArray[arrayIndex]);
+            this.board.splice(deleteTileIndex, 1);
+            // delete current html object
+            $("#" + rowArray[arrayIndex].tileId).remove();
+            // delete current value (tile object)
+            rowArray.splice(arrayIndex, 1);
+            // if not combining
+          } else {
+            rowArray[arrayIndex].col = col;
+            $("#" + rowArray[arrayIndex].tileId).attr("data-col", "c" + col);
+          }
+        }
+      };
+      func = _.bind(func, this);
+      Object.keys(groupedTiles).forEach(function(key) { return func(key); });
       break;
   }
 };
