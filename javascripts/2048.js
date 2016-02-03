@@ -33,12 +33,15 @@ Game.prototype.moveTile = function(tile, direction) {
       console.log('down');
       self.downMoveTiles();
       self.downTileCollision();
-      // self.downMoveTiles();
-      console.log(self.gameBoard);
+      self.downMoveTiles();
       break;
     case 37: //left
       console.log('left');
       self.leftMoveTiles();
+      self.leftTileCollision();
+      self.leftMoveTiles();
+      console.log(self.gameBoard);
+
       break;
     case 39: //right
       console.log('right');
@@ -161,6 +164,20 @@ Game.prototype.downTileCollision = function(){
         if (self.gameBoard[i - 1][j] === self.gameBoard[i][j]) {
           self.gameBoard[i][j] *= 2;
           self.gameBoard[i - 1][j] = 0;
+        }
+      }
+    }
+  }
+};
+
+Game.prototype.leftTileCollision = function(){
+  var self = this;
+  for (var i = 0; i <= 3; i++) { // iterate through each row
+    for (var j = 3; j > 0; j--) { // iterate through each tile in each row
+      if (self.gameBoard[i][j] > 0) {
+        if (self.gameBoard[i][j - 1] === self.gameBoard[i][j]) {
+          self.gameBoard[i][j] *= 2;
+          self.gameBoard[i][j - 1] = 0;
         }
       }
     }
