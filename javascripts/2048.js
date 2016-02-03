@@ -38,6 +38,7 @@ Game.prototype.addTile = function () {
 };
 
 Game.prototype.moveTile = function(tile, direction) {
+  var addTileCallback = function () { this.addTile(); }.bind(this) ;
   // Game method here
   switch(direction) {
     case 38: //up
@@ -79,11 +80,11 @@ Game.prototype.moveTile = function(tile, direction) {
       var afterMoves = this.board.map(function(tile) {return tile.moveCount;}),
           matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
       console.log(matching, initMoves, afterMoves);
-
-      if (!matching) {
-          game.addTile();
-      }
       
+      if (!matching) {
+        setTimeout(addTileCallback, 200);
+      }
+
       break;
 
     case 40: //down
@@ -128,8 +129,11 @@ Game.prototype.moveTile = function(tile, direction) {
       afterMoves = this.board.map(function(tile) {return tile.moveCount;});
       matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
       console.log(matching, initMoves, afterMoves);
-      if (!matching) { this.addTile(); }
 
+      if (!matching) {
+        setTimeout(addTileCallback, 200);
+      }
+      
       break;
 
     case 37: //left
@@ -172,8 +176,10 @@ Game.prototype.moveTile = function(tile, direction) {
       afterMoves = this.board.map(function(tile) {return tile.moveCount;});
       matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
       console.log(matching, initMoves, afterMoves);
-      if (!matching) { this.addTile(); }
-      break;
+
+      if (!matching) {
+        setTimeout(addTileCallback, 200);
+      }      break;
 
     case 39: //right
     groupedTiles = _.groupBy(this.board, function(tile) {
@@ -217,8 +223,10 @@ Game.prototype.moveTile = function(tile, direction) {
       afterMoves = this.board.map(function(tile) {return tile.moveCount;});
       matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
       console.log(matching, initMoves, afterMoves);
-      if (!matching) { this.addTile(); }
 
+      if (!matching) {
+        setTimeout(addTileCallback, 200);
+      }
       break;
   }
 };
