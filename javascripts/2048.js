@@ -52,25 +52,23 @@ Game.prototype.moveTile = function(tile, direction) {
         var colArray = groupedTiles[key];
         for (var row = 0; row < colArray.length; row++) {
           // if combining
-          if (colArray[row] && colArray[row+1]) {
-            if (colArray[row].val === colArray[row+1].val) {
-              colArray[row+1].val *= 2;
-              colArray[row+1].row = row;
-              // change HTML of tile
-              $("#" + colArray[row+1].tileId).attr("data-row", "r" + row);
-              $("#" + colArray[row+1].tileId).attr("data-val", colArray[row+1].val);
-              $("#" + colArray[row+1].tileId).html(colArray[row+1].val);
-              // delete from board
-              var deleteTileIndex = _.indexOf(this.board, colArray[row]);
-              this.board.splice(deleteTileIndex, 1);
-              // delete current html object
-              $("#" + colArray[row].tileId).remove();
-              // delete current value (tile object)
-              colArray.splice(row, 1);
-              // if not combining
-            } else {
-              colArray[row].row = row;
-            }
+          if (colArray[row] && colArray[row+1] && colArray[row].val === colArray[row+1].val) {
+            colArray[row+1].val *= 2;
+            colArray[row+1].row = row;
+            // change HTML of tile
+            $("#" + colArray[row+1].tileId).attr("data-row", "r" + row);
+            $("#" + colArray[row+1].tileId).attr("data-val", colArray[row+1].val);
+            $("#" + colArray[row+1].tileId).html(colArray[row+1].val);
+            // delete from board
+            var deleteTileIndex = _.indexOf(this.board, colArray[row]);
+            this.board.splice(deleteTileIndex, 1);
+            // delete current html object
+            $("#" + colArray[row].tileId).remove();
+            // delete current value (tile object)
+            colArray.splice(row, 1);
+            // if not combining
+          } else {
+            colArray[row].row = row;
           }
         }
         console.log(this.board);
