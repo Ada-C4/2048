@@ -62,6 +62,7 @@ Game.prototype.moveTile = function(tile, direction) {
       break;
     case 37: //left
       self.moveLeft();
+      this.addRandomTile();
       for (var i = 0; i < $(".tile").length; i++){
         var dataColumn = $(".tile").attr("data-col").slice(1);
             var dataInt = parseInt(dataColumn, 10);
@@ -87,7 +88,6 @@ Game.prototype.moveTile = function(tile, direction) {
 Game.prototype.moveLeft = function() {
   var self = this;
   var board = this.board;
-  // console.log(board);
   // first go through each row top to bottom
   for (var r = 0; r < 4; r++) {
     // go through each column left to right, starting at the 2nd column
@@ -117,7 +117,7 @@ $(document).ready(function() {
   var game = new Game();
   console.log(game.board);
   $('body').keydown(function(event){
-    console.log(board);
+    console.log(game.board);
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
