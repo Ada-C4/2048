@@ -1,8 +1,6 @@
 var Game = function() {
   // Game logic and initialization here
-  this.gameOver = false;
-  this.board = [];
-  this.score = 0;
+  this.highScore = 0;
 };
 
 var tileCount = 0;
@@ -15,6 +13,16 @@ var Tile = function (row, col) {
   this.val = 2;
   this.moveCount = 0;
   this.tileId = String(tileCount++);
+};
+
+Game.prototype.startGame = function () {
+  $('.tile').remove();
+  this.gameOver = false;
+  this.board = [];
+  this.score = 0;
+  $('#score').html('Score: '+ this.score);
+  this.addTile();
+  this.addTile();
 };
 
 
@@ -207,8 +215,8 @@ Game.prototype.updateGameOver = function(){
 $(document).ready(function() {
   // Any interactive jQuery functionality
   var game = new Game();
-  game.addTile();
-  game.addTile();
+  game.startGame();
+
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
@@ -216,6 +224,10 @@ $(document).ready(function() {
       game.moveTile(tile, event.which);
       $('#score').html('Score: ' + game.score);
     }
+
+  $('#reset').click(function () {
+    game.startGame();
+  });
 
   });
 });
