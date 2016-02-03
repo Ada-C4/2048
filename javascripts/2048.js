@@ -87,7 +87,6 @@ Game.prototype.moveTile = function(tile, direction) {
               //  }, 200);
             }
           }
-          console.log(this.board);
           }
         }
       break;
@@ -129,7 +128,6 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       }
-      console.log(this.board);
       break;
     case 37: //left
       tile = tile.sort(function(a,b){
@@ -169,7 +167,6 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       }
-      console.log(this.board);
       break;
     case 39: //right
       tile = tile.sort(function(a,b){
@@ -209,7 +206,6 @@ Game.prototype.moveTile = function(tile, direction) {
           }
         }
       }
-      console.log(this.board);
       break;
     }
 };
@@ -232,7 +228,6 @@ Game.prototype.addToBoard = function(tile) {
 };
 
 Game.prototype.newTile = function() {
-  // console.log("new tile");
   var randValue = Math.random() < 0.9 ? 2 : 4;
   var randCol = Math.floor(Math.random() * 4);
   var randRow = Math.floor(Math.random() * 4);
@@ -305,19 +300,71 @@ Game.prototype.gameOver = function(){
   }
 };
 
-Game.prototype.isMoveAvailable = function(tile){
-  // for (var i = 0; i < tile.length; i++) {
-  //   row = tile[i].dataset.row;
-  //   column = tile[i].dataset.col;
-  //   if (row[1] - 1 >= 0) {
-  //     console.log("move stuff");
-
-  //       }
-  //     };
-  //   }
-  // }
-  return true;
+Game.prototype.isMoveAvailable = function(tile, direction) {
+  switch(direction) {
+    case 38: //up
+      var move = [];
+      for (var i = 0; i < tile.length; i++) {
+        row = tile[i].dataset.row;
+        column = tile[i].dataset.col;
+        if (row[1] - 1 >= 0) {
+          if ((this.board[row[1] - 1][column[1]] == 0) || (this.board[row[1] - 1][column[1]] == this.board[row[1]][column[1]])) {
+            move.push(true);
+          } else {
+            move.push(false);
+          }
+        }
+      }
+      if (move.includes(true)){ return true };
+      break;
+    case 40: //down
+      var move = [];
+      for (var i = 0; i < tile.length; i++) {
+        row = tile[i].dataset.row;
+        column = tile[i].dataset.col;
+        if (parseInt(row[1]) + 1 <= 3) {
+          if ((this.board[parseInt(row[1]) + 1][column[1]] == 0) || (this.board[parseInt(row[1]) + 1][column[1]] == this.board[parseInt(row[1])][column[1]])) {
+            move.push(true);
+          } else {
+            move.push(false);
+          }
+        }
+      }
+      if (move.includes(true)){ return true };
+      break;
+    case 37: //left
+      var move = [];
+      for (var i = 0; i < tile.length; i++) {
+        row = tile[i].dataset.row;
+        column = tile[i].dataset.col;
+        if (column[1] - 1 >= 0) {
+          if ((this.board[row[1]][column[1] - 1] == 0) || (this.board[row[1]][column[1] - 1] == this.board[row[1]][column[1]])) {
+            move.push(true);
+          } else {
+            move.push(false);
+          }
+        }
+      }
+      if (move.includes(true)){ return true };
+      break;
+    case 39: //right
+      var move = [];
+      for (var i = 0; i < tile.length; i++) {
+        row = tile[i].dataset.row;
+        column = tile[i].dataset.col;
+        if (parseInt(column[1]) + 1 > 3) {
+          if ((this.board[row[1]][parseInt(column[1]) + 1] == 0) || (this.board[row[1]][parseInt(column[1]) + 1] == this.board[row[1]][parseInt(column[1])])) {
+            move.push(true);
+          } else {
+            move.push(false);
+          }
+        }
+      }
+      if (move.includes(true)){ return true };
+      break;
+  }
 };
+
 
 $(document).ready(function() {
   var game = new Game();
@@ -325,8 +372,8 @@ $(document).ready(function() {
   $('body').keydown(function(event){
     if (game.arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
-      game.moveTile(tile, event.which);
-      if (game.isMoveAvailable()){
+      if (game.isMoveAvailable(tile, event.which)){
+        game.moveTile(tile, event.which);
         setTimeout(function() { game.newTile(); }, 200);
       }
     }
