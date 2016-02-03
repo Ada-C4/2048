@@ -18,11 +18,17 @@ var Tile = function (row, col) {
 Game.prototype.startGame = function () {
   $('.tile').remove();
   this.gameOver = false;
+  this.gameWon = false;
   this.board = [];
   this.score = 0;
   $('#score').html('Score: '+ this.score);
   this.addTile();
   this.addTile();
+};
+
+Game.prototype.updateGameWon = function(){
+  var values = this.board.map(function(tile){ return tile.val; });
+  if (values.includes(2048)) { this.gameWon = true; }
 };
 
 
@@ -207,6 +213,10 @@ Game.prototype.moveTile = function(tile, direction) {
   if (!matching) {
     setTimeout(addTileCallback, 200);
   }
+  if (this.gameWon === false) {
+    this.updateGameWon();  
+    alert('Game won!'); 
+  }
 };
 
 Game.prototype.updateGameOver = function(){
@@ -216,7 +226,6 @@ $(document).ready(function() {
   // Any interactive jQuery functionality
   var game = new Game();
   game.startGame();
-
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
