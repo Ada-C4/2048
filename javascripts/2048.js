@@ -73,6 +73,8 @@ Game.prototype.moveTile = function(tile, direction) {
       }
       break;
     case 39: //right
+      self.moveRight();
+      this.addRandomTile();
       for (var i = 0; i < $(".tile").length; i++){
         var dataColumn = $(".tile").attr("data-col").slice(1);
             var dataInt = parseInt(dataColumn, 10);
@@ -90,9 +92,9 @@ Game.prototype.moveLeft = function() {
   var board = this.board;
   // first go through each row top to bottom
   for (var r = 0; r < 4; r++) {
-    // go through each column left to right, starting at the 2nd column
+    // go through each column left to right
     var emptyCols = [];
-    for (var c = 0; c < 4; c++) { /// should C be 0???
+    for (var c = 0; c < 4; c++) {
       //if c is empty, store c position in an array
       if (board[r][c] === 0) {
         // store in 0s array
@@ -103,6 +105,32 @@ Game.prototype.moveLeft = function() {
         if(emptyCols.length){
           // if there are empty spaces before c, shift to the left
           board[r][emptyCols[0]] = board[r][c]; //content moves to leftmost empty col
+          emptyCols.shift(); //delete that entry in the empty array
+          board[r][c] = 0; //empty col where content was
+        }
+      }
+    }
+  }
+};
+
+Game.prototype.moveRight = function() {
+  var self = this;
+  var board = this.board;
+  // first go through each row top to bottom
+  for (var r = 0; r < 4; r++) {
+    // go through each column right to left
+    var emptyCols = [];
+    for (var c = 3; c >= 0; c--) {
+      //if c is empty, store c position in an array
+      if (board[r][c] === 0) {
+        // store in 0s array
+        emptyCols.push(c);
+      }
+      // if c not empty, shift content to the right as far as possible up to index c3
+      if (board[r][c] !== 0) {
+        if(emptyCols.length){
+          // if there are empty spaces before c, shift to the left
+          board[r][emptyCols[0]] = board[r][c]; //content moves to rightmost empty col
           emptyCols.shift(); //delete that entry in the empty array
           board[r][c] = 0; //empty col where content was
         }
