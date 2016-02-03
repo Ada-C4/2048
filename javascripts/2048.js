@@ -29,50 +29,71 @@ Game.prototype.moveTile = function(tile, direction) {
 };
 
 Game.prototype.moveTileUp = function(tile) {
-  var y = parseInt($(".tile").attr("data-row").slice(-1));
-  var newY = parseInt($(".tile").attr("data-row").slice(-1)) - 1;
-  var x = parseInt($(".tile").attr("data-col").slice(-1));
-  if (newY >= 0) {
-    tile[0].setAttribute("data-row", ("r" + newY));
-    this.board[newY][x] = this.board[y][x];
-    this.board[y][x] = 0;
-  }
+  var valid = true;
+  while (valid) {
+    var y = parseInt($(".tile").attr("data-row").slice(-1));
+    var newY = parseInt($(".tile").attr("data-row").slice(-1)) - 1;
+    var x = parseInt($(".tile").attr("data-col").slice(-1));
+
+    if (newY >= 0 && this.board[newY][x] === 0) {
+      tile[0].setAttribute("data-row", ("r" + newY));
+      this.board[newY][x] = this.board[y][x];
+      this.board[y][x] = 0;
+    } else {
+      valid = false;
+    }
+}
 };
 
 Game.prototype.moveTileDown = function(tile) {
-  var y = parseInt($(".tile").attr("data-row").slice(-1));
-  var newY = parseInt($(".tile").attr("data-row").slice(-1)) + 1;
-  var x = parseInt($(".tile").attr("data-col").slice(-1));
-  if (newY <= 3) {
-    tile[0].setAttribute("data-row", ("r" + newY));
-    this.board[newY][x] = this.board[y][x];
-    this.board[y][x] = 0;
+  var valid = true;
+  while (valid) {
+    var y = parseInt($(".tile").attr("data-row").slice(-1));
+    var newY = parseInt($(".tile").attr("data-row").slice(-1)) + 1;
+    var x = parseInt($(".tile").attr("data-col").slice(-1));
+    if (newY <= 3 && this.board[newY][x] === 0) {
+      tile[0].setAttribute("data-row", ("r" + newY));
+      this.board[newY][x] = this.board[y][x];
+      this.board[y][x] = 0;
+    } else{
+      valid = false;
+    }
   }
 };
 
 Game.prototype.moveTileRight = function(tile) {
-  var y = parseInt($(".tile").attr("data-row").slice(-1));
-  var newY = parseInt($(".tile").attr("data-col").slice(-1)) + 1;
-  var x = parseInt($(".tile").attr("data-col").slice(-1));
-  if (newY <= 3) {
-    tile[0].setAttribute("data-col", ("c" + newY));
-    this.board[x][newY] = this.board[x][y];
-    this.board[x][y] = 0;
+  var valid = true;
+  while (valid) {
+    var y = parseInt($(".tile").attr("data-row").slice(-1));
+    var newY = parseInt($(".tile").attr("data-col").slice(-1)) + 1;
+    var x = parseInt($(".tile").attr("data-col").slice(-1));
+    if (newY <= 3 && this.board[x][newY] === 0) {
+      tile[0].setAttribute("data-col", ("c" + newY));
+      this.board[x][newY] = this.board[x][y];
+      this.board[x][y] = 0;
+    } else {
+      valid = false;
+    }
   }
+
 };
 
 Game.prototype.moveTileLeft = function(tile) {
-  var y = parseInt($(".tile").attr("data-row").slice(-1));
-  var newY = parseInt($(".tile").attr("data-col").slice(-1)) - 1;
-  var x = parseInt($(".tile").attr("data-col").slice(-1));
-  if (newY <= 3) {
-    tile[0].setAttribute("data-col", ("c" + newY));
-    this.board[x][newY] = this.board[x][y];
-    this.board[x][y] = 0;
+  var valid = true;
+  while (valid) {
+    var y = parseInt($(".tile").attr("data-row").slice(-1));
+    var newY = parseInt($(".tile").attr("data-col").slice(-1)) - 1;
+    var x = parseInt($(".tile").attr("data-col").slice(-1));
+    if (newY >= 0 && this.board[x][newY]) {
+      tile[0].setAttribute("data-col", ("c" + newY));
+      this.board[x][newY] = this.board[x][y];
+      this.board[x][y] = 0;
+    } else {
+      valid = false;
+    }
   }
+
 };
-
-
 
 Game.prototype.addRandoTile = function() {
   var tile = $("<div data-row='' data-col='' data-val=''></div>");
@@ -85,9 +106,7 @@ Game.prototype.addRandoTile = function() {
   tile.attr("data-val", dataVal);
   tile.text(dataVal);
   $("#gameboard").append(tile);
-  console.log(tile.attr("data-row"));
   this.board[randoLocation[0]][randoLocation[1]] = dataVal;
-  console.log(this.board);
 };
 
 Game.prototype.returnEmptySpaces = function() {
@@ -108,8 +127,6 @@ Game.prototype.returnEmptySpaces = function() {
   return emptySpaces;
 };
 
-
-
 $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
@@ -119,9 +136,8 @@ $(document).ready(function() {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
-      console.log(game.board);
-
       game.moveTile(tile, event.which);
+      game.addRandoTile();
     }
   });
 });
