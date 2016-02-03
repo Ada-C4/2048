@@ -42,9 +42,10 @@ Game.prototype.moveTile = function(tile, direction) {
       var groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.col;
         });
-      console.log(groupedTiles, Object.keys(groupedTiles));
+      console.log(groupedTiles, Object.keys(groupedTiles), this.board);
       // iterate through each column
-      Object.keys(groupedTiles).forEach(function(key){
+      
+      var func = function(key){
         var colArray = groupedTiles[key];
         for (var row = 0; row < colArray.length; row++) {
           // if combining
@@ -55,6 +56,9 @@ Game.prototype.moveTile = function(tile, direction) {
             $("#" + colArray[row+1].tileId).attr("data-row", "r" + row);
             $("#" + colArray[row+1].tileId).attr("data-val", colArray[row+1].val);
             $("#" + colArray[row+1].tileId).html(colArray[row+1].val);
+            // delete from board
+            var deleteTileIndex = _.indexOf(this.board, colArray[row]);
+            this.board.splice(deleteTileIndex, 1);
             // delete current html object
             $("#" + colArray[row].tileId).remove();
             // delete current value (tile object)
@@ -64,8 +68,10 @@ Game.prototype.moveTile = function(tile, direction) {
             colArray[row].row = row;
           }
         }
-        console.log(colArray);
-      });
+        console.log(this.board);
+      };
+      func = _.bind(func, this);
+      Object.keys(groupedTiles).forEach(function(key) { return func(key); });
       
       break;
     case 40: //down
