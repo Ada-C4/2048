@@ -251,7 +251,6 @@ Game.prototype.newTile = function() {
     this.board[randRow][randCol] = randValue;
   } else {
     this.newTile();
-    this.gameOver();
   }
 };
 
@@ -263,9 +262,11 @@ Game.prototype.gameOver = function(){
 
   for (var i = 0; i < board.length; i++) {
     for (var j = 0; j < board[i].length; j++) {
+      console.log("what about this");
       if (board[i][j] === 0){
         zeros.push(board[i][j]);
       } else if (board[i][j] === 2048) {
+        console.log("is this called");
         winner = true;
       }
     }
@@ -276,20 +277,6 @@ Game.prototype.gameOver = function(){
   } else {
     loser = false;
   }
-
-  var gameOverAlert = function() {
-    swal({
-      title: "Game Over!",
-      text: "Do you want to play again?",
-      type: "info",
-      showCancelButton: false,
-      closeOnConfirm: true,
-      confirmButtonText: "Yes, play again!",
-      confirmButtonColor: "#ec6c62"
-    }, function() {
-        window.location.reload();
-    });
-  };
 
   var gameWinAlert = function() {
     swal({
@@ -306,12 +293,25 @@ Game.prototype.gameOver = function(){
   };
 
   if (loser) {
-    this.newBoard();
-    gameOverAlert();
+    return true;
   } else if (winner) {
-    this.newBoard();
     gameWinAlert();
   }
+};
+
+
+Game.prototype.gameOverAlert = function() {
+  swal({
+    title: "Game Over!",
+    text: "Do you want to play again?",
+    type: "info",
+    showCancelButton: false,
+    closeOnConfirm: true,
+    confirmButtonText: "Yes, play again!",
+    confirmButtonColor: "#ec6c62"
+  }, function() {
+      window.location.reload();
+  });
 };
 
 Game.prototype.isMoveAvailable = function(tile, direction) {
@@ -329,7 +329,11 @@ Game.prototype.isMoveAvailable = function(tile, direction) {
           }
         }
       }
-      if (move.includes(true)){ return true };
+      if (move.includes(true)){ 
+        return true;
+      } else {
+        return false;
+      };
       break;
     case 40: //down
       var move = [];
@@ -344,7 +348,11 @@ Game.prototype.isMoveAvailable = function(tile, direction) {
           }
         }
       }
-      if (move.includes(true)){ return true };
+      if (move.includes(true)){ 
+        return true;
+      } else {
+        return false;
+      };
       break;
     case 37: //left
       var move = [];
@@ -359,7 +367,11 @@ Game.prototype.isMoveAvailable = function(tile, direction) {
           }
         }
       }
-      if (move.includes(true)){ return true };
+      if (move.includes(true)){ 
+        return true;
+      } else {
+        return false;
+      };
       break;
     case 39: //right
       var move = [];
@@ -374,7 +386,11 @@ Game.prototype.isMoveAvailable = function(tile, direction) {
           }
         }
       }
-      if (move.includes(true)){ return true };
+      if (move.includes(true)){ 
+        return true;
+      } else {
+        return false;
+      };
       break;
   }
 };
@@ -402,6 +418,8 @@ $(document).ready(function() {
       if (game.isMoveAvailable(tile, event.which)){
         game.moveTile(tile, event.which);
         setTimeout(function() { game.newTile(); }, 200);
+      } else if (game.gameOver() && !(game.isMoveAvailable(tile, 37) || game.isMoveAvailable(tile, 38) || game.isMoveAvailable(tile, 39) || game.isMoveAvailable(tile, 40))) {
+        game.gameOverAlert(); 
       }
     }
   });
