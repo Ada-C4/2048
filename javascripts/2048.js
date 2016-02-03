@@ -12,6 +12,7 @@ var Tile = function (row, col) {
   this.col = col;
   // update so it can also be 4
   this.val = 2;
+  this.moveCount = 0;
   this.tileId = String(tileCount++);
 };
 
@@ -42,7 +43,8 @@ Game.prototype.moveTile = function(tile, direction) {
     case 38: //up
       var groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.col;
-        });
+        }),
+          initMoves = this.board.map(function(tile) {return tile.moveCount;});
       // iterate through each column
       var func = function(key){
         var colArray = groupedTiles[key];
@@ -52,6 +54,7 @@ Game.prototype.moveTile = function(tile, direction) {
           if (colArray[row] && colArray[row+1] && colArray[row].val === colArray[row+1].val) {
             colArray[row+1].val *= 2;
             colArray[row+1].row = row;
+            colArray[row+1].moveCount++;
             // change HTML of tile
             $("#" + colArray[row+1].tileId).attr("data-row", "r" + row);
             $("#" + colArray[row+1].tileId).attr("data-val", colArray[row+1].val);
@@ -64,14 +67,19 @@ Game.prototype.moveTile = function(tile, direction) {
             // delete current value (tile object)
             colArray.splice(row, 1);
             // if not combining
-          } else {
+          } else if (colArray[row].row !== row){
             colArray[row].row = row;
             $("#" + colArray[row].tileId).attr("data-row", "r" + row);
+            colArray[row].moveCount++;
           }
         }
       };
       func = _.bind(func, this);
       Object.keys(groupedTiles).forEach(function(key) { return func(key); });
+      var afterMoves = this.board.map(function(tile) {return tile.moveCount;}),
+          matching = afterMoves.every(function(element, index) { return initMoves[index] === element; });
+      console.log(matching, initMoves, afterMoves);
+      if (!matching) { this.addTile(); }
       
       break;
     case 40: //down
@@ -113,11 +121,11 @@ Game.prototype.moveTile = function(tile, direction) {
 
     case 37: //left
       // console.log('left');
-      var groupedTiles = _.groupBy(this.board, function(tile) {
+      groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.row;
         });
       // iterate through each row
-      var func = function(key){
+      func = function(key){
         var rowArray = groupedTiles[key];
         rowArray = _.sortBy(rowArray, function(tile){ return tile.col; });
         for (var col = 0; col < rowArray.length; col++) {
