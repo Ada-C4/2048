@@ -20,7 +20,7 @@ Game.prototype.startGame = function () {
   this.gameWon = false;
   this.board = [];
   this.score = 0;
-  $('#score').html('Score: '+ this.score);
+  $('#score').html(this.score);
   this.addTile();
   this.addTile();
 };
@@ -270,8 +270,8 @@ $(document).ready(function() {
       if (directions.indexOf(event.which) > -1) {
         tile = $('.tile');
         game.moveTile(tile, event.which);
-        $('#score').html('Score: ' + game.score);
-        $('#high_score').html('Score: ' + game.highScore);
+        $('#score').html(game.score);
+        $('#high_score').html(game.highScore);
       }
     }  
   });
