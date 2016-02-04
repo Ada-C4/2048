@@ -4,8 +4,8 @@ var Game = function() {
   this.win = false;
 };
 
-Game.prototype.scoring = function(tile) {
-  this.score += tile;
+Game.prototype.scoring = function(value) {
+  this.score += value;
   if (this.score == 2048) {
     this.win = true;
   }
@@ -275,6 +275,8 @@ Game.prototype.collideLeft = function(row, col) {
     $tile1.attr('data-val', self.board[row][col]);
     $tile1.html(self.board[row][col]);
     $tile2.remove();
+    self.scoring(self.board[row][col]);
+    $("#score").html("Score: " + self.score);
   }, 100);
   switch(col) {
     case 0:
@@ -309,6 +311,8 @@ Game.prototype.collideRight = function(row, col) {
     $tile1.attr('data-val', self.board[row][col]);
     $tile1.html(self.board[row][col]);
     $tile2.remove();
+    self.scoring(self.board[row][col]);
+    $("#score").html("Score: " + self.score);
   }, 100);
   switch(col) {
     case 3:
@@ -343,6 +347,8 @@ Game.prototype.collideUp = function(row, col) {
     $tile1.attr('data-val', self.board[row][col]);
     $tile1.html(self.board[row][col]);
     $tile2.remove();
+    self.scoring(self.board[row][col]);
+    $("#score").html("Score: " + self.score);
   }, 100);
 
   switch(row) {
@@ -379,6 +385,8 @@ Game.prototype.collideDown = function(row, col) {
     $tile1.attr('data-val', self.board[row][col]);
     $tile1.html(self.board[row][col]);
     $tile2.remove();
+    self.scoring(self.board[row][col]);
+    $("#score").html("Score: " + self.score);
   }, 100);
 
   switch(row) {
@@ -408,6 +416,7 @@ $(document).ready(function() {
   var game = new Game();
   game.randTile();
   game.randTile();
+  //$("#score").html(this.score);
 
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
