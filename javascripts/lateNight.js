@@ -18,7 +18,7 @@ $(document).ready(function() {
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       game.moveTiles(event.which);
-      game.addRandoTile();
+      if (game.hasMoved) { game.addRandoTile(); }
     }
   });
 });
