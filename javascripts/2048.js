@@ -43,19 +43,21 @@ Game.prototype.randTile = function() {
       }
     }
   }
-  var randNum = Math.floor((Math.random() * arr.length));
-  var i_board = arr[randNum][0];
-  var j_board = arr[randNum][1];
+  if (arr.length !== 0) {
+    var randNum = Math.floor((Math.random() * arr.length));
+    var i_board = arr[randNum][0];
+    var j_board = arr[randNum][1];
 
-  if (Math.floor((Math.random() * 10) + 1) == 7) {
-    this.board[i_board][j_board] = 4;
-  } else {
-    this.board[i_board][j_board] = 2;
+    if (Math.floor((Math.random() * 10) + 1) == 7) {
+      this.board[i_board][j_board] = 4;
+    } else {
+      this.board[i_board][j_board] = 2;
+    }
+    var val = this.board[i_board][j_board];
+    $('#gameboard').append('<div class="tile" data-row="r'+i_board+'" data-col="c'+j_board+'" data-val="'+ val +'">'+ val +'</div>');
+
+    return [i_board, j_board];
   }
-  var val = this.board[i_board][j_board];
-  $('#gameboard').append('<div class="tile" data-row="r'+i_board+'" data-col="c'+j_board+'" data-val="'+ val +'">'+ val +'</div>');
-
-  return [i_board, j_board];
 };
 
 Game.prototype.selectTile = function(row, col, value) {
