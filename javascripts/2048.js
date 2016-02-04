@@ -30,6 +30,8 @@ Game.prototype.moveTile = function(tile, direction) {
       self.upMoveTiles();
       self.upTileCollision();
       self.upMoveTiles();
+      self.addOneTile();
+      console.log(self.gameBoard);
       // add new random tile
       self.isGameLost();
       console.log(self.score);
@@ -39,6 +41,8 @@ Game.prototype.moveTile = function(tile, direction) {
       self.downMoveTiles();
       self.downTileCollision();
       self.downMoveTiles();
+      self.addOneTile();
+      console.log(self.gameBoard);
       // add new random tile
       self.isGameLost();
       break;
@@ -47,6 +51,8 @@ Game.prototype.moveTile = function(tile, direction) {
       self.leftMoveTiles();
       self.leftTileCollision();
       self.leftMoveTiles();
+      self.addOneTile();
+      console.log(self.gameBoard);
       // add new random tile
       self.isGameLost();
       break;
@@ -55,6 +61,8 @@ Game.prototype.moveTile = function(tile, direction) {
       self.rightMoveTiles();
       self.rightTileCollision();
       self.rightMoveTiles();
+      self.addOneTile();
+      console.log(self.gameBoard);
       // add new random tile
       self.isGameLost();
       break;
@@ -243,3 +251,35 @@ Game.prototype.isGameLost = function() {
   self.gameLost = isGameLost;
   return isGameLost;
 };
+
+Game.prototype.getFreeSpaces = function(){
+  var freeSpaces = [];
+// 3. Iterate through the rows and the columns in the gameboard
+  for(var i = 0; i < 3; i++){
+    for(var j = 0; j < 3; j++){
+    // and find all that are empty
+      if (this.gameBoard[i][j] === 0){
+      // keep a list of the indices in a new array saved as a variable
+        freeSpaces.push([i, j]);
+      }
+    }
+  }
+  return freeSpaces;
+};
+
+Game.prototype.addOneTile = function(){
+  var num = Math.random();
+
+  var result;
+  if (num < 0.9) {
+    result = 2;
+  } else {
+    result = 4;
+  }
+
+  var openSpots = this.getFreeSpaces();
+  var selectedSpot = openSpots[Math.floor(Math.random() * openSpots.length)];
+  this.gameBoard[selectedSpot[0]][selectedSpot[1]] = result;
+  // console.log(selectedSpot);
+  return result;
+}
