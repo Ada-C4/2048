@@ -80,14 +80,16 @@ Game.prototype.animateTiles = function(tiles) {
   console.log("the board is " + this.board);
   console.log(" tileArray is" + tileArray);
   for (var i = 0; i < tileArray.length; i++) {
-    if (tileArray[i] === 0) {
-      // do nothing
-    }
-    else {
+    if (tileArray[i] !== 0) {
       var tileRow = tileArray[i].dataset.row.charAt(1);
+      console.log("oldTileRow: " + oldTileRow);
+      console.log("tileRow: " + tileRow);
+      console.log("j: " + j);
+      if (oldTileRow != tileRow) {
+      var j = 0;
+      }
       var tileVal = tileArray[i].dataset.val.charAt(1);
-      for (var j = 0; j < 4; j++) {
-        var newCol = this.board[tileRow][j];
+        var newCol = j;
         var oldCol = tileArray[i].dataset.col.charAt(1);
         if (this.board[tileRow][j] !== 0) {
           if(this.board[tileRow][j] === tileVal) {
@@ -113,6 +115,12 @@ Game.prototype.animateTiles = function(tiles) {
           // then delete the tile because it has been combined
         }
       }
+    var oldTileRow = tileRow;
+    console.log("j is " + j);
+    console.log("tileArray[i] is " + tileArray[i]);
+    console.log("expression is " + (j !== undefined && tileArray[i] !== 0));
+    if (j !=undefined && tileArray[i] !== 0) {
+      j++;
     }
   }
 };
