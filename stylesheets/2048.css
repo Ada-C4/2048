@@ -2,6 +2,11 @@ html {
   font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
+h1 {
+  text-align: center;
+  font-size: 100px;
+}
+
 #gameboard {
   background: #bbada0;
   border-radius: 0.5rem;
