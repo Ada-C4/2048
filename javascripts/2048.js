@@ -31,6 +31,41 @@ Game.prototype.updateGameWon = function(){
   if (values.includes(2048)) { this.gameWon = true; }
 };
 
+Game.prototype.checkGameOver = function () {
+  if (this.board.length !== 16) {
+    return;
+  } else {
+    var groupedTiles = _.groupBy(this.board, function(tile) {
+        return tile.val;
+      });
+    for (var val in groupedTiles) {
+      var tiles = groupedTiles[val];
+      for (var i=0; i < tiles.length; i++) {
+        var oddCol = tiles[i].col % 2 === 1;
+        var colMod;
+        if (oddCol) {
+          colMod = 1;
+        } else {
+          colMod = 0;
+        }
+        var oddRow = tiles[i].row % 2 === 1;
+        var rowMod;
+        if (oddRow) {
+          rowMod = 1;
+        } else {
+          rowMod = 0;
+        }
+        var match = _.find(tiles, function(tile) {
+          return (tile.row === tiles[i].row && tile.col % 2 === colMod) || (tile.col === tiles[i].col && tile.row % 2 === rowMod); 
+        });
+        if (match) { return; }
+      }
+    }
+    this.gameOver = true;
+    console.log(this.gameOver);
+  }
+};
+
 
 Game.prototype.addTile = function () {
   var tilePlaced = false;
@@ -57,6 +92,7 @@ Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   var initMoves = this.board.map(function(tile) {return tile.moveCount;});
   switch(direction) {
+    case 87:
     case 38: //up
       var groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.col;
@@ -93,6 +129,7 @@ Game.prototype.moveTile = function(tile, direction) {
       };
       break;
 
+    case 83:
     case 40: //down
     groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.col;
@@ -131,6 +168,7 @@ Game.prototype.moveTile = function(tile, direction) {
       };
       break;
 
+    case 65:
     case 37: //left
       groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.row;
@@ -167,6 +205,7 @@ Game.prototype.moveTile = function(tile, direction) {
       };
     break;
 
+    case 68:
     case 39: //right
     groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.row;
@@ -214,8 +253,10 @@ Game.prototype.moveTile = function(tile, direction) {
     setTimeout(addTileCallback, 200);
   }
   if (this.gameWon === false) {
-    this.updateGameWon();  
-    alert('Game won!'); 
+    this.updateGameWon();
+    if (this.gameWon) {
+      alert('Game won!');
+    }
   }
 };
 
@@ -227,8 +268,8 @@ $(document).ready(function() {
   var game = new Game();
   game.startGame();
   $('body').keydown(function(event){
-    var arrows = [37, 38, 39, 40];
-    if (arrows.indexOf(event.which) > -1) {
+    var directions = [37, 38, 39, 40, 87, 65, 83, 68];
+    if (directions.indexOf(event.which) > -1) {
       var tile = $('.tile');
       game.moveTile(tile, event.which);
       $('#score').html('Score: ' + game.score);
