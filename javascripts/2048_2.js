@@ -17,12 +17,13 @@ Game.prototype.randTile = function() {
   var i_board = arr[randNum][0];
   var j_board = arr[randNum][1];
 
-    if (Math.floor((Math.random() * 10) + 1) == 7) {
-      this.board[i_board][j_board] = 4;
-    } else { this.board[i_board][j_board] = 2; }
-  // return this.board;
+  if (Math.floor((Math.random() * 10) + 1) == 7) {
+    this.board[i_board][j_board] = 4;
+  } else {
+    this.board[i_board][j_board] = 2;
+  }
   var val = this.board[i_board][j_board];
-  //$('#gameboard').append('<div class="tile" data-row="r'+i_board+'" data-col="c'+j_board+'" data-val="'+ val +'">'+ val +'</div>');
+  $('#gameboard').append('<div class="tile" data-row="r'+i_board+'" data-col="c'+j_board+'" data-val="'+ val +'">'+ val +'</div>');
 
   return [i_board, j_board];
 };
@@ -33,10 +34,8 @@ Game.prototype.selectTile = function(row, col, value) {
 };
 
 Game.prototype.moveLeft = function(row,col) {
-  //self = this;
   var $tile;
   var value = this.board[row][col];
-  var newCol;
   $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
   var board_row = this.board[row];
   for(var j=0; j < col; j++) {
@@ -47,14 +46,12 @@ Game.prototype.moveLeft = function(row,col) {
       break;
     }
   }
-  return [row, newCol];
+  return [row, col];
 };
 
 Game.prototype.moveRight = function(row,col) {
-  //self = this;
   var $tile;
   var value = this.board[row][col];
-  var newCol;
   $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
   var board_row = this.board[row];
   for(var j= 3; j > col; j--) {
@@ -65,7 +62,7 @@ Game.prototype.moveRight = function(row,col) {
       break;
     }
   }
-  return [row, newCol];
+  return [row, col];
 };
 
 Game.prototype.moveBoardLeft = function() {
@@ -95,9 +92,12 @@ Game.prototype.collideLeft = function(row, col) {
   $tile1 = self.selectTile(row, col, value);
   $tile2 = self.selectTile(row, col+1, value2);
   this.board[row][col] = (value + value2);
-  $tile1.attr('data-val', this.board[row][col]);
-  $tile1.html(this.board[row][col]);
-  $tile2.remove();
+  $tile2.attr('data-col', col);
+  setTimeout(function() {
+    $tile1.attr('data-val', this.board[row][col]);
+    $tile1.html(this.board[row][col]);
+    $tile2.remove();
+  }, 200);
   this.board[row][col+1] = 0;
   switch(col) {
     case 0:
@@ -118,6 +118,7 @@ Game.prototype.collideRight = function(row, col) {
   $tile1 = self.selectTile(row, col, value);
   $tile2 = self.selectTile(row, col-1, value2);
   this.board[row][col] = (value + value2);
+  $tile2.attr('data-col', col);
   $tile1.attr('data-val', this.board[row][col]);
   $tile1.html(this.board[row][col]);
   $tile2.remove();
@@ -178,18 +179,25 @@ Game.prototype.moveTile = function(direction) {
         console.log('down');
         break;
       case 37: //left
-        //self.moveBoardLeft();
-        //self.collideBoardLeft();
+        self.moveBoardLeft();
+        setTimeout(function() {
+          self.collideBoardLeft();
+        }, 200);
+        setTimeout(function() {
+          self.randTile();
+        }, 200);
         //self.randTile();
         console.log('left');
         break;
       case 39: //right
         self.moveBoardRight();
-        self.collideBoardRight();
-        // self.randTile();
+        setTimeout(function() {
+          self.collideBoardRight();
+        }, 200);
+        setTimeout(function() {
+          self.randTile();
+        }, 200);
         console.log('right');
-        //this.moveRight(tile);
-        //this.collideRight(tile);
         break;
   }
 };
@@ -197,15 +205,15 @@ Game.prototype.moveTile = function(direction) {
 $(document).ready(function() {
   console.log("ready to go!");
   var game = new Game();
-  //game.randTile();
-  //game.randTile();
-  var test_row = 3
-  var test_col1 = 0
-  var test_col2 = 1
-  game.board[test_row][test_col1] = 2;
-  game.board[test_row][test_col2] = 2;
-  $('#gameboard').append('<div class="tile" data-row="r'+ test_row +'" data-col="c'+ test_col1 +'" data-val="'+ 2 +'">'+ 2 +'</div>');
-  $('#gameboard').append('<div class="tile" data-row="r'+ test_row +'" data-col="c'+ test_col2 +'" data-val="'+ 2 +'">'+ 2 +'</div>');
+  game.randTile();
+  game.randTile();
+  // var test_row = 3
+  // var test_col1 = 0
+  // var test_col2 = 1
+  // game.board[test_row][test_col1] = 2;
+  // game.board[test_row][test_col2] = 2;
+  // $('#gameboard').append('<div class="tile" data-row="r'+ test_row +'" data-col="c'+ test_col1 +'" data-val="'+ 2 +'">'+ 2 +'</div>');
+  // $('#gameboard').append('<div class="tile" data-row="r'+ test_row +'" data-col="c'+ test_col2 +'" data-val="'+ 2 +'">'+ 2 +'</div>');
 
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
