@@ -252,27 +252,36 @@ Game.prototype.gameOver = function(){
     loser = false;
   }
 
-  var gameWinAlert = function() {
-    swal({
-      title: "Congratulations! You won!",
-      text: "Do you want to play again?",
-      type: "info",
-      showCancelButton: false,
-      closeOnConfirm: true,
-      confirmButtonText: "Yes, play again!",
-      confirmButtonColor: "#ec6c62"
-    }, function() {
-        window.location.reload();
-    });
-  };
-
-  if (loser) {
-    return true;
-  } else if (winner) {
-    gameWinAlert();
-  }
+  return loser;
 };
 
+Game.prototype.gameWin = function() {
+  var board = this.board;
+  var winner = false;
+
+  for (var i = 0; i < board.length; i++) {
+    for (var j = 0; j < board[i].length; j++) {
+      if (board[i][j] === 2048) {
+        winner = true;
+      }
+    }
+  }
+  return winner;
+};
+
+Game.prototype.gameWinAlert = function(){
+  swal({
+    title: "Congratulations! You won!",
+    text: "Do you want to play again?",
+    type: "info",
+    showCancelButton: true,
+    closeOnConfirm: true,
+    confirmButtonText: "Yes, play again!",
+    confirmButtonColor: "#ec6c62"
+  }, function() {
+      window.location.reload();
+  });
+};
 
 Game.prototype.gameOverAlert = function() {
   swal({
@@ -391,6 +400,9 @@ $(document).ready(function() {
       var tile = $('.tile');
       if (game.isMoveAvailable(tile, event.which)){
         game.moveTile(tile, event.which);
+        if (game.gameWin()){
+          game.gameWinAlert();
+        }
         setTimeout(function() { game.newTile(); }, 200);
       } else if (game.gameOver() && !(game.isMoveAvailable(tile, 37) || game.isMoveAvailable(tile, 38) || game.isMoveAvailable(tile, 39) || game.isMoveAvailable(tile, 40))) {
         game.gameOverAlert();
