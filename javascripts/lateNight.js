@@ -238,7 +238,6 @@ Game.prototype.moveRowLeft = function(rowIndex) {
 // columnIndex is the index of all four columns (see iteration above);
 Game.prototype.moveColumnDown = function(columnIndex) {
   console.log("moving column " + columnIndex);
-// we pass in 1 because we're working in column dimension (dimesnion can be 0 or 1),
 // columnIndex can be [0,1,2,3]. Loop in case statement iterates through numbers.
   var valsAndIndicesIn = this.getValsByDim("col", columnIndex);
   console.log(valsAndIndicesIn);
@@ -286,22 +285,31 @@ Game.prototype.moveColumnDown = function(columnIndex) {
     }
   }
 };
-/// this is all the code from Left function but should be copying colDown
+/// this is all the code from Down function but should be making it move the row.
 //make this work for right;
 Game.prototype.moveRowRight = function(rowIndex) {
-  console.log("moving column " + rowIndex);
+  console.log("moving row " + rowIndex);
+// rowIndex can be [0,1,2,3]. Loop in case statement iterates through numbers.
   var valsAndIndicesIn = this.getValsByDim("row", rowIndex);
   console.log(valsAndIndicesIn);
   var valsIn = valsAndIndicesIn[0];
+  valsIn.reverse();
   var indicesIn = valsAndIndicesIn[1];
+  indicesIn.reverse();
+// smash values (like [2,2])
   var valsandIndicesOut = this.smash(valsIn);
   console.log(valsandIndicesOut);
   var valsOut = valsandIndicesOut[0];
+  while  (valsOut.length != this.boardSize) {
+    valsOut.push(0);
+  }
+  valsOut.reverse();
   var indicesOut = valsandIndicesOut[1];
+  indicesOut = this.reverseIndices(indicesOut);
   this.setValsByDim("row", rowIndex, valsOut);
   //loop over indices in and indices out to see if they are the same. if they are, then nothing has moved!
   for (var i = 0; i < indicesIn.length; i++){
-    var tileQuery = $(tileSelect(rowIndex,indicesIn[i]));
+    var tileQuery = $(tileSelect(rowIndex, indicesIn[i]));
     //if I am smashed into, delete myself
     if (i < indicesIn.length - 1) {
       if (indicesOut[i] === indicesOut[i+1]) {
@@ -310,6 +318,7 @@ Game.prototype.moveRowRight = function(rowIndex) {
     }
     // if i smashed into someone
     if (i >= 1) {
+      //aka, they are in the same spot
       if (indicesOut[i] === indicesOut[i-1]) {
         var newVal = valsOut[indicesOut[i]];
         console.log("I smashed and am now a " + newVal);
