@@ -3,6 +3,7 @@ var Game = function() {
   this.gameBoard = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
   this.gameLost = false;
   this.addOneTile();
+  this.addOneTile();
   this.score = 0;
 }
 
@@ -45,6 +46,7 @@ Game.prototype.moveTile = function(tile, direction) {
       self.addOneTile();
       console.log(self.gameBoard);
       self.isGameLost();
+      console.log(self.score);
       break;
     case 37: //left
       console.log('left');
@@ -54,6 +56,7 @@ Game.prototype.moveTile = function(tile, direction) {
       self.addOneTile();
       console.log(self.gameBoard);
       self.isGameLost();
+      console.log(self.score);
       break;
     case 39: //right
       console.log('right');
@@ -63,6 +66,7 @@ Game.prototype.moveTile = function(tile, direction) {
       self.addOneTile();
       console.log(self.gameBoard);
       self.isGameLost();
+      console.log(self.score);
       break;
   }
 };
