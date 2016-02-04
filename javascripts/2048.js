@@ -329,15 +329,15 @@ Game.prototype.isMoveAvailable = function(tile, direction) {
           }
         }
       }
-      if (move.includes(true)){ 
+      if (move.includes(true)){
         return true;
       } else {
         return false;
-      };
+      }
       break;
     case 40: //down
-      var move = [];
-      for (var i = 0; i < tile.length; i++) {
+      move = [];
+      for (i = 0; i < tile.length; i++) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (parseInt(row[1]) + 1 <= 3) {
@@ -348,15 +348,15 @@ Game.prototype.isMoveAvailable = function(tile, direction) {
           }
         }
       }
-      if (move.includes(true)){ 
+      if (move.includes(true)){
         return true;
       } else {
         return false;
-      };
+      }
       break;
     case 37: //left
-      var move = [];
-      for (var i = 0; i < tile.length; i++) {
+      move = [];
+      for (i = 0; i < tile.length; i++) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (column[1] - 1 >= 0) {
@@ -367,15 +367,15 @@ Game.prototype.isMoveAvailable = function(tile, direction) {
           }
         }
       }
-      if (move.includes(true)){ 
+      if (move.includes(true)){
         return true;
       } else {
         return false;
-      };
+      }
       break;
     case 39: //right
-      var move = [];
-      for (var i = 0; i < tile.length; i++) {
+      move = [];
+      for (i = 0; i < tile.length; i++) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (parseInt(column[1]) + 1 <= 3) {
@@ -386,11 +386,11 @@ Game.prototype.isMoveAvailable = function(tile, direction) {
           }
         }
       }
-      if (move.includes(true)){ 
+      if (move.includes(true)){
         return true;
       } else {
         return false;
-      };
+      }
       break;
   }
 };
@@ -419,7 +419,7 @@ $(document).ready(function() {
         game.moveTile(tile, event.which);
         setTimeout(function() { game.newTile(); }, 200);
       } else if (game.gameOver() && !(game.isMoveAvailable(tile, 37) || game.isMoveAvailable(tile, 38) || game.isMoveAvailable(tile, 39) || game.isMoveAvailable(tile, 40))) {
-        game.gameOverAlert(); 
+        game.gameOverAlert();
       }
     }
   });
