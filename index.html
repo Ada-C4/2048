@@ -8,8 +8,14 @@
     <script type="text/javascript" src="javascripts/2048.js"></script>
   </head>
   <body>
-    <h4 id="score"></h4>
-    <button id="reset">Reset Game</button>
+  	<div class="header">
+			<h1 class="2048">2048</h1>
+			<div class="score-container">
+				<h4 class="score-header">SCORE</h4>
+				<h4 id="score"></h4>
+			</div>
+  	</div>
+    <a id="reset">New Game</a>
     <div id="gameboard">
       <div class="cells">
         <div class="cell"></div>
@@ -29,7 +35,6 @@
         <div class="cell"></div>
         <div class="cell"></div>
       </div>
-      <!-- <div class="tile" data-row="r2", data-col="c1" data-val="8">8</div> -->
     </div>
   </body>
 </html>

@@ -2,6 +2,14 @@ html {
   font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
+body {
+  background-color: #FAF8EF;
+}
+
+h1 {
+  color: #776e65;
+}
+
 #gameboard {
   background: #bbada0;
   border-radius: 0.5rem;
@@ -9,6 +17,36 @@ html {
   margin: 1rem auto;
   position: relative;
   width: 18.5rem;
+}
+
+#reset {
+  color: #F9F6F2;
+}
+
+.header {
+  display: block;
+  margin: 0 auto;
+  width: 300px;
+}
+
+.score-container {
+  background-color: #BBADA0;
+  width: 125px;
+  padding: 5px;
+  font-weight: bold;
+  color: #EEE4DA;
+}
+
+.score-header {
+  font-size: 14px;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+.score {
+  padding: 5px;
+  margin-top: 10px;
 }
 
 .cell {
