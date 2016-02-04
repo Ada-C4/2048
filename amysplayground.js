@@ -1,4 +1,5 @@
-var gameBoard = [[0, 2, 0, 0], [0, 2, 0, 0], [0, 4, 4, 0], [0, 0, 4, 0]];
+var gameBoard = [[0, 2, 0, 0], [0, 2, 0, 0], [0, 2048, 4, 0], [0, 0, 4, 0]];
+var tile2048present = false;
 
 function getFreeSpaces(){
   var freeSpaces = [];
@@ -32,5 +33,18 @@ function addOneTile(){
   return result;
 }
 
+function isThere2048(){
+  for(var i = 0; i < 4; i++){
+    for(var j = 0; j < 4; j++){
+    // and find all that are empty
+      if (gameBoard[i][j] === 2048){
+      // keep a list of the indices in a new array saved as a variable
+        tile2048present = true;
+      }
+    }
+  }
+  return tile2048present;
+}
 console.log(getFreeSpaces());
 console.log(addOneTile());
+console.log(isThere2048());
