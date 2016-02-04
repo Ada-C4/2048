@@ -15,10 +15,11 @@ Game.prototype.play = function() {
 
 Game.prototype.moveTiles = function(direction) {
   this.hasMoved = false;
+  var i;
   // Game method here
   switch(direction) {
     case 38: //up
-      for (var i = 0; i < this.dims[1]; i++) {
+      for (i = 0; i < this.dims[1]; i++) {
         this.moveColumnUp(i);
       }
       break;
@@ -26,12 +27,12 @@ Game.prototype.moveTiles = function(direction) {
       this.moveColumnDown(tile);
       break;
     case 37: //left
-    for (var i = 0; i < this.dims[0]; i++) {
+    for (i = 0; i < this.dims[0]; i++) {
       this.moveRowLeft(i);
     }
       break;
     case 39: //right
-    for (var i = 0; i < this.dims[0]; i++) {
+    for (i = 0; i < this.dims[0]; i++) {
       this.moveRowRight(i);
     }
       break;
@@ -75,10 +76,17 @@ Game.prototype.setValue = function (dim, index0, index1, value) {
 Game.prototype.getValsByDim = function(dim, index) {
   var vals = [];
   var indices = [];
+// this.dims[1-dim] will toggle between 1 and 0;
   for (var i = 0; i < this.dims[1-dim]; i++) {
+//passes in the dim we're in, the column index we're working with and i,
+// which iterates through 0-3;
     var val = this.getValue(dim, index, i);
+// ignore zeros, and push everythign else into values array. It knows where
+// the values are.
     if (val !== 0) {vals.push(val); indices.push(i); }
   }
+// values is an array with the value of the numbers pushed into it.
+// indices is also an array that contains the indecies of where the values came from.
   return [vals, indices];
 };
 
@@ -87,10 +95,12 @@ Game.prototype.setValsByDim = function(dim, index, values) {
   var indices = [];
   var i;
   for (i = 0; i < values.length; i++) {
+//iterating through entire board (setValue)
     this.setValue(dim, index, i, values[i]);
   }
   //pick up where i left off in case we need to add 0s
   for (i; i < this.dims[1-dim]; i++) {
+// puts zeroes to fill in the board if there are empty spaces;    
     this.setValue(dim, index, i, 0);
   }
 };
@@ -101,26 +111,35 @@ Game.prototype.smash = function(valsIn) {
   var indicesOut = [0];
   var alreadySmashed = false;
   for (var i = 1; i < valsIn.length; i++) {
+// if the numbers next to and equal to each other, add them together (multiply one number by 2)
     if (valsIn[i] === valsOut[valsOut.length-1] && !alreadySmashed) {
       valsOut[valsOut.length-1] *= 2;
       alreadySmashed = true;
       indicesOut.push(indicesOut[indicesOut.length-1]);
       this.score += valsOut[valsOut.length-1];
-    } else {
+    }
+//if they're not equal to each other, push the value and the indicies OUT.
+      else {
+//alreadySmashed prevents everything form combining (like [2,2,2,2] to [8,0,0,0] automatically)
       alreadySmashed = false;
       indicesOut.push(indicesOut[indicesOut.length-1] + 1);
       valsOut.push(valsIn[i]);
     }
   }
+//returns 2D array
   return [valsOut, indicesOut];
 };
 
+// columnIndex is the index of all four columns (see iteration above);
 Game.prototype.moveColumnUp = function(columnIndex) {
   console.log("moving column " + columnIndex);
+// we pass in 1 because we're working in column dimension (dimesnion can be 0 or 1),
+// columnIndex can be [0,1,2,3]. Loop in case statement iterates through numbers.
   var valsAndIndicesIn = this.getValsByDim(1, columnIndex);
   console.log(valsAndIndicesIn);
   var valsIn = valsAndIndicesIn[0];
   var indicesIn = valsAndIndicesIn[1];
+// smash values (like [2,2])
   var valsandIndicesOut = this.smash(valsIn);
   console.log(valsandIndicesOut);
   var valsOut = valsandIndicesOut[0];
