@@ -3,7 +3,9 @@ var Game = function() {
   this.gameBoard = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
   this.gameLost = false;
   this.addOneTile();
-};
+  this.score = 0;
+}
+
 
 $(document).ready(function() {
   console.log("ready to go!");
@@ -33,7 +35,8 @@ Game.prototype.moveTile = function(tile, direction) {
       self.addOneTile();
       console.log(self.gameBoard);
       // add new random tile
-      self.isGameLost(); // what should happen on backend if game is lost?
+      self.isGameLost();
+      console.log(self.score);
       break;
     case 40: //down
       console.log('down');
@@ -167,6 +170,7 @@ Game.prototype.upTileCollision = function(){
       if(self.gameBoard[i][j] > 0){
         if(self.gameBoard[i - 1][j] === self.gameBoard[i][j]){
           self.gameBoard[i - 1][j] *= 2;
+          self.score += self.gameBoard[i - 1][j];
           self.gameBoard[i][j] = 0;
         }
       }
@@ -181,6 +185,7 @@ Game.prototype.downTileCollision = function(){
       if (self.gameBoard[i][j] > 0) {
         if (self.gameBoard[i - 1][j] === self.gameBoard[i][j]) {
           self.gameBoard[i][j] *= 2;
+          self.score += self.gameBoard[i][j];
           self.gameBoard[i - 1][j] = 0;
         }
       }
@@ -195,6 +200,7 @@ Game.prototype.leftTileCollision = function(){
       if (self.gameBoard[i][j] > 0) {
         if (self.gameBoard[i][j - 1] === self.gameBoard[i][j]) {
           self.gameBoard[i][j] *= 2;
+          self.score += self.gameBoard[i][j];
           self.gameBoard[i][j - 1] = 0;
         }
       }
@@ -209,6 +215,7 @@ Game.prototype.rightTileCollision = function(){
       if (self.gameBoard[i][j] > 0) {
         if (self.gameBoard[i][j - 1] === self.gameBoard[i][j]) {
           self.gameBoard[i][j] *= 2;
+          self.score += self.gameBoard[i][j];
           self.gameBoard[i][j - 1] = 0;
         }
       }
