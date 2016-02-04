@@ -322,7 +322,7 @@ Game.prototype.isMoveAvailable = function(tile, direction) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (row[1] - 1 >= 0) {
-          if ((this.board[row[1] - 1][column[1]] == 0) || (this.board[row[1] - 1][column[1]] == this.board[row[1]][column[1]])) {
+          if ((this.board[row[1] - 1][column[1]] === 0) || (this.board[row[1] - 1][column[1]] == this.board[row[1]][column[1]])) {
             move.push(true);
           } else {
             move.push(false);
@@ -341,7 +341,7 @@ Game.prototype.isMoveAvailable = function(tile, direction) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (parseInt(row[1]) + 1 <= 3) {
-          if ((this.board[parseInt(row[1]) + 1][column[1]] == 0) || (this.board[parseInt(row[1]) + 1][column[1]] == this.board[parseInt(row[1])][column[1]])) {
+          if ((this.board[parseInt(row[1]) + 1][column[1]] === 0) || (this.board[parseInt(row[1]) + 1][column[1]] == this.board[parseInt(row[1])][column[1]])) {
             move.push(true);
           } else {
             move.push(false);
@@ -360,7 +360,7 @@ Game.prototype.isMoveAvailable = function(tile, direction) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (column[1] - 1 >= 0) {
-          if ((this.board[row[1]][column[1] - 1] == 0) || (this.board[row[1]][column[1] - 1] == this.board[row[1]][column[1]])) {
+          if ((this.board[row[1]][column[1] - 1] === 0) || (this.board[row[1]][column[1] - 1] == this.board[row[1]][column[1]])) {
             move.push(true);
           } else {
             move.push(false);
@@ -379,7 +379,7 @@ Game.prototype.isMoveAvailable = function(tile, direction) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (parseInt(column[1]) + 1 <= 3) {
-          if ((this.board[row[1]][parseInt(column[1]) + 1] == 0) || (this.board[row[1]][parseInt(column[1]) + 1] == this.board[row[1]][parseInt(column[1])])) {
+          if ((this.board[row[1]][parseInt(column[1]) + 1] === 0) || (this.board[row[1]][parseInt(column[1]) + 1] == this.board[row[1]][parseInt(column[1])])) {
             move.push(true);
           } else {
             move.push(false);
