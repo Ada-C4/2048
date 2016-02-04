@@ -48,16 +48,6 @@ Game.prototype.moveLeft = function(row,col) {
     }
   }
 };
-//   var board_row = this.board[row];
-//   for(var j=0; j < col; j++) {
-//     if (board_row[j] === 0) {
-//       this.board[row][j] = value;
-//       $tile.attr('data-col', 'c' + j);
-//       this.board[row][col] = 0;
-//       break;
-//     }
-//   }
-// };
 
 Game.prototype.moveRight = function(row,col) {
   var $tile;
@@ -107,6 +97,18 @@ Game.prototype.moveBoardRight = function() {
   return this.board;
 };
 
+Game.prototype.collideBoardLeft = function() {
+  self = this;
+  for (var row = 0; row < 4; row++) {
+    for (var col = 0; col < 3; col++) {
+      if ((this.board[row][col] === this.board[row][col+1]) && (this.board[row][col] !== 0)) {
+        self.collideLeft(row, col);
+      }
+    }
+  }
+  return this.board;
+};
+
 Game.prototype.collideLeft = function(row, col) {
   self = this;
   var value = this.board[row][col];
@@ -115,12 +117,12 @@ Game.prototype.collideLeft = function(row, col) {
   $tile2 = self.selectTile(row, col+1, value2);
   this.board[row][col] = (value + value2);
   this.board[row][col+1] = 0;
-  $tile2.attr('data-col', col);
-  setTimeout(function() {
+  //$tile2.attr('data-col', col);
+//  setTimeout(function() {
     $tile1.attr('data-val', this.board[row][col]);
     $tile1.html(this.board[row][col]);
     $tile2.remove();
-  }, 200);
+//  }, 200);
 
   switch(col) {
     case 0:
@@ -131,23 +133,17 @@ Game.prototype.collideLeft = function(row, col) {
       this.board[row][1] = this.board[row][2];
       this.board[row][2] = this.board[row][3];
       this.board[row][3] = 0;
-      //       if (this.board[row][col+2] !== 0) {
-      //   self.moveLeft(row, col+2);
-      // }
-      // if (this.board[row][col+3] !== 0) {
-      //   self.moveLeft(row, col+3);
-      // }
       break;
     case 1:
-      $tile4 = self.selectTile(row, 3, this.board[row][3]);
-      $tile4.attr('data-col', 'c' + 2);
+      $tile5 = self.selectTile(row, 3, this.board[row][3]);
+      $tile5.attr('data-col', 'c' + 2);
       this.board[row][2] = this.board[row][3];
       this.board[row][3] = 0;
-      //self.moveLeft(row, col+2);
       break;
     }
     return this.board;
 };
+
 
 Game.prototype.collideRight = function(row, col) {
   self = this;
@@ -171,44 +167,25 @@ Game.prototype.collideRight = function(row, col) {
       this.board[row][2] = this.board[row][1];
       this.board[row][1] = this.board[row][0];
       this.board[row][0] = 0;
-      // if (this.board[row][col-2] !== 0) {
-      //   self.moveRight(row, col-2);
-      // }
-      // if (this.board[row][col-3] !== 0) {
-      //   self.moveRight(row, col-3);
-      // }
       break;
     case 2:
-      $tile4 = self.selectTile(row, 0, this.board[row][0]);
-      $tile4.attr('data-col', 'c' + 1);
+      $tile5 = self.selectTile(row, 0, this.board[row][0]);
+      $tile5.attr('data-col', 'c' + 1);
       this.board[row][1] = this.board[row][0];
       this.board[row][0] = 0;
-      //self.moveRight(row, col-2);
       break;
   }
   return this.board;
 };
 
-Game.prototype.collideBoardLeft = function() {
-  self = this;
-  for (var brow = 0; brow < 4; brow++) {
-    var row = this.board[brow];
-    for (var x = 0; x < 3; x++) {
-      if ((row[x] === row[x+1]) && (row[x] !== 0)) {
-        self.collideLeft(brow, x);
-      }
-    }
-  }
-  return this.board;
-};
+
 
 Game.prototype.collideBoardRight = function() {
   self = this;
-  for (var brow = 0; brow < 4; brow++) {
-    var row = this.board[brow];
-    for (var x = 3; x >= 1; x--) {
-      if ((row[x] === row[x-1]) && row[x] !== 0) {
-        self.collideRight(brow, x);
+  for (var row = 0; row < 4; row++) {
+    for (var col = 3; col >= 1; col--) {
+      if ((this.board[row][col] === this.board[row][col-1]) && this.board[row][col] !== 0) {
+        self.collideRight(row, col);
       }
     }
   }
@@ -254,26 +231,25 @@ Game.prototype.moveTile = function(direction) {
         break;
       case 37: //left
         self.moveBoardLeft();
-        setTimeout(function() {
+        // setTimeout(function() {
           self.collideBoardLeft();
-        }, 200);
-        setTimeout(function() {
+        // }, 200);
+        // setTimeout(function() {
           self.randTile();
-        }, 200);
+        // }, 200);
         //self.lost();
         //self.randTile();
-        console.log('left');
         break;
       case 39: //right
         self.moveBoardRight();
-        setTimeout(function() {
+        // setTimeout(function() {
           self.collideBoardRight();
-        }, 200);
-        setTimeout(function() {
+        // }, 200);
+        // setTimeout(function() {
           self.randTile();
-        }, 200);
+        // }, 200);
         //self.lost();
-        console.log('right');
+        // console.log('right');
         break;
   }
 };
@@ -283,16 +259,16 @@ $(document).ready(function() {
   var game = new Game();
   game.randTile();
   game.randTile();
-  // var test_row = 0
-  // var test_col1 = 0
-  // var test_col2 = 1
-  // var test_col3 = 2
-  // game.board[test_row][test_col1] = 2;
-  // game.board[test_row][test_col2] = 2;
-  // game.board[test_row][test_col3] = 2;
-  // $('#gameboard').append('<div class="tile" data-row="r'+ test_row +'" data-col="c'+ test_col1 +'" data-val="'+ 2 +'">'+ 2 +'</div>');
-  // $('#gameboard').append('<div class="tile" data-row="r'+ test_row +'" data-col="c'+ test_col2 +'" data-val="'+ 2 +'">'+ 2 +'</div>');
-  // $('#gameboard').append('<div class="tile" data-row="r'+ test_row +'" data-col="c'+ test_col3 +'" data-val="'+ 2 +'">'+ 2 +'</div>');
+  var test_row = 3
+  var test_col1 = 0
+  var test_col2 = 1
+  var test_col3 = 2
+  game.board[test_row][test_col1] = 2;
+  game.board[2][test_col2] = 2;
+  game.board[test_row][test_col3] = 2;
+  $('#gameboard').append('<div class="tile" data-row="r'+ test_row +'" data-col="c'+ test_col1 +'" data-val="'+ 2 +'">'+ 2 +'</div>');
+  $('#gameboard').append('<div class="tile" data-row="r'+ 2 +'" data-col="c'+ test_col2 +'" data-val="'+ 2 +'">'+ 2 +'</div>');
+  $('#gameboard').append('<div class="tile" data-row="r'+ test_row +'" data-col="c'+ test_col3 +'" data-val="'+ 2 +'">'+ 2 +'</div>');
 
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
