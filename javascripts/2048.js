@@ -37,7 +37,6 @@ Game.prototype.moveTiles = function(tiles, direction) {
       }
       break;
     case 37: //left
-    var boardCopy = Object.assign([], this.board);
     // looping through this.board array
       for (var i = 0; i < 4; i++) {
         var innerArray = this.board[i];
@@ -50,9 +49,7 @@ Game.prototype.moveTiles = function(tiles, direction) {
         }
         this.updateBoard(beginningTilesArray,i);
       }
-      console.log(boardCopy);
-      console.log(this.board);
-      this.animateTiles(tiles, boardCopy);
+      this.animateTiles(tiles);
       break;
     case 39: //right
       if (currentCol < 3) {
@@ -63,35 +60,68 @@ Game.prototype.moveTiles = function(tiles, direction) {
   }
 };
 
-Game.prototype.animateTiles = function(tileArray, boardCopy) {
+// Game.prototype.animateTiles = function(tileArray, boardCopy) {
+//   for (var i = 0; i < tileArray.length; i++) {
+//     var oldColumn = tileArray[i].dataset.col.charAt(1);
+//     var tileRow = tileArray[i].dataset.row.charAt(1);
+//     // moveTo should be the index of the column that we are going to move the tile to
+//     var newColumn = 0;
+//     var colDiff = oldColumn - newColumn;
+//     if (oldColumn > 0) {
+//       tileArray[i].dataset.col = "c" + (oldColumn - colDiff);
+//       var moveAmt = (135 * colDiff);
+//       tileArray[i].animate({left: '-=' + moveAmt + 'px'}, 50);
+//     }
+//   }
+// };
+
+Game.prototype.animateTiles = function(tiles) {
+  var tileArray = this.sortTiles(tiles);
+  console.log("the board is " + this.board);
+  console.log(" tileArray is" + tileArray);
   for (var i = 0; i < tileArray.length; i++) {
-    var oldColumn = tileArray[i].dataset.col.charAt(1);
-    var tileRow = tileArray[i].dataset.row.charAt(1);
-    // moveTo should be the index of the column that we are going to move the tile to
-    var newColumn = 0;
-    var colDiff = oldColumn - newColumn;
-    if (oldColumn > 0) {
-      tileArray[i].dataset.col = "c" + (oldColumn - colDiff);
-      var moveAmt = (135 * colDiff);
-      tileArray[i].animate({left: '-=' + moveAmt + 'px'}, 50);
+    if (tileArray[i] === 0) {
+      // do nothing
     }
-  }
-};
-
- // [0,2,2,2] becomes [2,2,2,0] - diff for each tile is one col
- // [0,2,0,2] becomes [2,2,0,0] - diff for first tile is 1, for second tile is 2
-// [0,2,0,0] becomes [2,0,0,0] - diff for first tile is 1
-// [0,0,0,2] becomes [2,0,0,0] - diff for first tile is 3
-Game.prototype.animateTilesAlt = function(tileArray, boardCopy) {
-  for (var i = 0; i < this.board.length; i++) {
-    if (this.board[i] != boardCopy[i]) {
+    else {
+      var tileRow = tileArray[i].dataset.row.charAt(1);
+      var tileVal = tileArray[i].dataset.val.charAt(1);
       for (var j = 0; j < 4; j++) {
-
+        var newCol = this.board[tileRow][j];
+        var oldCol = tileArray[i].dataset.col.charAt(1);
+        if (this.board[tileRow][j] !== 0) {
+          if(this.board[tileRow][j] === tileVal) {
+            // move tile[i] to position of this.board[tileRow][i]
+            // access tile element's dataset.col and update it
+            var moveAmt = this.calcMoveAmt(oldCol, newCol);
+            tileArray[i].animate({left: moveAmt}, 50);
+            tileArray[i].dataset.col = "c" + j;
+          }
+          else {
+            var moveAmt = this.calcMoveAmt(oldCol, newCol);
+            tileArray[i].animate({left: moveAmt}, 50);
+            // move tile[i] to position of this.board[tileRow][i]
+            tileArray[i].dataset.col = "c" + j;
+            // and reassign the value to be this.board[tileRow][i]
+            tileArray[i].dataset.val = this.board[tileRow][i];
+          }
+        }
+        else {
+          var moveAmt = this.calcMoveAmt(oldCol, 0);
+          tileArray[i].animate({left: moveAmt}, 50);
+          tileArray[i].dataset.col = "c" + 0;
+          // then delete the tile because it has been combined
+        }
       }
     }
   }
 };
 
+Game.prototype.calcMoveAmt = function(oldCol,newCol) {
+  var colDiff = oldCol - newCol;
+  var moveAmt = 135 * colDiff;
+  return '-=' + moveAmt + 'px';
+};
 
 // used inside the moveTiles function
 Game.prototype.updateBoard = function(arr,rowIndex) {
@@ -150,13 +180,13 @@ $(document).ready(function() {
   game.createRandomTile();
   game.createRandomTile();
   game.createRandomTile();
-  var tiles = $('.tile');
-  console.log(game.sortTiles(tiles));
+  game.createRandomTile();
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
-    //   var tiles = $('.tile');
+      var tiles = $('.tile');
       game.moveTiles(tiles, event.which);
+      console.log(game.board);
     }
   });
 
