@@ -106,15 +106,16 @@ Game.prototype.collideLeft = function(row, col) {
     case 0:
       if (this.board[row][col+2] !== 0) {
         self.moveLeft(row, col+2);
-      };
+      }
       if (this.board[row][col+3] !== 0) {
         self.moveLeft(row, col+3);
-      };
+      }
       break;
     case 1:
       self.moveLeft(row, col+2);
       break;
-    };
+    }
+    console.log(this.board);
   return this.board;
 };
 
@@ -151,7 +152,7 @@ Game.prototype.collideBoardLeft = function() {
   self = this;
   for (var brow = 0; brow < 4; brow++) {
     var row = this.board[brow];
-    for (var x = 0; x < 4; x++) {
+    for (var x = 0; x < 3; x++) {
       if ((row[x] === row[x+1]) && (row[x] !== 0)) {
         self.collideLeft(brow, x);
       }
@@ -164,13 +165,35 @@ Game.prototype.collideBoardRight = function() {
   self = this;
   for (var brow = 0; brow < 4; brow++) {
     var row = this.board[brow];
-    for (var x = 3; x >= 0; x--) {
+    for (var x = 3; x >= 1; x--) {
       if ((row[x] === row[x-1]) && row[x] !== 0) {
         self.collideRight(brow, x);
       }
     }
   }
   return this.board;
+};
+
+Game.prototype.lost = function() {
+  var count = 0;
+  board = this.board;
+  //check col
+  for (var i = 0; i < 4; i++) {
+    for (var j = 0; j < 3; j ++) {
+      if (board[i][j] === [i+1][j])
+      { return false;
+    }
+  }
+  //check row
+  for (var x = 0; x < 3; i++)
+    for (var y = 0; y < 4; y ++) {
+      if (board[x][y] === [x][y+1]) {
+        return false;
+      }
+    }
+   }
+  console.log("Game Over!");
+  return true;
 };
 
 Game.prototype.moveTile = function(direction) {
@@ -196,6 +219,7 @@ Game.prototype.moveTile = function(direction) {
         setTimeout(function() {
           self.randTile();
         }, 200);
+        //self.lost();
         //self.randTile();
         console.log('left');
         break;
@@ -207,6 +231,7 @@ Game.prototype.moveTile = function(direction) {
         setTimeout(function() {
           self.randTile();
         }, 200);
+        //self.lost();
         console.log('right');
         break;
   }
