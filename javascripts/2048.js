@@ -20,7 +20,7 @@ Game.prototype.startGame = function () {
   this.gameWon = false;
   this.board = [];
   this.score = 0;
-  $('#score').html('Score: '+ this.score);
+  $('#score').html(this.score);
   this.addTile();
   this.addTile();
 };
@@ -272,7 +272,7 @@ $(document).ready(function() {
       if (arrows.indexOf(event.which) > -1) {
         var tile = $('.tile');
         game.moveTile(tile, event.which);
-        $('#score').html('Score: ' + game.score);
+        $('#score').html(game.score);
       }
     }  
   });
