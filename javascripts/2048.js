@@ -92,6 +92,7 @@ Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   var initMoves = this.board.map(function(tile) {return tile.moveCount;});
   switch(direction) {
+    case 87:
     case 38: //up
       var groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.col;
@@ -128,6 +129,7 @@ Game.prototype.moveTile = function(tile, direction) {
       };
       break;
 
+    case 83:
     case 40: //down
     groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.col;
@@ -166,6 +168,7 @@ Game.prototype.moveTile = function(tile, direction) {
       };
       break;
 
+    case 65:
     case 37: //left
       groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.row;
@@ -202,6 +205,7 @@ Game.prototype.moveTile = function(tile, direction) {
       };
     break;
 
+    case 68:
     case 39: //right
     groupedTiles = _.groupBy(this.board, function(tile) {
           return tile.row;
@@ -264,8 +268,8 @@ $(document).ready(function() {
   var game = new Game();
   game.startGame();
   $('body').keydown(function(event){
-    var arrows = [37, 38, 39, 40];
-    if (arrows.indexOf(event.which) > -1) {
+    var directions = [37, 38, 39, 40, 87, 65, 83, 68];
+    if (directions.indexOf(event.which) > -1) {
       var tile = $('.tile');
       game.moveTile(tile, event.which);
       $('#score').html('Score: ' + game.score);
