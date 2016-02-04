@@ -12,7 +12,7 @@ html {
 .scorebox {
   margin-left: 102px;
   width: 150px;
-  height: 120px;
+  height: 100px;
   text-align: center;
   background-color: #bbada0;
   padding-top: 10px;
@@ -29,7 +29,7 @@ html {
 
 .header {
   text-align: center;
-  font-size: 130px;
+  font-size: 100px;
   display: inline-block;
 }
 
@@ -95,14 +95,15 @@ html {
 .tile[data-col=c2] { left: 9rem; }
 .tile[data-col=c3] { left: 13.5rem; }
 
-.tile[data-val="2"]    { color: #776e65; background-color: #eee4da; }
-.tile[data-val="4"]    { color: #776e65; background-color: #ede0c8; }
-.tile[data-val="8"]    { background-color: #f2b179; }
-.tile[data-val="16"]   { background-color: #f59563; }
-.tile[data-val="32"]   { background: #f67c5f; }
-.tile[data-val="64"]   { background: #f65e3b; }
-.tile[data-val="128"]  { background: #edcf72; }
-.tile[data-val="256"]  { background: #edcc61; }
-.tile[data-val="512"]  { background: #edc850; }
-.tile[data-val="1024"] { background: #edc53f; }
-.tile[data-val="2048"] { background: #edc22e; }
+
+.tile[data-val="2"]    { color: #776e65; background-color: #eee4da; background-image: url("../assets/images/2.png"); background-size: 150px 150px;}
+.tile[data-val="4"]    { color: #776e65; background-color: #eee4da; background-image: url("../assets/images/4.png"); background-size: 150px 150px;}
+.tile[data-val="8"]    { color: #776e65; background-color: #eee4da; background-image: url("../assets/images/8.png"); background-size: 150px 150px;}
+.tile[data-val="16"]   { color: #776e65; background-color: #eee4da; background-image: url("../assets/images/16.png"); background-size: 150px 150px;}
+.tile[data-val="32"]   { color: #776e65; background-color: #eee4da; background-image: url("../assets/images/32.png"); background-size: 150px 150px;}
+.tile[data-val="64"]   { color: #776e65; background-color: #eee4da; background-image: url("../assets/images/64.png"); background-size: 150px 150px;}
+.tile[data-val="128"]  { color: #776e65; background-color: #eee4da; background-image: url("../assets/images/128.png"); background-size: 150px 150px;}
+.tile[data-val="256"]  { color: #776e65; background-color: #eee4da; background-image: url("../assets/images/256.png"); background-size: 150px 150px;}
+.tile[data-val="512"]  { color: #776e65; background-color: #eee4da; background-image: url("../assets/images/512.png"); background-size: 150px 150px;}
+.tile[data-val="1024"] { color: #776e65; background-color: #eee4da; background-image: url("../assets/images/1024.png"); background-size: 150px 150px;}
+.tile[data-val="2048"] { color: #776e65; background-color: #eee4da; background-image: url("../assets/images/2048.png"); background-size: 150px 150px;}

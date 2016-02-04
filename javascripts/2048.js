@@ -41,8 +41,8 @@ Game.prototype.newBoard = function(){
   var colNum2 = array[1][1];
   var randValue2 = array[1][2];
 
-  $("#gameboard").append("<div class='tile' data-row='r" + rowNum1 + "', data-col='c" + colNum1 + "' data-val='" + randValue1 + "'>" + randValue1 + "</div>");
-  $("#gameboard").append("<div class='tile' data-row='r" + rowNum2 + "', data-col='c" + colNum2 + "' data-val='" + randValue2 + "'>" + randValue2 + "</div>");
+  $("#gameboard").append("<div class='tile' data-row='r" + rowNum1 + "', data-col='c" + colNum1 + "' data-val='" + randValue1 + "'></div>");
+  $("#gameboard").append("<div class='tile' data-row='r" + rowNum2 + "', data-col='c" + colNum2 + "' data-val='" + randValue2 + "'></div>");
 
   return board;
 };
@@ -193,7 +193,6 @@ Game.prototype.combineTile = function(rowToUpdate, columnToUpdate, tile, rowToDe
     tile.remove();
     updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
     updateTile[0].dataset.val = newVal;
-    updateTile[0].innerHTML = newVal;
     // update score
     this.updateScore(newVal);
   }
@@ -223,7 +222,7 @@ Game.prototype.newTile = function() {
   var randRow = Math.floor(Math.random() * 4);
 
   if (this.board[randRow][randCol] === 0) {
-    $("#gameboard").append("<div class='tile' data-row='r" + randRow + "', data-col='c" + randCol + "' data-val='" + randValue + "'>" + randValue + "</div>");
+    $("#gameboard").append("<div class='tile' data-row='r" + randRow + "', data-col='c" + randCol + "' data-val='" + randValue + "'></div>");
     this.board[randRow][randCol] = randValue;
   } else {
     this.newTile();
