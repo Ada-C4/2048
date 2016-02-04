@@ -6,8 +6,17 @@ body {
   background-color: #FAF8EF;
 }
 
+#container {
+  width: 600px;
+  margin: 0 auto;
+}
+
 h1 {
   color: #776e65;
+  position: relative;
+  display: inline;
+  top: 25px;
+  font-size: 104px;
 }
 
 .gameover {
@@ -67,25 +76,42 @@ h1 {
 }
 
 #reset {
+  position: relative;
   color: #FFFFFF;
   background-color: #8F7A66;
   width: 250px;
   padding: 10px;
+  font-weight: bold;
+  bottom: 100px;
 }
 
 .header {
-  display: block;
-  margin: 0 auto;
-  width: 300px;
+/*  display: block;
+*/  margin: 0 auto;
+  width: 500px;
+  margin-bottom: 0px;
+  height: 200px;
 }
 
-.score-container {
+.score-container, .high-score-container {
+  position: relative;
+  left: 300px;
   background-color: #BBADA0;
   width: 80px;
+  height: 70px;
   padding: 5px;
   font-weight: bold;
   color: #EEE4DA;
   text-align: center;
+}
+
+.score-container {
+  bottom: 65px;
+}
+
+.high-score-container {
+  left: 400px;
+  bottom: 145px;
 }
 
 .score-header {
@@ -95,9 +121,9 @@ h1 {
   margin: 0 auto;
 }
 
-.score {
+#score, #high_score {
   padding: 5px;
-  margin-top: 25px;
+  margin-top: 10px;
   color: #FFFFFF;
 }
 
