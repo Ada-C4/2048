@@ -37,39 +37,61 @@ Game.prototype.moveLeft = function(row,col) {
   var $tile;
   var value = this.board[row][col];
   $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
-  var board_row = this.board[row];
-  for(var j=0; j < col; j++) {
-    if (board_row[j] === 0) {
-      this.board[row][j] = value;
-      $tile.attr('data-col', 'c' + j);
-      this.board[row][col] = 0;
-      break;
+  if (this.board[row][col] !== 0) {
+    for(var j=0; j < col; j++) {
+      if (this.board[row][j] === 0) {
+        this.board[row][j] = value;
+        $tile.attr('data-col', 'c' + j);
+        this.board[row][col] = 0;
+        break;
+      }
     }
   }
 };
+//   var board_row = this.board[row];
+//   for(var j=0; j < col; j++) {
+//     if (board_row[j] === 0) {
+//       this.board[row][j] = value;
+//       $tile.attr('data-col', 'c' + j);
+//       this.board[row][col] = 0;
+//       break;
+//     }
+//   }
+// };
 
 Game.prototype.moveRight = function(row,col) {
   var $tile;
   var value = this.board[row][col];
   $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
-  var board_row = this.board[row];
-  for(var j= 3; j > col; j--) {
-    if (board_row[j] === 0) {
-      this.board[row][j] = value;
-      $tile.attr('data-col', 'c' + j);
-      this.board[row][col] = 0;
-      break;
+  if (this.board[row][col] !== 0) {
+    for(var j=3; j > col; j--) {
+      if (this.board[row][j] === 0) {
+        this.board[row][j] = value;
+        $tile.attr('data-col', 'c' + j);
+        this.board[row][col] = 0;
+        break;
+      }
     }
   }
+  // var $tile;
+  // var value = this.board[row][col];
+  // $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
+  // var board_row = this.board[row];
+  // for(var j= 3; j > col; j--) {
+  //   if (board_row[j] === 0) {
+  //     this.board[row][j] = value;
+  //     $tile.attr('data-col', 'c' + j);
+  //     this.board[row][col] = 0;
+  //     break;
+  //   }
+  // }
 };
 
 Game.prototype.moveBoardLeft = function() {
   self = this;
   for (var row=0; row < 4; row++) {
     for (var col=1; col < 4; col++) {
-      if (this.board[row][col] !== 0) {
-        self.moveLeft(row, col);
-      }
+      self.moveLeft(row, col);
     }
   }
   return this.board;
@@ -79,9 +101,7 @@ Game.prototype.moveBoardRight = function() {
   self = this;
   for (var row=0; row < 4; row++) {
     for (var col=3; col >= 0; col--) {
-      if (this.board[row][col] !== 0) {
-        self.moveRight(row, col);
-      }
+      self.moveRight(row, col);
     }
   }
   return this.board;
@@ -104,19 +124,29 @@ Game.prototype.collideLeft = function(row, col) {
 
   switch(col) {
     case 0:
-      if (this.board[row][col+2] !== 0) {
-        self.moveLeft(row, col+2);
-      }
-      if (this.board[row][col+3] !== 0) {
-        self.moveLeft(row, col+3);
-      }
+      $tile3 = self.selectTile(row, 2, this.board[row][2]);
+      $tile4 = self.selectTile(row, 3, this.board[row][3]);
+      $tile3.attr('data-col', 'c' + 1);
+      $tile4.attr('data-col', 'c' + 2);
+      this.board[row][1] = this.board[row][2];
+      this.board[row][2] = this.board[row][3];
+      this.board[row][3] = 0;
+      //       if (this.board[row][col+2] !== 0) {
+      //   self.moveLeft(row, col+2);
+      // }
+      // if (this.board[row][col+3] !== 0) {
+      //   self.moveLeft(row, col+3);
+      // }
       break;
     case 1:
-      self.moveLeft(row, col+2);
+      $tile4 = self.selectTile(row, 3, this.board[row][3]);
+      $tile4.attr('data-col', 'c' + 2);
+      this.board[row][2] = this.board[row][3];
+      this.board[row][3] = 0;
+      //self.moveLeft(row, col+2);
       break;
     }
-    console.log(this.board);
-  return this.board;
+    return this.board;
 };
 
 Game.prototype.collideRight = function(row, col) {
@@ -134,15 +164,26 @@ Game.prototype.collideRight = function(row, col) {
 
   switch(col) {
     case 3:
-      if (this.board[row][col-2] !== 0) {
-        self.moveRight(row, col-2);
-      }
-      if (this.board[row][col-3] !== 0) {
-        self.moveRight(row, col-3);
-      }
+      $tile3 = self.selectTile(row, 1, this.board[row][1]);
+      $tile4 = self.selectTile(row, 0, this.board[row][0]);
+      $tile3.attr('data-col', 'c' + 2);
+      $tile4.attr('data-col', 'c' + 1);
+      this.board[row][2] = this.board[row][1];
+      this.board[row][1] = this.board[row][0];
+      this.board[row][0] = 0;
+      // if (this.board[row][col-2] !== 0) {
+      //   self.moveRight(row, col-2);
+      // }
+      // if (this.board[row][col-3] !== 0) {
+      //   self.moveRight(row, col-3);
+      // }
       break;
     case 2:
-      self.moveRight(row, col-2);
+      $tile4 = self.selectTile(row, 0, this.board[row][0]);
+      $tile4.attr('data-col', 'c' + 1);
+      this.board[row][1] = this.board[row][0];
+      this.board[row][0] = 0;
+      //self.moveRight(row, col-2);
       break;
   }
   return this.board;

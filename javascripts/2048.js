@@ -47,13 +47,20 @@ Game.prototype.randTile = function() {
   var i_board = arr[randNum][0];
   var j_board = arr[randNum][1];
 
-    if (Math.floor((Math.random() * 10) + 1) == 7) {
-      this.board[i_board][j_board] = 4;
-    } else { this.board[i_board][j_board] = 2; }
-  // return this.board;
+  if (Math.floor((Math.random() * 10) + 1) == 7) {
+    this.board[i_board][j_board] = 4;
+  } else {
+    this.board[i_board][j_board] = 2;
+  }
   var val = this.board[i_board][j_board];
   $('#gameboard').append('<div class="tile" data-row="r'+i_board+'" data-col="c'+j_board+'" data-val="'+ val +'">'+ val +'</div>');
+
   return [i_board, j_board];
+};
+
+Game.prototype.selectTile = function(row, col, value) {
+  var $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"][data-val="' + value + '"]');
+  return $tile;
 };
 
 Game.prototype.moveTile = function(direction) {
@@ -90,158 +97,149 @@ Game.prototype.moveTile = function(direction) {
   }
 };
 
-Game.prototype.moveLeft = function(tile) {
-  // tile[0] is the row
-  // tile[1] is the column position
-  self = this;
-  var $tile;
-  var row = tile[0];
-  var col = tile[1];
-  var value = this.board[row][col];
-  var newCol;
-  $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
-  var board_row = this.board[tile[0]];
-  for(var j=0; j < col; j++) {
-    if (board_row[j] === 0) {
-      newCol = j;
-      this.board[row][j] = value;
-      this.board[row][col] = 0;
-      break;
-    }
-  }
-  $tile.attr('data-col', 'c' + newCol);
-  return [row, newCol];
-  //return this.board;
-};
-
-Game.prototype.moveBoardLeft = function() {
-  self = this;
-  for (var row=0; row < 4; row++) {
-    for (var col=0; col < 4; col++) {
-      self.moveLeft([row, col]);
-    }
-  }
-  return this.board;
-};
-
-Game.prototype.selectTile = function(row, col, value) {
-  //console.log("row = " + row)
-  //console.log("col = " + col)
-  console.log(col)
-  var $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"][data-val="' + value + '"]');
-  return $tile;
-};
-
-
-Game.prototype.collideLeft = function(row, col) {
-  self = this;
-  //var $tile1;
-  //var $tile2;
-  // self = this;
-  // for (var brow = 0; brow < 4; brow++) {
-  //   var row = this.board[brow];
-  //   for (var x = 0; x < 4; x++) {
-  //     //console.log(row[x-1]);
-  //     if ((row[x] === row[x+1]) && row[x] !== 0) {
-  var value = this.board[row][col];
-  var value2 = this.board[row][col+1];
-  $tile1 = self.selectTile(row, col, value);
-  $tile2 = self.selectTile(row, col+1, value2);
-  this.board[row][col] = (value + value2);
-  $tile1.attr('data-val', this.board[row][col]);
-  $tile1.html(this.board[row][col]);
-  $tile2.remove();
-  //self.scoring(row[x]);
-  this.board[row][col+1] = 0;
-  switch(col) {
-    case 0:
-      self.moveRight([row, col+2]);
-      self.moveRight([row, col+3]);
-      break;
-    case 1:
-      self.moveRight([row, col+2]);
-      break;
-    }
-  return this.board;
-};
-
-Game.prototype.collideBoardLeft = function() {
-  self = this;
-  for (var brow = 0; brow < 4; brow++) {
-    var row = this.board[brow];
-    for (var x = 0; x < 4; x++) {
-      //console.log(row[x-1]);
-      if ((row[x] === row[x+1]) && row[x] !== 0) {
-        self.collideLeft(brow, x);
-      }
-    }
-  }
-  console.log(this.board);
-  return this.board;
-};
-
-
-Game.prototype.moveRight = function(tile) {
-  // tile[0] is the row
-  // tile[1] is the column position
-  var $tile;
-  var newCol;
-  var row = tile[0];
-  var col = tile[1];
-  var value = this.board[row][col];
-  var board_row = this.board[tile[0]];
-  $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
-
-  for(var j= 3; j > col; j--) {
-    if (board_row[j] === 0) {
-      newCol = j;
-      this.board[row][j] = value;
-      this.board[row][col] = 0;
-      break;
-    }
-  }
-  $tile.attr('data-col', 'c' + newCol);
-  return [row, newCol];
-};
-
-Game.prototype.moveBoardRight = function() {
-  self = this;
-  for (var row=0; row < 4; row++) {
-    for (var col=3; col >= 0; col--) {
-      array = self.moveRight([row, col]);
-    }
-  }
-  return this.board;
-};
-
-
-Game.prototype.collideRight = function() {
-  self = this;
-  for (var brow = 0; brow < 4; brow++) {
-    var row = this.board[brow];
-    for (var x = 3; x > 0; x--) {
-      //console.log(row[x-1]);
-      if ((row[x] === row[x-1]) && row[x] !== 0) {
-        row[x] = (row[x] + row[x-1]);
-
-        $tile1 = self.selectTile(brow, x);
-        $tile2 = self.selectTile(brow, x-1);
-        self.scoring(row[x]);
-        row[x-1] = 0;
-        switch(x) {
-          case 3:
-            self.moveRight([brow, x-2]);
-            self.moveRight([brow, x-3]);
-            break;
-          case 2:
-            self.moveRight([brow, x-2]);
-            break;
-          }
-        }
-    }
-  }
-  return this.board;
-};
+// Game.prototype.moveLeft = function(tile) {
+//   // tile[0] is the row
+//   // tile[1] is the column position
+//   self = this;
+//   var $tile;
+//   var row = tile[0];
+//   var col = tile[1];
+//   var value = this.board[row][col];
+//   var newCol;
+//   $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
+//   var board_row = this.board[tile[0]];
+//   for(var j=0; j < col; j++) {
+//     if (board_row[j] === 0) {
+//       newCol = j;
+//       this.board[row][j] = value;
+//       this.board[row][col] = 0;
+//       break;
+//     }
+//   }
+//   $tile.attr('data-col', 'c' + newCol);
+//   return [row, newCol];
+//   //return this.board;
+// };
+//
+// Game.prototype.moveBoardLeft = function() {
+//   self = this;
+//   for (var row=0; row < 4; row++) {
+//     for (var col=0; col < 4; col++) {
+//       self.moveLeft([row, col]);
+//     }
+//   }
+//   return this.board;
+// };
+//
+// Game.prototype.collideLeft = function(row, col) {
+//   self = this;
+//   //var $tile1;
+//   //var $tile2;
+//   // self = this;
+//   // for (var brow = 0; brow < 4; brow++) {
+//   //   var row = this.board[brow];
+//   //   for (var x = 0; x < 4; x++) {
+//   //     //console.log(row[x-1]);
+//   //     if ((row[x] === row[x+1]) && row[x] !== 0) {
+//   var value = this.board[row][col];
+//   var value2 = this.board[row][col+1];
+//   $tile1 = self.selectTile(row, col, value);
+//   $tile2 = self.selectTile(row, col+1, value2);
+//   this.board[row][col] = (value + value2);
+//   $tile1.attr('data-val', this.board[row][col]);
+//   $tile1.html(this.board[row][col]);
+//   $tile2.remove();
+//   //self.scoring(row[x]);
+//   this.board[row][col+1] = 0;
+//   switch(col) {
+//     case 0:
+//       self.moveRight([row, col+2]);
+//       self.moveRight([row, col+3]);
+//       break;
+//     case 1:
+//       self.moveRight([row, col+2]);
+//       break;
+//     }
+//   return this.board;
+// };
+//
+// Game.prototype.collideBoardLeft = function() {
+//   self = this;
+//   for (var brow = 0; brow < 4; brow++) {
+//     var row = this.board[brow];
+//     for (var x = 0; x < 4; x++) {
+//       //console.log(row[x-1]);
+//       if ((row[x] === row[x+1]) && row[x] !== 0) {
+//         self.collideLeft(brow, x);
+//       }
+//     }
+//   }
+//   console.log(this.board);
+//   return this.board;
+// };
+//
+//
+// Game.prototype.moveRight = function(tile) {
+//   // tile[0] is the row
+//   // tile[1] is the column position
+//   var $tile;
+//   var newCol;
+//   var row = tile[0];
+//   var col = tile[1];
+//   var value = this.board[row][col];
+//   var board_row = this.board[tile[0]];
+//   $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
+//
+//   for(var j= 3; j > col; j--) {
+//     if (board_row[j] === 0) {
+//       newCol = j;
+//       this.board[row][j] = value;
+//       this.board[row][col] = 0;
+//       break;
+//     }
+//   }
+//   $tile.attr('data-col', 'c' + newCol);
+//   return [row, newCol];
+// };
+//
+// Game.prototype.moveBoardRight = function() {
+//   self = this;
+//   for (var row=0; row < 4; row++) {
+//     for (var col=3; col >= 0; col--) {
+//       array = self.moveRight([row, col]);
+//     }
+//   }
+//   return this.board;
+// };
+//
+//
+// Game.prototype.collideRight = function() {
+//   self = this;
+//   for (var brow = 0; brow < 4; brow++) {
+//     var row = this.board[brow];
+//     for (var x = 3; x > 0; x--) {
+//       //console.log(row[x-1]);
+//       if ((row[x] === row[x-1]) && row[x] !== 0) {
+//         row[x] = (row[x] + row[x-1]);
+//
+//         $tile1 = self.selectTile(brow, x);
+//         $tile2 = self.selectTile(brow, x-1);
+//         self.scoring(row[x]);
+//         row[x-1] = 0;
+//         switch(x) {
+//           case 3:
+//             self.moveRight([brow, x-2]);
+//             self.moveRight([brow, x-3]);
+//             break;
+//           case 2:
+//             self.moveRight([brow, x-2]);
+//             break;
+//           }
+//         }
+//     }
+//   }
+//   return this.board;
+// };
 
 
 Game.prototype.moveDown = function(tile) {
@@ -301,7 +299,7 @@ Game.prototype.collideDown = function() {
 
 
 Game.prototype.moveUp = function(row, col) {
-  self = this;
+  //self = this;
   var $tile;
   var value = this.board[row][col];
   $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
@@ -334,10 +332,10 @@ Game.prototype.collideUp = function(row, col) {
   $tile1 = self.selectTile(row, col, value);
   $tile2 = self.selectTile(row+1, col, value2);
   this.board[row][col] = (value + value2);
+  this.board[row+1][col] = 0;
   $tile1.attr('data-val', this.board[row][col]);
   $tile1.html(this.board[row][col]);
   $tile2.remove();
-  this.board[row+1][col] = 0;
   switch(row) {
     case 0:
       $tile3 = self.selectTile(2, col, this.board[2][col]);
