@@ -6,7 +6,7 @@ var Game = function() {
 
 Game.prototype.scoring = function(value) {
   this.score += value;
-  if (this.score == 2048) {
+  if (this.value == 2048) {
     this.win = true;
   }
 };
