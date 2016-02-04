@@ -21,6 +21,7 @@ Game.prototype.startGame = function () {
   this.board = [];
   this.score = 0;
   $('#score').html(this.score);
+  $('#high_score').html(this.highScore);
   this.addTile();
   this.addTile();
 };
