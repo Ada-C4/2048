@@ -24,7 +24,22 @@ Game.prototype.addRandomTile = function(){
   var startNumArray = [2,2,2,2,2,2,4];
   var randTile = startNumArray[Math.floor(Math.random()*startNumArray.length)];
   this.board[randIndex[0]][randIndex[1]] = randTile;
-}
+  var $tile = $('<div class="tile"></div>');
+  if (randTile === 2) {
+    $("#gameboard").append($tile);
+    $tile.attr("data-row", ("r" + randIndex[0]));
+    $tile.attr("data-col", ("c" + randIndex[1]));
+    $tile.attr("data-val", ("2"));
+    $tile.html("2");
+  }
+  if (randTile === 4) {
+    $("#gameboard").append($tile);
+    $tile.attr("data-row", ("r" + randIndex[0]));
+    $tile.attr("data-col", ("c" + randIndex[1]));
+    $tile.attr("data-val", ("4"));
+    $tile.html("4");
+  }
+};
 
 Game.prototype.getPositions = function(){
   var tileRows = $(".tile").map(function(){
@@ -205,17 +220,16 @@ Game.prototype.moveDown = function() {
 };
 
 Game.prototype.displayBoard = function() {
-    // board[r][c]
-  // <div id="gameboard">
-  // <div class="tile" data-row="r1", data-col="c1" data-val="2">2</div>
-
-  // for (var i = 0; i < $(".tile").length; i++){
-  //   var dataColumn = $(".tile").attr("data-col").slice(1);
-  //       var dataInt = parseInt(dataColumn, 10);
-  //       if(dataInt < 3){
-  //         dataInt += 1;
-  //       }
-  //       $(".tile")[i].setAttribute("data-col", ("c" + dataInt));
+  // var self = this;
+  // if (self.moveLeft) {
+  //   for (var i = 0; i < $(".tile").length; i++){
+  //     var dataColumn = $(".tile").attr("data-col").slice(1);
+  //         var dataInt = parseInt(dataColumn, 10);
+  //         if(dataInt < 3){
+  //           dataInt += 1;
+  //         }
+  //         $(".tile")[i].setAttribute("data-col", ("c" + dataInt));
+  //     }
   //   }
 };
 
@@ -223,7 +237,6 @@ $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
   var game = new Game();
-  console.log(game.board);
   $('body').keydown(function(event){
     console.log(game.board);
     var arrows = [37, 38, 39, 40];
@@ -231,6 +244,7 @@ $(document).ready(function() {
       var tile = $('.tile');
       game.moveTile(tile, event.which);
       game.addRandomTile();
+      game.displayBoard();
     }
   });
 });
