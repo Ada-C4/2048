@@ -10,7 +10,7 @@ html {
 }
 
 .scorebox {
-  margin-left: 102px;
+  margin-left: 167px;
   width: 150px;
   height: 100px;
   text-align: center;
@@ -25,6 +25,7 @@ html {
 
 .score-val {
   font-size: 32px;
+  margin-top: -10px;
 }
 
 .header {
