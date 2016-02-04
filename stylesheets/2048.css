@@ -10,6 +10,38 @@ h1 {
   color: #776e65;
 }
 
+.gameover {
+  color: #fdd785;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #776e65;
+  text-align: center;
+  vertical-align: bottom;
+  height: 300px;
+  font-size: 2.5em;
+}
+
+.btn {
+  display: block;
+  margin: auto;
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  -webkit-box-shadow: 3px 3px 3px #666666;
+  -moz-box-shadow: 3px 3px 3px #666666;
+  box-shadow: 3px 3px 3px #666666;
+  font-family: Arial;
+  color: #423d42;
+  font-size: 25px;
+  background: #fdd785;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #fae9c3;
+  text-decoration: none;
+}
+
 #gameboard {
   background: #bbada0;
   border-radius: 0.5rem;
@@ -17,6 +49,21 @@ h1 {
   margin: 1rem auto;
   position: relative;
   width: 18.5rem;
+}
+
+#game-message{
+  display: none;
+  background: #bbada0;
+  opacity: 0.7;
+  filter: alpha(opacity=70); /* For IE8 and earlier */
+  border-radius: 0.5rem;
+  height: 18.5rem;
+  position: absolute;
+  width: 18.5rem;
+  z-index: 1000;
+  -webkit-animation: fade-in 800ms ease 1200ms;
+  -moz-animation: fade-in 800ms ease 1200ms;
+  animation: fade-in 800ms ease 1200ms;
 }
 
 #reset {

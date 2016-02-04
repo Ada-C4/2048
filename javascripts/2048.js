@@ -15,6 +15,7 @@ var Tile = function (row, col, val) {
 };
 
 Game.prototype.startGame = function () {
+  $('#game-message').fadeOut();
   $('.tile').remove();
   this.gameOver = false;
   this.gameWon = false;
@@ -51,7 +52,7 @@ Game.prototype.checkGameOver = function () {
       }
     }
     this.gameOver = true;
-    console.log(this.gameOver);
+    $('#game-message').fadeIn();
   }
 };
 
@@ -277,6 +278,9 @@ $(document).ready(function() {
     }  
   });
   $('#reset').click(function () {
+    game.startGame();
+  });
+  $('button').click(function () {
     game.startGame();
   });
 
