@@ -41,22 +41,11 @@ Game.prototype.checkGameOver = function () {
     for (var val in groupedTiles) {
       var tiles = groupedTiles[val];
       for (var i=0; i < tiles.length; i++) {
-        var oddCol = tiles[i].col % 2 === 1;
-        var colMod;
-        if (oddCol) {
-          colMod = 1;
-        } else {
-          colMod = 0;
-        }
-        var oddRow = tiles[i].row % 2 === 1;
-        var rowMod;
-        if (oddRow) {
-          rowMod = 1;
-        } else {
-          rowMod = 0;
-        }
         var match = _.find(tiles, function(tile) {
-          return (tile.row === tiles[i].row && tile.col % 2 === colMod) || (tile.col === tiles[i].col && tile.row % 2 === rowMod); 
+          return (tiles[i].row === tile.row && 
+            (tiles[i].col == tile.col + 1 || tiles[i].col == tile.col - 1)) || 
+            (tiles[i].col === tile.col && 
+            (tiles[i].row == tile.row + 1 || tiles[i].row == tile.row - 1)); 
         });
         if (match) { return; }
       }
@@ -68,12 +57,13 @@ Game.prototype.checkGameOver = function () {
 
 
 Game.prototype.addTile = function () {
-  var tilePlaced = false;
-  var currentTiles = [];
-  this.board.forEach(function (tile) {
-    currentTiles.push([tile.row, tile.col]);
-  });
-  while (!tilePlaced) {
+  if (this.board.length < 16) {
+    var tilePlaced = false;
+    var currentTiles = [];
+    this.board.forEach(function (tile) {
+      currentTiles.push([tile.row, tile.col]);
+    });
+    while (!tilePlaced) {
       var col =  Math.floor(Math.random() * (4 - 0)),
           row =  Math.floor(Math.random() * (4 - 0));
       var sameTile = _.find(this.board, function(tile) { return tile.col === col && tile.row === row; });
@@ -84,6 +74,7 @@ Game.prototype.addTile = function () {
         var $tileHTML = $('<div class="tile" id="' + newTile.tileId + '" data-row="r'+ row +'", data-col="c'+ col +'" data-val="2">2</div>');
         $('#gameboard').append($tileHTML);
       }
+    }
   }
 };
 
@@ -254,6 +245,7 @@ Game.prototype.moveTile = function(tile, direction) {
       alert('Game won!');
     }
   }
+  this.checkGameOver();
 };
 
 Game.prototype.updateGameOver = function(){
@@ -264,16 +256,17 @@ $(document).ready(function() {
   var game = new Game();
   game.startGame();
   $('body').keydown(function(event){
-    var arrows = [37, 38, 39, 40];
-    if (arrows.indexOf(event.which) > -1) {
-      var tile = $('.tile');
-      game.moveTile(tile, event.which);
-      $('#score').html('Score: ' + game.score);
-    }
-
+    if (!game.gameOver) {
+      var arrows = [37, 38, 39, 40];
+      if (arrows.indexOf(event.which) > -1) {
+        var tile = $('.tile');
+        game.moveTile(tile, event.which);
+        $('#score').html('Score: ' + game.score);
+      }
+    }  
+  });
   $('#reset').click(function () {
     game.startGame();
   });
 
-  });
 });
