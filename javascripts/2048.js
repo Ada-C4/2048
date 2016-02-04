@@ -111,18 +111,44 @@ Game.prototype.calcMoveAmt = function(oldCol,newCol) {
 
 // used inside the moveTiles function
 Game.prototype.updateBoard = function(arr,rowIndex) {
+  var brd = this.board[rowIndex];
   switch(arr.length) {
     case 1:
-      this.board[rowIndex] = [arr[0],0,0,0];
+      brd = [arr[0],0,0,0];
       break;
     case 2:
-      this.board[rowIndex] = [arr[0],arr[1],0,0];
+      if (arr[0] === arr[1]) {
+        brd = [(arr[0] + arr[1]),0,0,0];
+      } else {
+        brd = [arr[0],arr[1],0,0];
+      }
       break;
     case 3:
-      this.board[rowIndex] = [arr[0],arr[1],arr[2],0];
+      console.log("board before: " + brd);
+      console.log("array: " + arr);
+      if (arr[0] === arr[1]) {
+        brd = [(arr[0] + arr[1]), arr[2],0,0];
+      } else if (arr[1] === arr[2]) {
+        brd = [arr[0],(arr[1] + arr[2]),0,0];
+      } else {
+        brd = [arr[0],arr[1],arr[2],0];
+      };
+      console.log("board after: " + brd);
       break;
     case 4:
-      this.board[rowIndex] = arr;
+      if (arr[0] == arr[1]) {
+        if (arr[2] == arr[3]){
+          brd = [(arr[0] + arr[1]), (arr[2] + arr[3]), 0,0];
+        } else {
+          brd = [(arr[0] + arr[1]),arr[2], arr[3], 0];
+        }
+      } else if (arr[1] === arr[2]) {
+        brd = [arr[0], (arr[1] + arr[2]), arr[3], 0];
+      } else if (arr[2] == arr[3]) {
+        brd = [arr[0], arr[1], (arr[2] + arr[3]), 0];
+      } else {
+        brd = arr;
+      }
       break;
   }
 };
