@@ -35,7 +35,7 @@ h1 {
   width: 250px;
   padding: 10px;
   font-weight: bold;
-  bottom: 50px;
+  bottom: 100px;
 }
 
 .header {
@@ -43,8 +43,8 @@ h1 {
 */  margin: 0 auto;
   width: 500px;
   margin-bottom: 0px;
-/*  height: 200px;
-*/}
+  height: 200px;
+}
 
 .score-container, .high-score-container {
   position: relative;
