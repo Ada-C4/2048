@@ -287,7 +287,7 @@ Game.prototype.collideUp = function(row, col) {
   var $tile2 = self.selectTile(row+1, col, value2);
   this.board[row][col] = (value + value2);
   this.board[row+1][col] = 0;
-  $tile2.attr('data-row', row);
+  $tile2.attr('data-row', 'r' + row);
   setTimeout(function() {
     $tile1.attr('data-val', self.board[row][col]);
     $tile1.html(self.board[row][col]);
@@ -363,7 +363,7 @@ Game.prototype.collideDown = function(row, col) {
   this.board[row][col] = (value + value2);
   this.board[row-1][col] = 0;
   console.log($tile2)
-  $tile2.attr('data-row', row);
+  $tile2.attr('data-row', 'r' + row);
   console.log($tile2)
   setTimeout(function() {
     $tile1.attr('data-val', self.board[row][col]);
