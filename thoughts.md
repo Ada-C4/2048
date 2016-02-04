@@ -23,6 +23,12 @@ Tile movement and combination occurs simultaneously with all rows or columns cor
 Random Tile Appearance
 * After each directional key is pressed, a tile with a value of either two or 4 will appear randomly in an empty space on the game board.
 
+Steps to make this happen:
+Generate a tile("value")
+Check the board for empty spots(if any of the spots in the array ==== 0)
+Use two nested loops to select a random empty spot on the board and select the value
+
+
 // Returns a random integer between min (included) and max (included)
 // Using Math.round() will give you a non-uniform distribution!
 function getRandomIntInclusive(min, max) {
@@ -31,14 +37,20 @@ function getRandomIntInclusive(min, max) {
 
 //The Math.floor() function returns the largest integer less than or equal to a given number.
 
-function randomTwoorFour(2, 4){
-  return Math.floor(Math.random())
+function randomGameBoardIndex(min, max){
+  return Math.floor(Math.random()(put an asterisk)(max-min+1)+min));
 }
+randomGameBoardIndex(0, 15);
 
-* Turn Sequence
+myArray = [2, 4];
+var rand = myArray[Math.floor(Math.random() * myArray.length)];
+
+* Turn Sequence of functions
 Key Press
 Tile Slide
 Tile Combination
+Tile Slide
 Increment Score
 Check for conditions to determine end of game
+Check for 2048 tile
 If EOG is false, Generate Random Tile
