@@ -65,19 +65,28 @@ Game.prototype.selectTile = function(row, col, value) {
 
 Game.prototype.moveTile = function(direction) {
   // Game method here
-  board = this.board;
-  self = this;
+  var board = this.board;
+  var self = this;
       switch(direction) {
         case 38: //up
           self.moveBoardUp();
-          self.collideBoardUp();
-          self.randTile();
+          setTimeout(function() {
+            self.collideBoardUp();
+          }, 200);
+          setTimeout(function() {
+            self.randTile();
+          }, 400);
+
           console.log('up');
           break;
         case 40: //down
           self.moveBoardDown();
-          self.collideBoardDown();
-          self.randTile();
+          setTimeout(function() {
+            self.collideBoardDown();
+          }, 200);
+          setTimeout(function() {
+            self.randTile();
+          }, 200);
           console.log('down');
           break;
         case 37: //left
@@ -261,7 +270,7 @@ Game.prototype.moveUp = function(row, col) {
 };
 
 Game.prototype.moveBoardUp = function() {
-  self = this;
+  var self = this;
   for (var row = 1; row < 4; row++) {
     for (var col = 0; col < 4; col++) {
       self.moveUp(row, col);
@@ -271,29 +280,33 @@ Game.prototype.moveBoardUp = function() {
 };
 
 Game.prototype.collideUp = function(row, col) {
-  self = this;
+  var self = this;
   var value = this.board[row][col];
   var value2 = this.board[row+1][col];
-  $tile1 = self.selectTile(row, col, value);
-  $tile2 = self.selectTile(row+1, col, value2);
+  var $tile1 = self.selectTile(row, col, value);
+  var $tile2 = self.selectTile(row+1, col, value2);
   this.board[row][col] = (value + value2);
   this.board[row+1][col] = 0;
-  $tile1.attr('data-val', this.board[row][col]);
-  $tile1.html(this.board[row][col]);
-  $tile2.remove();
+  $tile2.attr('data-row', row);
+  setTimeout(function() {
+    $tile1.attr('data-val', self.board[row][col]);
+    $tile1.html(self.board[row][col]);
+    $tile2.remove();
+  }, 200);
+
   switch(row) {
     case 0:
-      $tile3 = self.selectTile(2, col, this.board[2][col]);
-      $tile4 = self.selectTile(3, col, this.board[3][col]);
+      var $tile3 = self.selectTile(2, col, this.board[2][col]);
+      var $tile4 = self.selectTile(3, col, this.board[3][col]);
       $tile3.attr('data-row', 'r' + 1);
       $tile4.attr('data-row', 'r' + 2);
       this.board[1][col] = this.board[2][col];
       this.board[2][col] = this.board[3][col];
       this.board[3][col] = 0;
-  //    self.moveUp([row+3, col]);
+
       break;
     case 1:
-      $tile5 = self.selectTile(3, col, this.board[3][col]);
+      var $tile5 = self.selectTile(3, col, this.board[3][col]);
       $tile5.attr('data-row', 'r' + 2);
       this.board[2][col] = this.board[3][col];
       this.board[3][col] = 0;
@@ -303,7 +316,8 @@ Game.prototype.collideUp = function(row, col) {
 };
 
 Game.prototype.collideBoardUp = function() {
-self = this;
+var self = this;
+var board = this.board;
 for (var row = 0; row < 3 ; row++) {
   for (var col = 0; col < 4; col++) {
     if (( board[row][col] === board[row+1][col]) && (board[row][col] !== 0)) {
@@ -331,7 +345,7 @@ Game.prototype.moveDown = function(row, col) {
 };
 
 Game.prototype.moveBoardDown = function() {
-  self = this;
+  var self = this;
   for (var row = 2; row >= 0; row--) {
     for (var col = 0; col < 4; col++) {
       self.moveDown(row, col);
@@ -341,20 +355,26 @@ Game.prototype.moveBoardDown = function() {
 };
 
 Game.prototype.collideDown = function(row, col) {
-  self = this;
+  var self = this;
   var value = this.board[row][col];
   var value2 = this.board[row-1][col];
-  $tile1 = self.selectTile(row, col, value);
-  $tile2 = self.selectTile(row-1, col, value2);
+  var $tile1 = self.selectTile(row, col, value);
+  var $tile2 = self.selectTile(row-1, col, value2);
   this.board[row][col] = (value + value2);
   this.board[row-1][col] = 0;
-  $tile1.attr('data-val', this.board[row][col]);
-  $tile1.html(this.board[row][col]);
-  $tile2.remove();
+  console.log($tile2)
+  $tile2.attr('data-row', row);
+  console.log($tile2)
+  setTimeout(function() {
+    $tile1.attr('data-val', self.board[row][col]);
+    $tile1.html(self.board[row][col]);
+    $tile2.remove();
+  }, 200);
+
   switch(row) {
     case 3:
-      $tile3 = self.selectTile(1, col, this.board[1][col]);
-      $tile4 = self.selectTile(0, col, this.board[0][col]);
+      var $tile3 = self.selectTile(1, col, this.board[1][col]);
+      var $tile4 = self.selectTile(0, col, this.board[0][col]);
       $tile3.attr('data-row', 'r' + 2);
       $tile4.attr('data-row', 'r' + 1);
       this.board[2][col] = this.board[1][col];
@@ -362,7 +382,7 @@ Game.prototype.collideDown = function(row, col) {
       this.board[0][col] = 0;
       break;
     case 2:
-      $tile5 = self.selectTile(0, col, this.board[0][col]);
+      var $tile5 = self.selectTile(0, col, this.board[0][col]);
       $tile5.attr('data-row', 'r' + 1);
       this.board[1][col] = this.board[0][col];
       this.board[0][col] = 0;
@@ -372,7 +392,8 @@ Game.prototype.collideDown = function(row, col) {
 };
 
 Game.prototype.collideBoardDown = function() {
-self = this;
+var self = this;
+var board = this.board;
 for (var row = 3; row > 0 ; row--) {
   for (var col = 0; col < 4; col++) {
     if (( board[row][col] === board[row-1][col]) && (board[row][col] !== 0)) {
@@ -397,6 +418,3 @@ $(document).ready(function() {
 
   });
 });
-//
-var game = new Game();
-var f = game.randTile();

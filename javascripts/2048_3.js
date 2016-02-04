@@ -34,8 +34,6 @@ Game.prototype.selectTile = function(row, col, value) {
 
 
 Game.prototype.moveDown = function(row, col) {
-//self = this;
-//console.log("This is working")
   var $tile;
   var value = this.board[row][col];
   $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
@@ -66,8 +64,6 @@ Game.prototype.collideDown = function(row, col) {
   self = this;
   var value = this.board[row][col];
   var value2 = this.board[row-1][col];
-  console.log(value)
-  console.log(value2)
   $tile1 = self.selectTile(row, col, value);
   $tile2 = self.selectTile(row-1, col, value2);
   this.board[row][col] = (value + value2);
@@ -106,27 +102,7 @@ for (var row = 3; row > 0 ; row--) {
 }
 return this.board;
 };
-//   for (var bcol = 0; bcol < 4 ; bcol++) {
-//     for (var row = 3; row > 0; row--) {
-//       //console.log(row[x-1]);
-//       if (( board[row][bcol] === board[row-1][bcol]) && board[row][bcol] !== 0) {
-//         board[row][bcol] = (board[row][bcol] + board[row-1][bcol]);
-//         self.scoring(board[row][bcol]);
-//         board[row-1][bcol] = 0;
-//         switch(row) {
-//           case 3:
-//             self.moveDown([row-2, bcol]);
-//             self.moveDown([row-3, bcol]);
-//             break;
-//           case 2:
-//             self.moveDown([row-2, bcol]);
-//             break;
-//           }
-//         }
-//     }
-//   }
-//   return this.board;
-// };
+
 
 Game.prototype.moveTile = function(direction) {
 // Game method here
