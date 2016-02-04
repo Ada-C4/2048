@@ -20,7 +20,10 @@ h1 {
 }
 
 #reset {
-  color: #F9F6F2;
+  color: #FFFFFF;
+  background-color: #8F7A66;
+  width: 250px;
+  padding: 10px;
 }
 
 .header {
@@ -31,7 +34,7 @@ h1 {
 
 .score-container {
   background-color: #BBADA0;
-  width: 125px;
+  width: 80px;
   padding: 5px;
   font-weight: bold;
   color: #EEE4DA;
@@ -48,7 +51,7 @@ h1 {
 .score {
   padding: 5px;
   margin-top: 25px;
-  color: #;
+  color: #FFFFFF;
 }
 
 .cell {
