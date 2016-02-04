@@ -75,9 +75,9 @@ Game.prototype.moveTile = function(direction) {
           console.log('up');
           break;
         case 40: //down
-          // self.moveBoardDown();
-          // self.collideDown();
-          // self.randTile();
+          self.moveBoardDown();
+          self.collideBoardDown();
+          self.randTile();
           console.log('down');
           break;
         case 37: //left
@@ -242,61 +242,6 @@ Game.prototype.moveTile = function(direction) {
 // };
 
 
-Game.prototype.moveDown = function(tile) {
-  var $tile;
-  var newRow;
-  var row = tile[0];
-  var col = tile[1];
-  var value = this.board[row][col];
-  $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
-  for(var i = 3; i > row ; i--) {
-    if ((this.board[i][col]) === 0) {
-      newRow = i;
-      this.board[i][col] = value;
-      this.board[row][col] = 0;
-      break;
-    }
-  }
-  $tile.attr('data-row', 'r' + newRow);
-  return this.board;
-};
-
-Game.prototype.moveBoardDown = function() {
-  self = this;
-  for (var row = 2; row >= 0; row--) {
-    for (var col = 0; col < 4; col++) {
-      self.moveDown([row, col]);
-    }
-  }
-  return this.board;
-};
-
-
-Game.prototype.collideDown = function() {
-  self = this;
-  board = this.board;
-  for (var bcol = 0; bcol < 4 ; bcol++) {
-    for (var row = 3; row > 0; row--) {
-      //console.log(row[x-1]);
-      if (( board[row][bcol] === board[row-1][bcol]) && board[row][bcol] !== 0) {
-        board[row][bcol] = (board[row][bcol] + board[row-1][bcol]);
-        self.scoring(board[row][bcol]);
-        board[row-1][bcol] = 0;
-        switch(row) {
-          case 3:
-            self.moveDown([row-2, bcol]);
-            self.moveDown([row-3, bcol]);
-            break;
-          case 2:
-            self.moveDown([row-2, bcol]);
-            break;
-          }
-        }
-    }
-  }
-  return this.board;
-};
-
 
 Game.prototype.moveUp = function(row, col) {
   //self = this;
@@ -355,7 +300,7 @@ Game.prototype.collideUp = function(row, col) {
       break;
   }
   return this.board;
-}
+};
 
 Game.prototype.collideBoardUp = function() {
 self = this;
@@ -367,8 +312,76 @@ for (var row = 0; row < 3 ; row++) {
   }
 }
 return this.board;
-}
+};
 
+Game.prototype.moveDown = function(row, col) {
+  var $tile;
+  var value = this.board[row][col];
+  $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
+  if (this.board[row][col] !== 0) {
+    for(var i = 3; i > row; i--) {
+      if ((this.board[i][col]) === 0) {
+        this.board[i][col] = value;
+        $tile.attr('data-row', 'r' + i);
+        this.board[row][col] = 0;
+        break;
+      }
+    }
+  }
+};
+
+Game.prototype.moveBoardDown = function() {
+  self = this;
+  for (var row = 2; row >= 0; row--) {
+    for (var col = 0; col < 4; col++) {
+      self.moveDown(row, col);
+    }
+  }
+  return this.board;
+};
+
+Game.prototype.collideDown = function(row, col) {
+  self = this;
+  var value = this.board[row][col];
+  var value2 = this.board[row-1][col];
+  $tile1 = self.selectTile(row, col, value);
+  $tile2 = self.selectTile(row-1, col, value2);
+  this.board[row][col] = (value + value2);
+  this.board[row-1][col] = 0;
+  $tile1.attr('data-val', this.board[row][col]);
+  $tile1.html(this.board[row][col]);
+  $tile2.remove();
+  switch(row) {
+    case 3:
+      $tile3 = self.selectTile(1, col, this.board[1][col]);
+      $tile4 = self.selectTile(0, col, this.board[0][col]);
+      $tile3.attr('data-row', 'r' + 2);
+      $tile4.attr('data-row', 'r' + 1);
+      this.board[2][col] = this.board[1][col];
+      this.board[1][col] = this.board[0][col];
+      this.board[0][col] = 0;
+      break;
+    case 2:
+      $tile5 = self.selectTile(0, col, this.board[0][col]);
+      $tile5.attr('data-row', 'r' + 1);
+      this.board[1][col] = this.board[0][col];
+      this.board[0][col] = 0;
+      break;
+  }
+  return this.board;
+};
+
+Game.prototype.collideBoardDown = function() {
+self = this;
+for (var row = 3; row > 0 ; row--) {
+  for (var col = 0; col < 4; col++) {
+    if (( board[row][col] === board[row-1][col]) && (board[row][col] !== 0)) {
+      self.collideDown(row, col);
+    }
+  }
+}
+return this.board;
+};
 
 $(document).ready(function() {
   console.log("ready to go!");
