@@ -261,15 +261,12 @@ $(document).ready(function() {
   var game = new Game();
   game.startGame();
   $('body').keydown(function(event){
-<<<<<<< HEAD
     var directions = [37, 38, 39, 40, 87, 65, 83, 68];
     if (directions.indexOf(event.which) > -1) {
       var tile = $('.tile');
       game.moveTile(tile, event.which);
       $('#score').html('Score: ' + game.score);
     }
-
-=======
     if (!game.gameOver) {
       var arrows = [37, 38, 39, 40];
       if (arrows.indexOf(event.which) > -1) {
@@ -279,7 +276,6 @@ $(document).ready(function() {
       }
     }  
   });
->>>>>>> 4e288d516cf275f18767aaeb39c932f135ee067c
   $('#reset').click(function () {
     game.startGame();
   });
