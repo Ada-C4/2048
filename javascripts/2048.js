@@ -1,6 +1,7 @@
 var Game = function() {
   // Game logic and initialization here
-  this.gameBoard = [[0, 2, 0, 0], [0, 2, 0, 0], [4, 4, 4, 0], [0, 0, 0, 0]];
+  this.gameBoard = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+  this.gameLost = false;
 };
 
 $(document).ready(function() {
@@ -28,25 +29,32 @@ Game.prototype.moveTile = function(tile, direction) {
       self.upMoveTiles();
       self.upTileCollision();
       self.upMoveTiles();
+      // add new random tile
+      self.isGameLost(); // what should happen on backend if game is lost?
       break;
     case 40: //down
       console.log('down');
       self.downMoveTiles();
       self.downTileCollision();
       self.downMoveTiles();
+      // add new random tile
+      self.isGameLost();
       break;
     case 37: //left
       console.log('left');
       self.leftMoveTiles();
       self.leftTileCollision();
       self.leftMoveTiles();
+      // add new random tile
+      self.isGameLost();
       break;
     case 39: //right
       console.log('right');
       self.rightMoveTiles();
       self.rightTileCollision();
       self.rightMoveTiles();
-      console.log(self.gameBoard);
+      // add new random tile
+      self.isGameLost();
       break;
   }
 };
@@ -197,4 +205,35 @@ Game.prototype.rightTileCollision = function(){
       }
     }
   }
+};
+
+Game.prototype.flattenNums = function() {
+  var flattened = this.gameBoard.reduce(function(a, b) {
+    return a.concat(b);
+  }, []);
+  return flattened;
+};
+
+Game.prototype.isGameLost = function() {
+  // check if any number in flattened game board is 0
+  var flattenedNums = this.flattenNums(), isGameLost = true, self = this;
+  for (var i = 0; i < flattenedNums.length; i++) {
+    if (flattenedNums[i] === 0) {
+      isGameLost = false;
+    }
+  }
+
+  // check if any tiles can be combined with the tile to the right, or below
+  for (var m = 0; m <= 3; m++) {
+    for (var j = 0; j <= 3; j++) {
+      if (self.gameBoard[m][j] === self.gameBoard[m][j + 1]){
+        isGameLost = false;
+      }
+      if (self.gameBoard[m + 1] !== undefined && self.gameBoard[m][j] === self.gameBoard[m + 1][j]) {
+        isGameLost = false;
+      }
+    }
+  }
+  self.gameLost = isGameLost;
+  return isGameLost;
 };
