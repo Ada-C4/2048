@@ -119,6 +119,7 @@ Game.prototype.setValsByDim = function(dim, index, values) {
 Game.prototype.smash = function(valsIn) {
   if (valsIn.length === 0) { return [ [], [] ]; }
   var valsOut = [valsIn[0]];
+// puts 0 in new array at index 0;
   var indicesOut = [0];
   var alreadySmashed = false;
   for (var i = 1; i < valsIn.length; i++) {
@@ -158,6 +159,7 @@ Game.prototype.moveColumnUp = function(columnIndex) {
 // smash values (like [2,2])
   var valsandIndicesOut = this.smash(valsIn);
   console.log(valsandIndicesOut);
+//below begins the unsmashing;
   var valsOut = valsandIndicesOut[0];
   var indicesOut = valsandIndicesOut[1];
   this.setValsByDim("col", columnIndex, valsOut);
@@ -186,6 +188,7 @@ Game.prototype.moveColumnUp = function(columnIndex) {
       console.log(tileQuery);
       console.log(tileQuery[0]);
       tileQuery[0].setAttribute("data-row", ("r" + indicesOut[i]));
+//will use this later to prevent a tile from appearing when nothing has moved;
       this.hasMoved = true;
     }
   }
@@ -283,7 +286,8 @@ Game.prototype.moveColumnDown = function(columnIndex) {
     }
   }
 };
-
+/// this is all the code from Left function but should be copying colDown
+//make this work for right;
 Game.prototype.moveRowRight = function(rowIndex) {
   console.log("moving column " + rowIndex);
   var valsAndIndicesIn = this.getValsByDim("row", rowIndex);
