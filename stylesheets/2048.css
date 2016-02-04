@@ -7,6 +7,11 @@ h1 {
   font-size: 100px;
 }
 
+#score {
+  text-align: center;
+  font-size: 40px;
+}
+
 #gameboard {
   background: #bbada0;
   border-radius: 0.5rem;
