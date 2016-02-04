@@ -34,6 +34,7 @@ Game.prototype.selectTile = function(row, col, value) {
 };
 
 Game.prototype.moveLeft = function(row,col) {
+  console.log("move left is about to happen")
   var $tile;
   var value = this.board[row][col];
   $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
@@ -46,10 +47,11 @@ Game.prototype.moveLeft = function(row,col) {
       break;
     }
   }
-  return [row, col];
+  console.log(this.board)
 };
 
 Game.prototype.moveRight = function(row,col) {
+  console.log("move right is about to happen")
   var $tile;
   var value = this.board[row][col];
   $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
@@ -62,26 +64,34 @@ Game.prototype.moveRight = function(row,col) {
       break;
     }
   }
-  return [row, col];
+  console.log(this.board)
 };
 
 Game.prototype.moveBoardLeft = function() {
+  console.log("move board left is about to happen")
   self = this;
   for (var row=0; row < 4; row++) {
-    for (var col=0; col < 4; col++) {
-      self.moveLeft(row, col);
+    for (var col=1; col < 4; col++) {
+      if (this.board[row][col] !== 0) {
+        self.moveLeft(row, col);
+      }
     }
   }
+  console.log(this.board)
   return this.board;
 };
 
 Game.prototype.moveBoardRight = function() {
+  console.log("move board right is about to happen")
   self = this;
   for (var row=0; row < 4; row++) {
     for (var col=3; col >= 0; col--) {
-      self.moveRight(row, col);
+      if (this.board[row][col] !== 0) {
+        self.moveRight(row, col);
+      }
     }
   }
+  console.log(this.board)
   return this.board;
 };
 
@@ -92,22 +102,34 @@ Game.prototype.collideLeft = function(row, col) {
   $tile1 = self.selectTile(row, col, value);
   $tile2 = self.selectTile(row, col+1, value2);
   this.board[row][col] = (value + value2);
+  this.board[row][col+1] = 0;
   $tile2.attr('data-col', col);
   setTimeout(function() {
     $tile1.attr('data-val', this.board[row][col]);
     $tile1.html(this.board[row][col]);
+    console.log("This is tile 1");
+    console.log($tile1);
     $tile2.remove();
   }, 200);
-  this.board[row][col+1] = 0;
+
   switch(col) {
     case 0:
-      self.moveLeft(row, col+2);
-      self.moveLeft(row, col+3);
+      console.log("case 0 is breaking it on collide left")
+      if (this.board[row][col+2] !== 0) {
+        self.moveLeft(row, col+2);
+      }
+      if (this.board[row][col+3] !== 0) {
+        self.moveLeft(row, col+3);
+      }
+      console.log(this.board)
       break;
     case 1:
+      console.log("case 0 is breaking it on collide left")
       self.moveLeft(row, col+2);
+      console.log(this.board)
       break;
     }
+  console.log(this.board)
   return this.board;
 };
 
@@ -118,37 +140,50 @@ Game.prototype.collideRight = function(row, col) {
   $tile1 = self.selectTile(row, col, value);
   $tile2 = self.selectTile(row, col-1, value2);
   this.board[row][col] = (value + value2);
+  this.board[row][col-1] = 0;
   $tile2.attr('data-col', col);
   $tile1.attr('data-val', this.board[row][col]);
   $tile1.html(this.board[row][col]);
   $tile2.remove();
-  this.board[row][col+1] = 0;
+
   switch(col) {
     case 3:
-      self.moveRight(row, col-2);
-      self.moveRight(row, col-3);
+      console.log("case 3 is breaking it on collide right")
+      if (this.board[row][col-2] !== 0) {
+        self.moveRight(row, col-2);
+      }
+      if (this.board[row][col-3] !== 0) {
+        self.moveRight(row, col-3);
+      }
+      console.log(this.board)
       break;
     case 2:
+      console.log("case 2 is breaking it on collide right")
       self.moveRight(row, col-2);
+      console.log(this.board)
       break;
   }
+  console.log(this.board);
   return this.board;
 };
 
 Game.prototype.collideBoardLeft = function() {
+  console.log("collide board left is about to happen")
   self = this;
   for (var brow = 0; brow < 4; brow++) {
     var row = this.board[brow];
     for (var x = 0; x < 4; x++) {
-      if ((row[x] === row[x+1]) && row[x] !== 0) {
+      if ((row[x] === row[x+1]) && (row[x] !== 0)) {
         self.collideLeft(brow, x);
       }
     }
   }
+  console.log(this.board);
   return this.board;
 };
 
 Game.prototype.collideBoardRight = function() {
+  console.log("collide board right is about to happen")
   self = this;
   for (var brow = 0; brow < 4; brow++) {
     var row = this.board[brow];
@@ -158,6 +193,7 @@ Game.prototype.collideBoardRight = function() {
       }
     }
   }
+  console.log(this.board)
   return this.board;
 };
 
@@ -170,13 +206,11 @@ Game.prototype.moveTile = function(direction) {
         // self.moveBoardUp();
         // self.collideUp();
         // self.randTile();
-        console.log('up');
         break;
       case 40: //down
         // self.moveBoardDown();
         // self.collideDown();
         // self.randTile();
-        console.log('down');
         break;
       case 37: //left
         self.moveBoardLeft();
@@ -207,13 +241,16 @@ $(document).ready(function() {
   var game = new Game();
   game.randTile();
   game.randTile();
-  // var test_row = 3
+  // var test_row = 0
   // var test_col1 = 0
   // var test_col2 = 1
+  // var test_col3 = 2
   // game.board[test_row][test_col1] = 2;
   // game.board[test_row][test_col2] = 2;
+  // game.board[test_row][test_col3] = 2;
   // $('#gameboard').append('<div class="tile" data-row="r'+ test_row +'" data-col="c'+ test_col1 +'" data-val="'+ 2 +'">'+ 2 +'</div>');
   // $('#gameboard').append('<div class="tile" data-row="r'+ test_row +'" data-col="c'+ test_col2 +'" data-val="'+ 2 +'">'+ 2 +'</div>');
+  // $('#gameboard').append('<div class="tile" data-row="r'+ test_row +'" data-col="c'+ test_col3 +'" data-val="'+ 2 +'">'+ 2 +'</div>');
 
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
