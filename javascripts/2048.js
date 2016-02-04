@@ -409,6 +409,17 @@ Game.prototype.collideDown = function(row, col) {
   return this.board;
 };
 
+Game.prototype.restart = function() {
+  console.log("in the function")
+  this.board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+  this.score = 0;
+  this.win = false;
+  $("#score").html("Score: " + self.score);
+  $(".tile").remove();
+  this.randTile();
+  this.randTile();
+}
+
 
 
 $(document).ready(function() {
@@ -423,6 +434,10 @@ $(document).ready(function() {
     if (arrows.indexOf(event.which) > -1) {
       game.moveTile(event.which);
     }
+  });
 
+  $('#restart').click(function() {
+    game.restart();
+    console.log(game.board);
   });
 });

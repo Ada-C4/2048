@@ -12,6 +12,14 @@ h1 {
   font-size: 40px;
 }
 
+button {
+  text-align: center;
+  display: block;
+  margin: auto;
+  font-size: 30px;
+  font: normal normal "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
 #gameboard {
   background: #bbada0;
   border-radius: 0.5rem;
