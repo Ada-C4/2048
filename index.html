@@ -8,35 +8,39 @@
     <script type="text/javascript" src="javascripts/2048.js"></script>
   </head>
   <body>
-  	<div class="header">
-			<h1 class="2048">2048</h1>
-			<div class="score-container">
-				<h4 class="score-header">SCORE</h4>
-				<div id="score"></div>
-        <h4 class="score-header">HIGH SCORE</h4>
-        <div id="high_score"></div>
-			</div>
+  	<div id="container">
+          <div class="header">
+      			<h1 class="2048">2048</h1>
+      			<div class="score-container">
+      				<h4 class="score-header">SCORE</h4>
+      				<div id="score"></div>
+            </div>
+            <div class="high-score-container">
+              <h4 class="score-header">BEST</h4>
+              <div id="high_score"></div>
+            </div>
+            <a id="reset">New Game</a>
+    			</div>
+          <div id="gameboard">
+            <div class="cells">
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+              <div class="cell"></div>
+            </div>
+          </div>
   	</div>
-    <a id="reset">New Game</a>
-    <div id="gameboard">
-      <div class="cells">
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-      </div>
-    </div>
   </body>
 </html>
