@@ -2,8 +2,10 @@ var Game = function() {
   // Game logic and initialization here
   this.gameBoard = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
   this.gameLost = false;
+  this.addOneTile();
   this.score = 0;
-};
+}
+
 
 $(document).ready(function() {
   console.log("ready to go!");
