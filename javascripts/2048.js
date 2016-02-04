@@ -1,6 +1,6 @@
 var Game = function() {
   // Game logic and initialization here
-  this.gameBoard = [[0, 2, 0, 0], [0, 2, 0, 0], [0, 4, 4, 0], [0, 0, 4, 0]];
+  this.gameBoard = [[0, 2, 0, 0], [0, 2, 0, 0], [4, 4, 4, 0], [0, 0, 0, 0]];
 };
 
 $(document).ready(function() {
@@ -45,6 +45,7 @@ Game.prototype.moveTile = function(tile, direction) {
       console.log('right');
       self.rightMoveTiles();
       self.rightTileCollision();
+      self.rightMoveTiles();
       console.log(self.gameBoard);
       break;
   }
@@ -187,11 +188,11 @@ Game.prototype.leftTileCollision = function(){
 Game.prototype.rightTileCollision = function(){
   var self = this;
   for (var i = 0; i <= 3; i++) { // iterate through each row
-    for (var j = 0; j < 3; j++) { // iterate through each tile in each row
+    for (var j = 3; j > 0; j--) { // iterate through each tile in each row
       if (self.gameBoard[i][j] > 0) {
-        if (self.gameBoard[i][j + 1] === self.gameBoard[i][j]) {
+        if (self.gameBoard[i][j - 1] === self.gameBoard[i][j]) {
           self.gameBoard[i][j] *= 2;
-          self.gameBoard[i][j + 1] = 0;
+          self.gameBoard[i][j - 1] = 0;
         }
       }
     }
