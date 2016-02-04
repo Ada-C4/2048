@@ -32,7 +32,6 @@ Game.prototype.moveTile = function(tile, direction) {
       self.upMoveTiles();
       self.addOneTile();
       console.log(self.gameBoard);
-      // add new random tile
       self.isGameLost();
       console.log(self.score);
       break;
@@ -43,7 +42,6 @@ Game.prototype.moveTile = function(tile, direction) {
       self.downMoveTiles();
       self.addOneTile();
       console.log(self.gameBoard);
-      // add new random tile
       self.isGameLost();
       break;
     case 37: //left
@@ -53,7 +51,6 @@ Game.prototype.moveTile = function(tile, direction) {
       self.leftMoveTiles();
       self.addOneTile();
       console.log(self.gameBoard);
-      // add new random tile
       self.isGameLost();
       break;
     case 39: //right
@@ -63,7 +60,6 @@ Game.prototype.moveTile = function(tile, direction) {
       self.rightMoveTiles();
       self.addOneTile();
       console.log(self.gameBoard);
-      // add new random tile
       self.isGameLost();
       break;
   }
