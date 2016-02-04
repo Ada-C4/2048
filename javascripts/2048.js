@@ -57,47 +57,47 @@ Game.prototype.moveTile = function(tile, direction) {
   switch(direction) {
     case 38: //up  // subtract from data-row, TODO: if cell is empty (?)
       self.moveUp();
-      // for (var i = 0; i < $(".tile").length; i++){
-      //   var dataRow = $(".tile").attr("data-row").slice(1);
-      //       var dataInt = parseInt(dataRow, 10);
-      //       if(dataInt > 0){
-      //         dataInt = 0;
-      //       }
-      //       $(".tile")[i].setAttribute("data-row", ("r" + dataInt));
-      //   }
+      for (var i = 0; i < $(".tile").length; i++){
+        var dataRow = $(".tile").attr("data-row").slice(1);
+            var dataInt = parseInt(dataRow, 10);
+            if(dataInt > 0){
+              dataInt = 0;
+            }
+            $(".tile")[i].setAttribute("data-row", ("r" + dataInt));
+        }
       break;
     case 40: //down
       self.moveDown();
-      // for (var i = 0; i < $(".tile").length; i++){
-      //   var dataRow = $(".tile").attr("data-row").slice(1);
-      //       var dataInt = parseInt(dataRow, 10);
-      //       if(dataInt < 3){
-      //         dataInt += 1;
-      //       }
-      //       $(".tile")[i].setAttribute("data-row", ("r" + dataInt));
-      //   }
+      for (var i = 0; i < $(".tile").length; i++){
+        var dataRow = $(".tile").attr("data-row").slice(1);
+            var dataInt = parseInt(dataRow, 10);
+            if(dataInt < 3){
+              dataInt += 1;
+            }
+            $(".tile")[i].setAttribute("data-row", ("r" + dataInt));
+        }
       break;
     case 37: //left
       self.moveLeft();
-      // for (var i = 0; i < $(".tile").length; i++){
-      //   var dataColumn = $(".tile").attr("data-col").slice(1);
-      //       var dataInt = parseInt(dataColumn, 10);
-      //       if(dataInt > 0){
-      //         dataInt -= 1;
-      //       }
-      //       $(".tile")[i].setAttribute("data-col", ("c" + dataInt));
-      // }
+      for (var i = 0; i < $(".tile").length; i++){
+        var dataColumn = $(".tile").attr("data-col").slice(1);
+            var dataInt = parseInt(dataColumn, 10);
+            if(dataInt > 0){
+              dataInt -= 1;
+            }
+            $(".tile")[i].setAttribute("data-col", ("c" + dataInt));
+      }
       break;
     case 39: //right
       self.moveRight();
-      // for (var i = 0; i < $(".tile").length; i++){
-      //   var dataColumn = $(".tile").attr("data-col").slice(1);
-      //       var dataInt = parseInt(dataColumn, 10);
-      //       if(dataInt < 3){
-      //         dataInt += 1;
-      //       }
-      //       $(".tile")[i].setAttribute("data-col", ("c" + dataInt));
-      //   }
+      for (var i = 0; i < $(".tile").length; i++){
+        var dataColumn = $(".tile").attr("data-col").slice(1);
+            var dataInt = parseInt(dataColumn, 10);
+            if(dataInt < 3){
+              dataInt += 1;
+            }
+            $(".tile")[i].setAttribute("data-col", ("c" + dataInt));
+        }
       break;
   }
 };
@@ -220,17 +220,7 @@ Game.prototype.moveDown = function() {
 };
 
 Game.prototype.displayBoard = function() {
-  // var self = this;
-  // if (self.moveLeft) {
-  //   for (var i = 0; i < $(".tile").length; i++){
-  //     var dataColumn = $(".tile").attr("data-col").slice(1);
-  //         var dataInt = parseInt(dataColumn, 10);
-  //         if(dataInt < 3){
-  //           dataInt += 1;
-  //         }
-  //         $(".tile")[i].setAttribute("data-col", ("c" + dataInt));
-  //     }
-  //   }
+
 };
 
 $(document).ready(function() {
