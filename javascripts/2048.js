@@ -60,31 +60,12 @@ Game.prototype.moveTiles = function(tiles, direction) {
   }
 };
 
-// Game.prototype.animateTiles = function(tileArray, boardCopy) {
-//   for (var i = 0; i < tileArray.length; i++) {
-//     var oldColumn = tileArray[i].dataset.col.charAt(1);
-//     var tileRow = tileArray[i].dataset.row.charAt(1);
-//     // moveTo should be the index of the column that we are going to move the tile to
-//     var newColumn = 0;
-//     var colDiff = oldColumn - newColumn;
-//     if (oldColumn > 0) {
-//       tileArray[i].dataset.col = "c" + (oldColumn - colDiff);
-//       var moveAmt = (135 * colDiff);
-//       tileArray[i].animate({left: '-=' + moveAmt + 'px'}, 50);
-//     }
-//   }
-// };
 
 Game.prototype.animateTiles = function(tiles) {
   var tileArray = this.sortTiles(tiles);
-  console.log("the board is " + this.board);
-  console.log(" tileArray is" + tileArray);
   for (var i = 0; i < tileArray.length; i++) {
     if (tileArray[i] !== 0) {
       var tileRow = tileArray[i].dataset.row.charAt(1);
-      console.log("oldTileRow: " + oldTileRow);
-      console.log("tileRow: " + tileRow);
-      console.log("j: " + j);
       if (oldTileRow != tileRow) {
       var j = 0;
       }
@@ -105,7 +86,7 @@ Game.prototype.animateTiles = function(tiles) {
             // move tile[i] to position of this.board[tileRow][i]
             tileArray[i].dataset.col = "c" + j;
             // and reassign the value to be this.board[tileRow][i]
-            tileArray[i].dataset.val = this.board[tileRow][i];
+            // tileArray[i].dataset.val = this.board[tileRow][i];
           }
         }
         else {
@@ -116,10 +97,7 @@ Game.prototype.animateTiles = function(tiles) {
         }
       }
     var oldTileRow = tileRow;
-    console.log("j is " + j);
-    console.log("tileArray[i] is " + tileArray[i]);
-    console.log("expression is " + (j !== undefined && tileArray[i] !== 0));
-    if (j !=undefined && tileArray[i] !== 0) {
+    if (j !== undefined && tileArray[i] !== 0) {
       j++;
     }
   }
