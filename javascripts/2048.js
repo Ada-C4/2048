@@ -6,6 +6,19 @@ var Game = function() {
   this.availableSquares = 15;
 };
 
+Game.prototype.sortTiles = function(tiles) {
+  var arrayOfArrays = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+  for (var i = 0; i < tiles.length; i ++) {
+    var tileRow = parseInt(tiles[i].dataset.row.charAt(1));
+    var tileCol = parseInt(tiles[i].dataset.col.charAt(1));
+    arrayOfArrays[tileRow][tileCol] = tiles[i];
+  }
+  var flattened = arrayOfArrays.reduce(function(a, b) {
+    return a.concat(b);
+  });
+  return flattened;
+};
+
 Game.prototype.moveTiles = function(tiles, direction) {
   // Game method here
   var currentRow = parseInt(tiles[0].dataset.row.charAt(1));
@@ -134,10 +147,15 @@ $(document).ready(function() {
   // randomly assign two tiles
   game.createRandomTile();
   game.createRandomTile();
+  game.createRandomTile();
+  game.createRandomTile();
+  game.createRandomTile();
+  var tiles = $('.tile');
+  console.log(game.sortTiles(tiles));
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
-      var tiles = $('.tile');
+    //   var tiles = $('.tile');
       game.moveTiles(tiles, event.which);
     }
   });
