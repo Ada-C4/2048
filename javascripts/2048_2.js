@@ -33,9 +33,7 @@ Game.prototype.selectTile = function(row, col, value) {
 };
 
 Game.prototype.moveLeft = function(row,col) {
-  // tile[0] is the row
-  // tile[1] is the column position
-  self = this;
+  //self = this;
   var $tile;
   var value = this.board[row][col];
   var newCol;
@@ -52,11 +50,39 @@ Game.prototype.moveLeft = function(row,col) {
   return [row, newCol];
 };
 
+Game.prototype.moveRight = function(row,col) {
+  //self = this;
+  var $tile;
+  var value = this.board[row][col];
+  var newCol;
+  $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
+  var board_row = this.board[row];
+  for(var j= 3; j > col; j--) {
+    if (board_row[j] === 0) {
+      this.board[row][j] = value;
+      $tile.attr('data-col', 'c' + j);
+      this.board[row][col] = 0;
+      break;
+    }
+  }
+  return [row, newCol];
+};
+
 Game.prototype.moveBoardLeft = function() {
   self = this;
   for (var row=0; row < 4; row++) {
     for (var col=0; col < 4; col++) {
       self.moveLeft(row, col);
+    }
+  }
+  return this.board;
+};
+
+Game.prototype.moveBoardRight = function() {
+  self = this;
+  for (var row=0; row < 4; row++) {
+    for (var col=3; col >= 0; col--) {
+      self.moveRight(row, col);
     }
   }
   return this.board;
@@ -85,14 +111,49 @@ Game.prototype.collideLeft = function(row, col) {
   return this.board;
 };
 
+Game.prototype.collideRight = function(row, col) {
+  self = this;
+  var value = this.board[row][col];
+  var value2 = this.board[row][col-1];
+  $tile1 = self.selectTile(row, col, value);
+  $tile2 = self.selectTile(row, col-1, value2);
+  this.board[row][col] = (value + value2);
+  $tile1.attr('data-val', this.board[row][col]);
+  $tile1.html(this.board[row][col]);
+  $tile2.remove();
+  this.board[row][col+1] = 0;
+  switch(col) {
+    case 3:
+      self.moveRight(row, col-2);
+      self.moveRight(row, col-3);
+      break;
+    case 2:
+      self.moveRight(row, col-2);
+      break;
+  }
+  return this.board;
+};
+
 Game.prototype.collideBoardLeft = function() {
   self = this;
   for (var brow = 0; brow < 4; brow++) {
     var row = this.board[brow];
     for (var x = 0; x < 4; x++) {
-      //console.log(row[x-1]);
       if ((row[x] === row[x+1]) && row[x] !== 0) {
         self.collideLeft(brow, x);
+      }
+    }
+  }
+  return this.board;
+};
+
+Game.prototype.collideBoardRight = function() {
+  self = this;
+  for (var brow = 0; brow < 4; brow++) {
+    var row = this.board[brow];
+    for (var x = 3; x >= 0; x--) {
+      if ((row[x] === row[x-1]) && row[x] !== 0) {
+        self.collideRight(brow, x);
       }
     }
   }
@@ -117,14 +178,14 @@ Game.prototype.moveTile = function(direction) {
         console.log('down');
         break;
       case 37: //left
-        self.moveBoardLeft();
-        self.collideBoardLeft();
+        //self.moveBoardLeft();
+        //self.collideBoardLeft();
         //self.randTile();
         console.log('left');
         break;
       case 39: //right
-        // self.moveBoardRight();
-        // self.collideRight();
+        self.moveBoardRight();
+        self.collideBoardRight();
         // self.randTile();
         console.log('right');
         //this.moveRight(tile);
@@ -138,10 +199,13 @@ $(document).ready(function() {
   var game = new Game();
   //game.randTile();
   //game.randTile();
-  game.board[1][1] = 2;
-  game.board[1][3] = 2;
-  $('#gameboard').append('<div class="tile" data-row="r'+ 1 +'" data-col="c'+ 1 +'" data-val="'+ 2 +'">'+ 2 +'</div>');
-  $('#gameboard').append('<div class="tile" data-row="r'+ 1 +'" data-col="c'+ 3 +'" data-val="'+ 2 +'">'+ 2 +'</div>');
+  var test_row = 3
+  var test_col1 = 0
+  var test_col2 = 1
+  game.board[test_row][test_col1] = 2;
+  game.board[test_row][test_col2] = 2;
+  $('#gameboard').append('<div class="tile" data-row="r'+ test_row +'" data-col="c'+ test_col1 +'" data-val="'+ 2 +'">'+ 2 +'</div>');
+  $('#gameboard').append('<div class="tile" data-row="r'+ test_row +'" data-col="c'+ test_col2 +'" data-val="'+ 2 +'">'+ 2 +'</div>');
 
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
