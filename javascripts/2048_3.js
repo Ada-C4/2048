@@ -141,21 +141,21 @@ self = this;
 $(document).ready(function() {
   console.log("ready to go!");
   var game = new Game();
-  //game.randTile();
-  //game.randTile();
-  col = 2;
-  rowo =3;
-  row2 = 1;
-  row3 = 0;
-  row4 = 2;
-  game.board[rowo][col] = 2;
-  game.board[row2][col] = 2;
-  game.board[row4][col] = 2;
-  game.board[row3][col] = 2;
-  $('#gameboard').append('<div class="tile" data-row="r'+ rowo +'" data-col="c'+ col +'" data-val="'+ 2 +'">'+ 2 +'</div>');
-  $('#gameboard').append('<div class="tile" data-row="r'+ row2 +'" data-col="c'+ col +'" data-val="'+ 2 +'">'+ 2 +'</div>');
-  $('#gameboard').append('<div class="tile" data-row="r'+ row3 +'" data-col="c'+ col +'" data-val="'+ 2 +'">'+ 2 +'</div>');
-  $('#gameboard').append('<div class="tile" data-row="r'+ row4 +'" data-col="c'+ col +'" data-val="'+ 2 +'">'+ 2 +'</div>');
+  game.randTile();
+  game.randTile();
+  // col = 2;
+  // rowo =3;
+  // row2 = 1;
+  // row3 = 0;
+  // row4 = 2;
+  // game.board[rowo][col] = 2;
+  // game.board[row2][col] = 2;
+  // game.board[row4][col] = 2;
+  // game.board[row3][col] = 2;
+  // $('#gameboard').append('<div class="tile" data-row="r'+ rowo +'" data-col="c'+ col +'" data-val="'+ 2 +'">'+ 2 +'</div>');
+  // $('#gameboard').append('<div class="tile" data-row="r'+ row2 +'" data-col="c'+ col +'" data-val="'+ 2 +'">'+ 2 +'</div>');
+  // $('#gameboard').append('<div class="tile" data-row="r'+ row3 +'" data-col="c'+ col +'" data-val="'+ 2 +'">'+ 2 +'</div>');
+  // $('#gameboard').append('<div class="tile" data-row="r'+ row4 +'" data-col="c'+ col +'" data-val="'+ 2 +'">'+ 2 +'</div>');
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
