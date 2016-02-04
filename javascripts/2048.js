@@ -127,6 +127,7 @@ Game.prototype.moveBoardLeft = function() {
 Game.prototype.selectTile = function(row, col, value) {
   //console.log("row = " + row)
   //console.log("col = " + col)
+  console.log(col)
   var $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"][data-val="' + value + '"]');
   return $tile;
 };
@@ -175,7 +176,7 @@ Game.prototype.collideBoardLeft = function() {
       }
     }
   }
-  console.log(this.board)
+  console.log(this.board);
   return this.board;
 };
 
@@ -222,6 +223,7 @@ Game.prototype.collideRight = function() {
       //console.log(row[x-1]);
       if ((row[x] === row[x-1]) && row[x] !== 0) {
         row[x] = (row[x] + row[x-1]);
+
         $tile1 = self.selectTile(brow, x);
         $tile2 = self.selectTile(brow, x-1);
         self.scoring(row[x]);
