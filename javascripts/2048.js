@@ -318,75 +318,75 @@ Game.prototype.isMoveAvailable = function(tile, direction) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (row[1] - 1 >= 0) {
-          if ((this.board[row[1] - 1][column[1]] == 0) || (this.board[row[1] - 1][column[1]] == this.board[row[1]][column[1]])) {
+          if ((this.board[row[1] - 1][column[1]] === 0) || (this.board[row[1] - 1][column[1]] == this.board[row[1]][column[1]])) {
             move.push(true);
           } else {
             move.push(false);
           }
         }
       }
-      if (move.includes(true)){ 
+      if (move.includes(true)){
         return true;
       } else {
         return false;
-      };
+      }
       break;
     case 40: //down
-      var move = [];
-      for (var i = 0; i < tile.length; i++) {
+      move = [];
+      for (i = 0; i < tile.length; i++) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (parseInt(row[1]) + 1 <= 3) {
-          if ((this.board[parseInt(row[1]) + 1][column[1]] == 0) || (this.board[parseInt(row[1]) + 1][column[1]] == this.board[parseInt(row[1])][column[1]])) {
+          if ((this.board[parseInt(row[1]) + 1][column[1]] === 0) || (this.board[parseInt(row[1]) + 1][column[1]] == this.board[parseInt(row[1])][column[1]])) {
             move.push(true);
           } else {
             move.push(false);
           }
         }
       }
-      if (move.includes(true)){ 
+      if (move.includes(true)){
         return true;
       } else {
         return false;
-      };
+      }
       break;
     case 37: //left
-      var move = [];
-      for (var i = 0; i < tile.length; i++) {
+      move = [];
+      for (i = 0; i < tile.length; i++) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (column[1] - 1 >= 0) {
-          if ((this.board[row[1]][column[1] - 1] == 0) || (this.board[row[1]][column[1] - 1] == this.board[row[1]][column[1]])) {
+          if ((this.board[row[1]][column[1] - 1] === 0) || (this.board[row[1]][column[1] - 1] == this.board[row[1]][column[1]])) {
             move.push(true);
           } else {
             move.push(false);
           }
         }
       }
-      if (move.includes(true)){ 
+      if (move.includes(true)){
         return true;
       } else {
         return false;
-      };
+      }
       break;
     case 39: //right
-      var move = [];
-      for (var i = 0; i < tile.length; i++) {
+      move = [];
+      for (i = 0; i < tile.length; i++) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
         if (parseInt(column[1]) + 1 <= 3) {
-          if ((this.board[row[1]][parseInt(column[1]) + 1] == 0) || (this.board[row[1]][parseInt(column[1]) + 1] == this.board[row[1]][parseInt(column[1])])) {
+          if ((this.board[row[1]][parseInt(column[1]) + 1] === 0) || (this.board[row[1]][parseInt(column[1]) + 1] == this.board[row[1]][parseInt(column[1])])) {
             move.push(true);
           } else {
             move.push(false);
           }
         }
       }
-      if (move.includes(true)){ 
+      if (move.includes(true)){
         return true;
       } else {
         return false;
-      };
+      }
       break;
   }
 };
@@ -418,7 +418,7 @@ $(document).ready(function() {
         }
         setTimeout(function() { game.newTile(); }, 200);
       } else if (game.gameOver() && !(game.isMoveAvailable(tile, 37) || game.isMoveAvailable(tile, 38) || game.isMoveAvailable(tile, 39) || game.isMoveAvailable(tile, 40))) {
-        game.gameOverAlert(); 
+        game.gameOverAlert();
       }
     }
   });
