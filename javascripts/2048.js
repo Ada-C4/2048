@@ -96,29 +96,53 @@ Game.prototype.moveLeft = function() {
     var emptyCols = [];
     var filledCols = {};
     for (var c = 0; c < 4; c++) {
-      //if c is empty, store c position in an array
+      //if content is empty, store c position in an array
       if (board[r][c] === 0) {
-        // store in 0s array
         emptyCols.push(c);
-      } else  {   // if c not empty
-        if(filledCols.hasOwnProperty(board[r][c])){ //if the filledCols contains a key matching content
-          // at position of previous matching content, the content doubles
-          board[r][filledCols[board[r][c]]] = 2 * (board[r][c]);
-          //filledCols old key = new key
-          filledCols[board[r][filledCols[board[r][c]]]] = filledCols[board[r][c]];
-          // delete filledCols old key
-          delete filledCols[board[r][c]];
-          //empty col where content was
-          board[r][c] = 0;
-        } else {
-          // put in filledCols
-          filledCols[board[r][c]]= c;    // filledCols[content]= [c index]
-          if(emptyCols.length){ //shift content to the left as far as possible up to index c0
-            // if there are empty spaces before c, shift to the left
+      } else  {   // if content not empty
+        if(filledCols.hasOwnProperty(board[r][c])){ //if current content matches a previous content
+          //if prev matching content is adjacent to current content
+          if(filledCols[board[r][c]] === (c - 1)){
+            //merge
+            board[r][filledCols[board[r][c]]] = 2 * (board[r][c]);
+            //filledCols old key = new key,  then delete filledCols old key
+            filledCols[board[r][filledCols[board[r][c]]]] = filledCols[board[r][c]];
+            delete filledCols[board[r][c]];
+            //empty col where content was
+            board[r][c] = 0;
+            // add current c to emptyCols
+            emptyCols.push(c);
+          //not adjacent, but only empty cols between
+        } else if(((filledCols[board[r][c]] === (c - 2)) && emptyCols.includes(c-1)) ||
+          ((filledCols[board[r][c]] === (c - 3))  &&  emptyCols.includes(1, 2)  )){
+            //merge, same process as above if statement
+            board[r][filledCols[board[r][c]]] = 2 * (board[r][c]);
+            filledCols[board[r][filledCols[board[r][c]]]] = filledCols[board[r][c]];
+            delete filledCols[board[r][c]];
+            board[r][c] = 0;
+            emptyCols.push(c);
+          // not adjacent, there is a filledCol between matching and current, & possibly an empty space
+          } else {
+            if(emptyCols.includes(c-1)){
+              var index = emptyCols.indexOf(c-1);
+              board[r][c-1] = board[r][c]; //content replaces the empty col to the left of it
+              filledCols[board[r][c]]= emptyCols[index]; //add/update filledCols
+              emptyCols.splice(index, 1); //delete that entry in the empty array
+              board[r][c] = 0; //empty col where content was
+              emptyCols.push(c); //add current c to emptyCols
+            } else {
+              filledCols[board[r][c]]= c; //add to filledCols
+            }
+          }
+        } else { //if content unique to row so far
+          if(emptyCols.length){ //if empty cols before current, shift over
             board[r][emptyCols[0]] = board[r][c]; //content moves to leftmost empty col
             filledCols[board[r][c]]= emptyCols[0];
             emptyCols.shift(); //delete that entry in the empty array
             board[r][c] = 0; //empty col where content was
+            emptyCols.push(c); //add current c to emptyCols
+          } else {
+            filledCols[board[r][c]]= c; //add to filledCols
           }
         }
       }
