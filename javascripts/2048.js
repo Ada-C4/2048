@@ -251,6 +251,9 @@ Game.prototype.moveTile = function(tile, direction) {
     }
   }
   this.checkGameOver();
+  if (this.score > this.highScore) { 
+    this.highScore = this.score; 
+  }
 };
 
 Game.prototype.updateGameOver = function(){
@@ -258,21 +261,17 @@ Game.prototype.updateGameOver = function(){
 
 $(document).ready(function() {
   // Any interactive jQuery functionality
-  var game = new Game();
+  var tile,
+      game = new Game();
   game.startGame();
   $('body').keydown(function(event){
-    var directions = [37, 38, 39, 40, 87, 65, 83, 68];
-    if (directions.indexOf(event.which) > -1) {
-      var tile = $('.tile');
-      game.moveTile(tile, event.which);
-      $('#score').html('Score: ' + game.score);
-    }
     if (!game.gameOver) {
-      var arrows = [37, 38, 39, 40];
-      if (arrows.indexOf(event.which) > -1) {
-        var tile = $('.tile');
+      var directions = [37, 38, 39, 40, 87, 65, 83, 68];
+      if (directions.indexOf(event.which) > -1) {
+        tile = $('.tile');
         game.moveTile(tile, event.which);
         $('#score').html('Score: ' + game.score);
+        $('#high_score').html('Score: ' + game.highScore);
       }
     }  
   });
