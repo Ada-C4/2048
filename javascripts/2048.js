@@ -5,12 +5,11 @@ var Game = function() {
 
 var tileCount = 0;
 
-var Tile = function (row, col) {
+var Tile = function (row, col, val) {
   // make new Tiles
   this.row = row;
   this.col = col;
-  // update so it can also be 4
-  this.val = 2;
+  this.val = val;
   this.moveCount = 0;
   this.tileId = String(tileCount++);
 };
@@ -57,9 +56,11 @@ Game.prototype.checkGameOver = function () {
 
 
 Game.prototype.addTile = function () {
+  var valArray = [2, 2, 2, 2, 2, 2, 2, 2, 2, 4];
   if (this.board.length < 16) {
-    var tilePlaced = false;
-    var currentTiles = [];
+    var tilePlaced = false,
+        val = valArray[Math.floor(Math.random() * 10)],
+        currentTiles = [];
     this.board.forEach(function (tile) {
       currentTiles.push([tile.row, tile.col]);
     });
@@ -69,9 +70,9 @@ Game.prototype.addTile = function () {
       var sameTile = _.find(this.board, function(tile) { return tile.col === col && tile.row === row; });
       if (!sameTile) {
         tilePlaced = true;
-        newTile = new Tile(row, col);
+        newTile = new Tile(row, col, val);
         this.board.push(newTile);
-        var $tileHTML = $('<div class="tile" id="' + newTile.tileId + '" data-row="r'+ row +'", data-col="c'+ col +'" data-val="2">2</div>');
+        var $tileHTML = $('<div class="tile" id="' + newTile.tileId + '" data-row="r'+ row +'", data-col="c'+ col +'" data-val="'+val+'">'+val+'</div>');
         $('#gameboard').append($tileHTML);
       }
     }
