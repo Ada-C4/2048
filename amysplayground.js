@@ -28,9 +28,9 @@ function addOneTile(){
   var openSpots = this.getFreeSpaces();
   var selectedSpot = openSpots[Math.floor(Math.random() * openSpots.length)];
   gameBoard[selectedSpot[0]][selectedSpot[1]] = result;
-  // console.log(selectedSpot);
+  console.log(selectedSpot);
   return result;
 }
-//
-// console.log(getFreeSpaces());
-// console.log(addOneTile());
+
+console.log(getFreeSpaces());
+console.log(addOneTile());
