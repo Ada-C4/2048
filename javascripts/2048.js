@@ -94,19 +94,32 @@ Game.prototype.moveLeft = function() {
   for (var r = 0; r < 4; r++) {
     // go through each column left to right
     var emptyCols = [];
+    var filledCols = {};
     for (var c = 0; c < 4; c++) {
       //if c is empty, store c position in an array
       if (board[r][c] === 0) {
         // store in 0s array
         emptyCols.push(c);
-      }
-      // if c not empty, shift content to the left as far as possible up to index c0
-      if (board[r][c] !== 0) {
-        if(emptyCols.length){
-          // if there are empty spaces before c, shift to the left
-          board[r][emptyCols[0]] = board[r][c]; //content moves to leftmost empty col
-          emptyCols.shift(); //delete that entry in the empty array
-          board[r][c] = 0; //empty col where content was
+      } else  {   // if c not empty
+        if(filledCols.hasOwnProperty(board[r][c])){ //if the filledCols contains a key matching content
+          // at position of previous matching content, the content doubles
+          board[r][filledCols[board[r][c]]] = 2 * (board[r][c]);
+          //filledCols old key = new key
+          filledCols[board[r][filledCols[board[r][c]]]] = filledCols[board[r][c]];
+          // delete filledCols old key
+          delete filledCols[board[r][c]];
+          //empty col where content was
+          board[r][c] = 0;
+        } else {
+          // put in filledCols
+          filledCols[board[r][c]]= c;    // filledCols[content]= [c index]
+          if(emptyCols.length){ //shift content to the left as far as possible up to index c0
+            // if there are empty spaces before c, shift to the left
+            board[r][emptyCols[0]] = board[r][c]; //content moves to leftmost empty col
+            filledCols[board[r][c]]= emptyCols[0];
+            emptyCols.shift(); //delete that entry in the empty array
+            board[r][c] = 0; //empty col where content was
+          }
         }
       }
     }
