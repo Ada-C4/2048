@@ -28,6 +28,7 @@ Game.prototype.moveTile = function(tile, direction) {
       self.upMoveTiles();
       self.upTileCollision();
       self.upMoveTiles();
+      self.isGameLost(); // what should happen on backend if game is lost?
       break;
     case 40: //down
       console.log('down');
@@ -197,4 +198,21 @@ Game.prototype.rightTileCollision = function(){
       }
     }
   }
+};
+
+Game.prototype.flattenNums = function() {
+  var flattened = this.gameBoard.reduce(function(a, b) {
+    return a.concat(b);
+  }, []);
+  return flattened;
+};
+
+Game.prototype.isGameLost = function() {
+  var flattenedNums = this.flattenNums();
+  for (var i = 0; i < flattenedNums.length; i++) {
+    if (flattenedNums[i] === 0) {
+      return false;
+    }
+  }
+  return true;
 };
