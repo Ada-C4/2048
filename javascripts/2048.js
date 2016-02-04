@@ -2,6 +2,7 @@ var Game = function() {
   // Game logic and initialization here
   this.gameBoard = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
   this.gameLost = false;
+  this.addOneTile();
 };
 
 $(document).ready(function() {
