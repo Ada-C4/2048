@@ -27,6 +27,11 @@ Game.prototype.randTile = function() {
   return [i_board, j_board];
 };
 
+Game.prototype.selectTile = function(row, col, value) {
+  var $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"][data-val="' + value + '"]');
+  return $tile;
+};
+
 Game.prototype.moveLeft = function(row,col) {
   // tile[0] is the row
   // tile[1] is the column position
@@ -55,13 +60,6 @@ Game.prototype.moveBoardLeft = function() {
     }
   }
   return this.board;
-};
-
-Game.prototype.selectTile = function(row, col, value) {
-  //console.log("row = " + row)
-  //console.log("col = " + col)
-  var $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"][data-val="' + value + '"]');
-  return $tile;
 };
 
 Game.prototype.collideLeft = function(row, col) {
