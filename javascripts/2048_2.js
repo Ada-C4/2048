@@ -34,7 +34,6 @@ Game.prototype.selectTile = function(row, col, value) {
 };
 
 Game.prototype.moveLeft = function(row,col) {
-  console.log("move left is about to happen")
   var $tile;
   var value = this.board[row][col];
   $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
@@ -47,11 +46,9 @@ Game.prototype.moveLeft = function(row,col) {
       break;
     }
   }
-  console.log(this.board)
 };
 
 Game.prototype.moveRight = function(row,col) {
-  console.log("move right is about to happen")
   var $tile;
   var value = this.board[row][col];
   $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
@@ -64,11 +61,9 @@ Game.prototype.moveRight = function(row,col) {
       break;
     }
   }
-  console.log(this.board)
 };
 
 Game.prototype.moveBoardLeft = function() {
-  console.log("move board left is about to happen")
   self = this;
   for (var row=0; row < 4; row++) {
     for (var col=1; col < 4; col++) {
@@ -77,12 +72,10 @@ Game.prototype.moveBoardLeft = function() {
       }
     }
   }
-  console.log(this.board)
   return this.board;
 };
 
 Game.prototype.moveBoardRight = function() {
-  console.log("move board right is about to happen")
   self = this;
   for (var row=0; row < 4; row++) {
     for (var col=3; col >= 0; col--) {
@@ -91,7 +84,6 @@ Game.prototype.moveBoardRight = function() {
       }
     }
   }
-  console.log(this.board)
   return this.board;
 };
 
@@ -107,29 +99,22 @@ Game.prototype.collideLeft = function(row, col) {
   setTimeout(function() {
     $tile1.attr('data-val', this.board[row][col]);
     $tile1.html(this.board[row][col]);
-    console.log("This is tile 1");
-    console.log($tile1);
     $tile2.remove();
   }, 200);
 
   switch(col) {
     case 0:
-      console.log("case 0 is breaking it on collide left")
       if (this.board[row][col+2] !== 0) {
         self.moveLeft(row, col+2);
-      }
+      };
       if (this.board[row][col+3] !== 0) {
         self.moveLeft(row, col+3);
-      }
-      console.log(this.board)
+      };
       break;
     case 1:
-      console.log("case 0 is breaking it on collide left")
       self.moveLeft(row, col+2);
-      console.log(this.board)
       break;
-    }
-  console.log(this.board)
+    };
   return this.board;
 };
 
@@ -148,27 +133,21 @@ Game.prototype.collideRight = function(row, col) {
 
   switch(col) {
     case 3:
-      console.log("case 3 is breaking it on collide right")
       if (this.board[row][col-2] !== 0) {
         self.moveRight(row, col-2);
       }
       if (this.board[row][col-3] !== 0) {
         self.moveRight(row, col-3);
       }
-      console.log(this.board)
       break;
     case 2:
-      console.log("case 2 is breaking it on collide right")
       self.moveRight(row, col-2);
-      console.log(this.board)
       break;
   }
-  console.log(this.board);
   return this.board;
 };
 
 Game.prototype.collideBoardLeft = function() {
-  console.log("collide board left is about to happen")
   self = this;
   for (var brow = 0; brow < 4; brow++) {
     var row = this.board[brow];
@@ -178,12 +157,10 @@ Game.prototype.collideBoardLeft = function() {
       }
     }
   }
-  console.log(this.board);
   return this.board;
 };
 
 Game.prototype.collideBoardRight = function() {
-  console.log("collide board right is about to happen")
   self = this;
   for (var brow = 0; brow < 4; brow++) {
     var row = this.board[brow];
@@ -193,7 +170,6 @@ Game.prototype.collideBoardRight = function() {
       }
     }
   }
-  console.log(this.board)
   return this.board;
 };
 
