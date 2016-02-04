@@ -50,17 +50,18 @@ Game.prototype.newBoard = function(){
 Game.prototype.moveTile = function(tile, direction) {
   var column;
   var row;
-  var tileToDelete;
   var rowToUpdate;
   var columnToUpdate;
-  var newVal;
-  var updateTile;
+  var tileToDelete;
+  var rowToDelete;
+  var columnToDelete;
 
   switch(direction) {
     case 38: //up
       tile = tile.sort(function(a,b){
         return a.dataset.row[1] - b.dataset.row[1];
       });
+      // move tiles
       for (var i = 0; i < tile.length; i++) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
@@ -74,27 +75,17 @@ Game.prototype.moveTile = function(tile, direction) {
               break;
             }
           }
+          // combine tiles
           if (row[1] - 1 >= 0) {
-            if (this.board[row[1] - 1][column[1]] == tile[i].dataset.val) {
-              //update array board
-              this.board[(row[1] - 1)][column[1]] *= 2;
-              newVal = this.board[(row[1] - 1)][column[1]];
-              this.board[row[1]][column[1]] = 0;
-              //delete extra tile and update value
-              tileToDelete = tile[i];
-              rowToUpdate = (row[1] - 1);
-              columnToUpdate = column[1];
-              // setTimeout(function() {
-                tileToDelete.remove();
-                updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
-                updateTile[0].dataset.val = newVal;
-              // update score
-                this.updateScore(newVal);
-              //  }, 200);
-            }
-          }
+            rowToUpdate = row[1] - 1;
+            columnToUpdate = column[1];
+            tileToDelete = tile[i];
+            rowToDelete = row[1];
+            columnToDelete = column[1];
+            this.combineTile(rowToUpdate, columnToUpdate, tileToDelete, rowToDelete, columnToDelete);
           }
         }
+      }
       break;
     case 40: //down
       tile = Array.from(tile);
@@ -104,6 +95,7 @@ Game.prototype.moveTile = function(tile, direction) {
       for (i = 0; i < tile.length; i++) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
+        // move tiles
         if (parseInt(row[1]) + 1 <= 3) {
           while (this.board[parseInt(row[1]) + 1][column[1]] === 0) {
             this.removeFromBoard(tile[i]);
@@ -114,24 +106,14 @@ Game.prototype.moveTile = function(tile, direction) {
               break;
             }
           }
+          // combine tiles
           if (parseInt(row[1]) + 1 <= 3) {
-            if (this.board[parseInt(row[1]) + 1][column[1]] == tile[i].dataset.val) {
-              //update array board
-              this.board[parseInt(row[1]) + 1][column[1]] *= 2;
-              newVal = this.board[parseInt(row[1]) + 1][column[1]];
-              this.board[row[1]][column[1]] = 0;
-              //delete extra tile and update value
-              tileToDelete = tile[i];
-              rowToUpdate = parseInt(row[1]) + 1;
-              columnToUpdate = column[1];
-              // setTimeout(function() {
-                tileToDelete.remove();
-                updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
-                updateTile[0].dataset.val = newVal;
-              // update score
-                this.updateScore(newVal);
-              //  }, 200);
-            }
+            rowToUpdate = parseInt(row[1]) + 1;
+            columnToUpdate = column[1];
+            tileToDelete = tile[i];
+            rowToDelete = row[1];
+            columnToDelete = column[1];
+            this.combineTile(rowToUpdate, columnToUpdate, tileToDelete, rowToDelete, columnToDelete);
           }
         }
       }
@@ -144,6 +126,7 @@ Game.prototype.moveTile = function(tile, direction) {
       for (i = 0; i < tile.length; i++) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
+        // move tiles
         if (column[1] - 1 >= 0) {
           while (this.board[row[1]][column[1] - 1] === 0) {
             this.removeFromBoard(tile[i]);
@@ -154,24 +137,14 @@ Game.prototype.moveTile = function(tile, direction) {
               break;
             }
           }
+          // combine tiles
           if (column[1] - 1 >= 0) {
-            if (this.board[row[1]][column[1] - 1] == tile[i].dataset.val) {
-              //update array board
-              this.board[row[1]][column[1] - 1] *= 2;
-              newVal = this.board[row[1]][column[1] - 1];
-              this.board[row[1]][column[1]] = 0;
-              //delete extra tile and update value
-              tileToDelete = tile[i];
-              rowToUpdate = row[1];
-              columnToUpdate = column[1] - 1;
-              // setTimeout(function() {
-                tileToDelete.remove();
-                updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
-                updateTile[0].dataset.val = newVal;
-              // update score
-                this.updateScore(newVal);
-              //  }, 200);
-            }
+            rowToUpdate = row[1];
+            columnToUpdate = column[1] - 1;
+            tileToDelete = tile[i];
+            rowToDelete = row[1];
+            columnToDelete = column[1];
+            this.combineTile(rowToUpdate, columnToUpdate, tileToDelete, rowToDelete, columnToDelete);
           }
         }
       }
@@ -184,6 +157,7 @@ Game.prototype.moveTile = function(tile, direction) {
       for (i = 0; i < tile.length; i++) {
         row = tile[i].dataset.row;
         column = tile[i].dataset.col;
+        // move tiles
         if (parseInt(column[1]) + 1 <= 3) {
           while (this.board[row[1]][parseInt(column[1]) + 1] === 0) {
             this.removeFromBoard(tile[i]);
@@ -194,29 +168,34 @@ Game.prototype.moveTile = function(tile, direction) {
               break;
             }
           }
+          // combine tiles
           if (parseInt(column[1]) + 1 <= 3) {
-            if (this.board[row[1]][parseInt(column[1]) + 1] == tile[i].dataset.val) {
-              //update array board
-              this.board[row[1]][parseInt(column[1]) + 1] *= 2;
-              newVal = this.board[row[1]][parseInt(column[1]) + 1];
-              this.board[row[1]][column[1]] = 0;
-              //delete extra tile and update value
-              tileToDelete = tile[i];
-              rowToUpdate = row[1];
-              columnToUpdate = [parseInt(column[1]) + 1];
-              // setTimeout(function() {
-                tileToDelete.remove();
-                updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
-                updateTile[0].dataset.val = newVal;
-              // update score
-                this.updateScore(newVal);
-              //  }, 200);
-            }
+            rowToUpdate = row[1];
+            columnToUpdate = parseInt(column[1]) + 1;
+            tileToDelete = tile[i];
+            rowToDelete = row[1];
+            columnToDelete = column[1];
+            this.combineTile(rowToUpdate, columnToUpdate, tileToDelete, rowToDelete, columnToDelete);
           }
         }
       }
       break;
     }
+};
+
+Game.prototype.combineTile = function(rowToUpdate, columnToUpdate, tile, rowToDelete, columnToDelete) {
+  if (this.board[rowToUpdate][columnToUpdate] == tile.dataset.val) {
+    //update array board
+    this.board[rowToUpdate][columnToUpdate] *= 2;
+    newVal = this.board[rowToUpdate][columnToUpdate];
+    this.board[rowToDelete][columnToDelete] = 0;
+    //delete extra tile and update value
+    tile.remove();
+    updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
+    updateTile[0].dataset.val = newVal;
+    // update score
+    this.updateScore(newVal);
+  }
 };
 
 
@@ -254,6 +233,17 @@ Game.prototype.gameOver = function(){
   var loser;
   var board = this.board;
   var zeros = [];
+  var winner = false;
+
+  for (var i = 0; i < board.length; i++) {
+    for (var j = 0; j < board[i].length; j++) {
+      if (board[i][j] === 0){
+        zeros.push(board[i][j]);
+      } else if (board[i][j] === 2048) {
+        winner = true;
+      }
+    }
+  }
 
   if (zeros.length === 0){
     loser = true;
@@ -276,7 +266,7 @@ Game.prototype.gameWin = function() {
     }
   }
   return winner;
-}
+};
 
 Game.prototype.gameWinAlert = function(){
   swal({
@@ -290,7 +280,7 @@ Game.prototype.gameWinAlert = function(){
   }, function() {
       window.location.reload();
   });
-}
+};
 
 Game.prototype.gameOverAlert = function() {
   swal({
