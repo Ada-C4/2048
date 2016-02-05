@@ -86,6 +86,8 @@ Game.prototype.animateTiles = function(tiles) {
             // move tile[i] to position of this.board[tileRow][i]
             tileArray[i].dataset.col = "c" + j;
             tileArray[i].dataset.val = this.board[tileRow][j];
+            console.log(typeof tileArray[i]);
+            $(tileArray[i]).html(tileArray[i].dataset.val);
             // and reassign the value to be this.board[tileRow][i]
             // tileArray[i].dataset.val = this.board[tileRow][i];
           }
