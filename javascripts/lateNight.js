@@ -52,7 +52,7 @@ Game.prototype.moveTiles = function(direction) {
       break;
     case 40: //down
       for (i = 0; i < this.boardSize; i++) {
-        this.moveColumnDown(i);
+        this.move(i, "col", "away");
       }
       break;
     case 37: //left
@@ -62,7 +62,7 @@ Game.prototype.moveTiles = function(direction) {
       break;
     case 39: //right
     for (i = 0; i < this.boardSize; i++) {
-      this.moveRowRight(i);
+      this.move(i, "row", "away");
     }
       break;
   }
@@ -161,11 +161,24 @@ Game.prototype.move = function(index, dim, vertex) {
   var valsAndIndicesIn = this.getValsByDim(dim, index);
   var valsIn = valsAndIndicesIn[0];
   var indicesIn = valsAndIndicesIn[1];
+
+  if (vertex === "away") {
+    valsIn.reverse();
+    indicesIn.reverse();
+  }
 // smash values (like [2,2])
   var valsandIndicesOut = this.smash(valsIn);
 //below begins the unsmashing;
   var valsOut = valsandIndicesOut[0];
   var indicesOut = valsandIndicesOut[1];
+
+  if (vertex === "away") {
+    while  (valsOut.length != this.boardSize) {
+      valsOut.push(0);
+    }
+    valsOut.reverse();
+    indicesOut = this.reverseIndices(indicesOut);
+  }
   this.setValsByDim(dim, index, valsOut);
   this.display(index, vertex, dim, indicesIn, indicesOut, valsOut);
 };
@@ -195,8 +208,6 @@ Game.prototype.display = function(index, vertex, dim, indicesIn, indicesOut, val
         tileQuery[0].setAttribute("data-val", newVal);
       }
     }
-    // dim = ("col") ? "row" : "col";
-
     if (indicesIn[i] !== indicesOut[i]) {
       if (dim === "col") {
         tileQuery[0].setAttribute("data-row", ("r" + indicesOut[i]));
@@ -205,125 +216,6 @@ Game.prototype.display = function(index, vertex, dim, indicesIn, indicesOut, val
       }
 
 //will use this later to prevent a tile from appearing when nothing has moved;
-      this.hasMoved = true;
-    }
-  }
-};
-
-Game.prototype.moveRowLeft = function(rowIndex) {
-
-  var valsAndIndicesIn = this.getValsByDim("row", rowIndex);
-  var valsIn = valsAndIndicesIn[0];
-  var indicesIn = valsAndIndicesIn[1];
-  var valsandIndicesOut = this.smash(valsIn);
-  var valsOut = valsandIndicesOut[0];
-  var indicesOut = valsandIndicesOut[1];
-  this.setValsByDim("row", rowIndex, valsOut);
-  //loop over indices in and indices out to see if they are the same. if they are, then nothing has moved!
-  for (var i = 0; i < indicesIn.length; i++){
-    var tileQuery = $(tileSelect(rowIndex, indicesIn[i]));
-    //if I am smashed into, delete myself
-    if (i < indicesIn.length - 1) {
-      if (indicesOut[i] === indicesOut[i+1]) {
-        tileQuery[0].remove();
-      }
-    }
-    // if i smashed into someone
-    if (i >= 1) {
-      if (indicesOut[i] === indicesOut[i-1]) {
-        var newVal = valsOut[indicesOut[i]];
-        tileQuery.text(newVal);
-        tileQuery[0].setAttribute("data-val", newVal);
-      }
-    }
-    if (indicesIn[i] !== indicesOut[i]) {
-      tileQuery[0].setAttribute("data-col", ("c" + indicesOut[i]));
-      this.hasMoved = true;
-    }
-  }
-};
-
-// columnIndex is the index of all four columns (see iteration above);
-Game.prototype.moveColumnDown = function(columnIndex) {
-// columnIndex can be [0,1,2,3]. Loop in case statement iterates through numbers.
-  var valsAndIndicesIn = this.getValsByDim("col", columnIndex);
-  var valsIn = valsAndIndicesIn[0];
-  valsIn.reverse();
-  var indicesIn = valsAndIndicesIn[1];
-  indicesIn.reverse();
-// smash values (like [2,2])
-  var valsandIndicesOut = this.smash(valsIn);
-  var valsOut = valsandIndicesOut[0];
-  while  (valsOut.length != this.boardSize) {
-    valsOut.push(0);
-  }
-  valsOut.reverse();
-  var indicesOut = valsandIndicesOut[1];
-  indicesOut = this.reverseIndices(indicesOut);
-  this.setValsByDim("col", columnIndex, valsOut);
-  //loop over indices in and indices out to see if they are the same. if they are, then nothing has moved!
-  for (var i = 0; i < indicesIn.length; i++){
-    var tileQuery = $(tileSelect(indicesIn[i], columnIndex));
-    //if I am smashed into, delete myself
-    if (i < indicesIn.length - 1) {
-      if (indicesOut[i] === indicesOut[i+1]) {
-        tileQuery[0].remove();
-      }
-    }
-    // if i smashed into someone
-    if (i >= 1) {
-      //aka, they are in the same spot
-      if (indicesOut[i] === indicesOut[i-1]) {
-        var newVal = valsOut[indicesOut[i]];
-        tileQuery.text(newVal);
-        tileQuery[0].setAttribute("data-val", newVal);
-      }
-    }
-    if (indicesIn[i] !== indicesOut[i]) {
-      tileQuery[0].setAttribute("data-row", ("r" + indicesOut[i]));
-      this.hasMoved = true;
-    }
-  }
-};
-/// this is all the code from Down function but should be making it move the row.
-//make this work for right;
-Game.prototype.moveRowRight = function(rowIndex) {
-// rowIndex can be [0,1,2,3]. Loop in case statement iterates through numbers.
-  var valsAndIndicesIn = this.getValsByDim("row", rowIndex);
-  var valsIn = valsAndIndicesIn[0];
-  valsIn.reverse();
-  var indicesIn = valsAndIndicesIn[1];
-  indicesIn.reverse();
-// smash values (like [2,2])
-  var valsandIndicesOut = this.smash(valsIn);
-  var valsOut = valsandIndicesOut[0];
-  while  (valsOut.length != this.boardSize) {
-    valsOut.push(0);
-  }
-  valsOut.reverse();
-  var indicesOut = valsandIndicesOut[1];
-  indicesOut = this.reverseIndices(indicesOut);
-  this.setValsByDim("row", rowIndex, valsOut);
-  //loop over indices in and indices out to see if they are the same. if they are, then nothing has moved!
-  for (var i = 0; i < indicesIn.length; i++){
-    var tileQuery = $(tileSelect(rowIndex, indicesIn[i]));
-    //if I am smashed into, delete myself
-    if (i < indicesIn.length - 1) {
-      if (indicesOut[i] === indicesOut[i+1]) {
-        tileQuery[0].remove();
-      }
-    }
-    // if i smashed into someone
-    if (i >= 1) {
-      //aka, they are in the same spot
-      if (indicesOut[i] === indicesOut[i-1]) {
-        var newVal = valsOut[indicesOut[i]];
-        tileQuery.text(newVal);
-        tileQuery[0].setAttribute("data-val", newVal);
-      }
-    }
-    if (indicesIn[i] !== indicesOut[i]) {
-      tileQuery[0].setAttribute("data-col", ("c" + indicesOut[i]));
       this.hasMoved = true;
     }
   }
