@@ -2,6 +2,57 @@ html {
   font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
+body {
+  background-color: #FAF8EF;
+}
+
+#container {
+  width: 600px;
+  margin: 0 auto;
+}
+
+h1 {
+  color: #776e65;
+  position: relative;
+  display: inline;
+  top: 25px;
+  font-size: 104px;
+}
+
+.game-change {
+  color: #776e65;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #776e65;
+  text-align: center;
+  vertical-align: bottom;
+  height: 300px;
+  font-size: 2.5em;
+  font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  font-weight: bold;
+}
+
+.btn {
+  display: block;
+  margin: auto;
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  -webkit-box-shadow: 3px 3px 3px #776e65;
+  -moz-box-shadow: 3px 3px 3px #776e65;
+  box-shadow: 3px 3px 3px #776e65;
+  font-family: Arial;
+  color: #FFFFFF;
+  font-size: 25px;
+  background: #776e65;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #fae9c3;
+  text-decoration: none;
+}
+
 #gameboard {
   background: #bbada0;
   border-radius: 0.5rem;
@@ -9,6 +60,78 @@ html {
   margin: 1rem auto;
   position: relative;
   width: 18.5rem;
+}
+
+#game-message,
+#game-won {
+  display: none;
+  background: #bbada0;
+  opacity: 0.8;
+  filter: alpha(opacity=80); /* For IE8 and earlier */
+  border-radius: 0.5rem;
+  height: 18.5rem;
+  position: absolute;
+  width: 18.5rem;
+  z-index: 1000;
+  -webkit-animation: fade-in 800ms ease 1200ms;
+  -moz-animation: fade-in 800ms ease 1200ms;
+  animation: fade-in 800ms ease 1200ms;
+}
+
+#reset {
+  position: relative;
+  color: #FFFFFF;
+  background-color: #8F7A66;
+  width: 200px;
+  text-align: center;
+  display: block;
+  margin: auto;
+  border-radius: 0.5rem;
+  padding: 10px;
+  font-weight: bold;
+  bottom: 110px;
+}
+
+.header {
+/*  display: block;
+*/  margin: 0 auto;
+  width: 500px;
+  margin-bottom: 0px;
+  height: 190px;
+}
+
+.score-container, .high-score-container {
+  position: relative;
+  left: 300px;
+  background-color: #BBADA0;
+  border-radius: 0.5rem;
+  width: 80px;
+  height: 70px;
+  padding: 5px;
+  font-weight: bold;
+  color: #EEE4DA;
+  text-align: center;
+}
+
+.score-container {
+  bottom: 65px;
+}
+
+.high-score-container {
+  left: 400px;
+  bottom: 145px;
+}
+
+.score-header {
+  font-size: 20px;
+  text-align: center;
+  padding: 0;
+  margin: 0 auto;
+}
+
+#score, #high_score {
+  margin-top: 10px;
+  color: #FFFFFF;
 }
 
 .cell {

@@ -4,29 +4,52 @@
     <title>2048</title>
     <link rel="stylesheet" media="all" href="stylesheets/2048.css"/>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="javascripts/underscore-min.js"></script>
     <script type="text/javascript" src="javascripts/2048.js"></script>
   </head>
   <body>
-    <div id="gameboard">
-      <div class="cells">
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
-        <div class="cell"></div>
+  	<div id="container">
+      <div class="header">
+  			<h1 class="2048">2048</h1>
+  			<div class="score-container">
+  				<h4 class="score-header">SCORE</h4>
+  				<div id="score"></div>
+        </div>
+        <div class="high-score-container">
+          <h4 class="score-header">BEST</h4>
+          <div id="high_score"></div>
+        </div>
+        <a id="reset" class="reset">New Game</a>
+			</div>
+        <div id="gameboard">
+        <div id="game-message">
+          <p class="game-change">Game over!</p>
+          <button class="btn reset">New Game</button>
+        </div>
+        <div id="game-won">
+          <p class="game-change">Game won!</p>
+          <button class="btn reset">New Game</button>
+          <button class="btn resume">Keep Playing</button>
+        </div>
+        <div class="cells">
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+        </div>
       </div>
-      <div class="tile" data-row="r1", data-col="c1" data-val="2">2</div>
-    </div>
+  	</div>
   </body>
 </html>
