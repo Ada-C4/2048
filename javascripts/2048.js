@@ -285,7 +285,7 @@ Game.prototype.gameWinAlert = function(){
   swal({
     title: "Congratulations! You won!",
     text: "Do you want to play again?",
-    type: "info",
+    imageUrl: "../assets/images/win.png",
     showCancelButton: true,
     closeOnConfirm: true,
     confirmButtonText: "Yes, play again!",
@@ -299,7 +299,7 @@ Game.prototype.gameOverAlert = function() {
   swal({
     title: "Game Over!",
     text: "Do you want to play again?",
-    type: "info",
+    imageUrl: "../assets/images/lose.png",
     showCancelButton: false,
     closeOnConfirm: true,
     confirmButtonText: "Yes, play again!",
