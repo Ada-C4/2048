@@ -63,13 +63,15 @@ Game.prototype.moveTiles = function(tiles, direction) {
 
 Game.prototype.animateTiles = function(tiles) {
   var tileArray = this.sortTiles(tiles);
+  console.log("tileArray is " + tileArray);
+  console.log("this.board is " + this.board);
   for (var i = 0; i < tileArray.length; i++) {
     if (tileArray[i] !== 0) {
       var tileRow = tileArray[i].dataset.row.charAt(1);
       if (oldTileRow != tileRow) {
       var j = 0;
       }
-      var tileVal = tileArray[i].dataset.val.charAt(1);
+      var tileVal = tileArray[i].dataset.val;
         var newCol = j;
         var oldCol = tileArray[i].dataset.col.charAt(1);
         if (this.board[tileRow][j] !== 0) {
@@ -85,6 +87,7 @@ Game.prototype.animateTiles = function(tiles) {
             tileArray[i].animate({left: moveAmt}, 50);
             // move tile[i] to position of this.board[tileRow][i]
             tileArray[i].dataset.col = "c" + j;
+            tileArray[i].dataset.val = this.board[tileRow][j];
             // and reassign the value to be this.board[tileRow][i]
             // tileArray[i].dataset.val = this.board[tileRow][i];
           }
@@ -105,6 +108,7 @@ Game.prototype.animateTiles = function(tiles) {
 
 Game.prototype.calcMoveAmt = function(oldCol,newCol) {
   var colDiff = oldCol - newCol;
+  console.log("colDiff is " + colDiff);
   var moveAmt = 135 * colDiff;
   return '-=' + moveAmt + 'px';
 };
@@ -114,40 +118,42 @@ Game.prototype.updateBoard = function(arr,rowIndex) {
   var brd = this.board[rowIndex];
   switch(arr.length) {
     case 1:
-      brd = [arr[0],0,0,0];
+      this.board[rowIndex] = [arr[0],0,0,0];
       break;
     case 2:
+    console.log("this is case 2");
+    console.log("arr 0 is " + arr[0]);
+    console.log("arr 1 is " + arr[1]);
       if (arr[0] === arr[1]) {
-        brd = [(arr[0] + arr[1]),0,0,0];
+        this.board[rowIndex] = [(arr[0] + arr[1]),0,0,0];
+        console.log("if " + this.board[rowIndex]);
       } else {
-        brd = [arr[0],arr[1],0,0];
+        this.board[rowIndex] = [arr[0],arr[1],0,0];
+        console.log("else " + this.board[rowIndex]);
       }
       break;
     case 3:
-      console.log("board before: " + brd);
-      console.log("array: " + arr);
       if (arr[0] === arr[1]) {
-        brd = [(arr[0] + arr[1]), arr[2],0,0];
+        this.board[rowIndex] = [(arr[0] + arr[1]), arr[2],0,0];
       } else if (arr[1] === arr[2]) {
-        brd = [arr[0],(arr[1] + arr[2]),0,0];
+        this.board[rowIndex] = [arr[0],(arr[1] + arr[2]),0,0];
       } else {
-        brd = [arr[0],arr[1],arr[2],0];
+        this.board[rowIndex] = [arr[0],arr[1],arr[2],0];
       };
-      console.log("board after: " + brd);
       break;
     case 4:
       if (arr[0] == arr[1]) {
         if (arr[2] == arr[3]){
-          brd = [(arr[0] + arr[1]), (arr[2] + arr[3]), 0,0];
+          this.board[rowIndex] = [(arr[0] + arr[1]), (arr[2] + arr[3]), 0,0];
         } else {
-          brd = [(arr[0] + arr[1]),arr[2], arr[3], 0];
+          this.board[rowIndex] = [(arr[0] + arr[1]),arr[2], arr[3], 0];
         }
       } else if (arr[1] === arr[2]) {
-        brd = [arr[0], (arr[1] + arr[2]), arr[3], 0];
+        this.board[rowIndex] = [arr[0], (arr[1] + arr[2]), arr[3], 0];
       } else if (arr[2] == arr[3]) {
-        brd = [arr[0], arr[1], (arr[2] + arr[3]), 0];
+        this.board[rowIndex] = [arr[0], arr[1], (arr[2] + arr[3]), 0];
       } else {
-        brd = arr;
+        this.board[rowIndex] = arr;
       }
       break;
   }
@@ -198,7 +204,6 @@ $(document).ready(function() {
     if (arrows.indexOf(event.which) > -1) {
       var tiles = $('.tile');
       game.moveTiles(tiles, event.which);
-      console.log(game.board);
     }
   });
 
