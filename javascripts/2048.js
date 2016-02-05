@@ -258,19 +258,42 @@ Game.prototype.moveDown = function() {
   for (var c = 3; c >= 0; c--) {
     // go through each row bottom to top
     var emptyRows = [];
+    var filledRows = {};
     for (var r = 3; r >= 0; r--) {
-      //if r is empty, store r position in an array
       if (board[r][c] === 0) {
-        // store in 0s array
         emptyRows.push(r);
-      }
-      // if r not empty, shift content down as far as possible down to index r3
-      if (board[r][c] !== 0) {
-        if(emptyRows.length){
-          // if there are empty spaces below tile, shift down
-          board[emptyRows[0]][c] = board[r][c]; //content moves to bottommost empty row in that col
-          emptyRows.shift(); //delete that entry in the empty arrays
-          board[r][c] = 0; //empty the tile space where content was
+      } else  {   // if content not empty
+        if(filledRows.hasOwnProperty(board[r][c])){ //if current content matches a previous content
+          //if prev matching content is adjacent to current content OR only empty spaces between
+          if((filledRows[board[r][c]] === (r + 1))||
+          ((filledRows[board[r][c]] === (r + 2)) && emptyRows.includes(r + 1)) ||
+          ((filledRows[board[r][c]] === (r + 3))  &&  emptyRows.includes(1) && emptyRows.includes(2))
+          ){
+            board[filledRows[board[r][c]]][c] = 2 * (board[r][c]);
+            delete filledRows[board[r][c]];
+            board[r][c] = 0;
+            emptyRows.push(r);
+          // there is a non matching filledCol between matching and current
+        } else if(emptyRows.includes(r + 1)){  //there is a space between current and a non matching filledCol
+            var index = emptyRows.indexOf(r + 1);
+            board[r+1][c] = board[r][c];
+            filledRows[board[r][c]]= r + 1;
+            emptyRows.splice(index, 1);
+            board[r][c] = 0;
+            emptyRows.push(r);
+          } else {
+            filledRows[board[r][c]]= r;
+          }
+        } else { //if content unique to row so far
+          if(emptyRows.length){ //if empty cols before current, shift over
+            board[emptyRows[0]][c] = board[r][c];
+            filledRows[board[r][c]]= emptyRows[0];
+            emptyRows.shift();
+            board[r][c] = 0;
+            emptyRows.push(r);
+          } else {
+            filledRows[board[r][c]]= r;
+          }
         }
       }
     }
