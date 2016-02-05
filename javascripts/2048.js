@@ -1,9 +1,9 @@
 var Game = function() {
   // Game logic and initialization here
-  this.gameBoard = [[16, 0, 0, 0], [2, 16, 0, 2], [0, 0, 0, 0], [0, 0, 0, 0]];
+  this.gameBoard = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
   this.gameLost = false;
-  // this.addOneTile();
-  // this.addOneTile();
+  this.addOneTile();
+  this.addOneTile();
   this.showBoard();
   this.score = 0;
 };
