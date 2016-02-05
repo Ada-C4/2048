@@ -7,7 +7,7 @@ var Game = function() {
 Game.prototype.scoring = function(value) {
   this.score += value;
   if (value == 2048) {
-    alert("You made it to 2048! Keep playing or click the restart button!");
+    sweetAlert({   title: "Winner!",   text: "You made it to 2048! Keep playing or hit the restart button to start from the beginning",   type: "success",   confirmButtonText: "I'm the best!" });
   }
 };
 
@@ -30,7 +30,8 @@ Game.prototype.lost = function() {
       }
     }
   }
-  alert("Game Over!");
+  sweetAlert({   title: "You Lost",   text: "You lost. You should try again!",   type: "error",   confirmButtonText: "Okay" });
+  //alert("Game Over!");
   this.restart();
 };
 
