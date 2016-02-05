@@ -180,7 +180,7 @@ Game.prototype.upTileCollision = function(){
 
 Game.prototype.downTileCollision = function(){
   var self = this;
-  for (var i = 3; i >= 0; i--) { // iterate through each row
+  for (var i = 3; i > 0; i--) { // iterate through each row
     for (var j = 0; j < 3; j++) { // iterate through each tile in each row
       if (self.gameBoard[i][j] > 0) {
         if (self.gameBoard[i - 1][j] === self.gameBoard[i][j]) {
@@ -260,7 +260,7 @@ Game.prototype.getFreeSpaces = function(){
   for(var i = 0; i < 3; i++){
     for(var j = 0; j < 3; j++){
     // and find all that are empty
-      if (this.gameBoard[i][j] === 0){
+        if(this.gameBoard[i][j] === 0){
       // keep a list of the indices in a new array saved as a variable
         freeSpaces.push([i, j]);
       }
