@@ -133,9 +133,15 @@ Game.prototype.endGame = function() {
     }
   }
   if (self.gameWon === true) {
-    console.log("You Win!");
+    swal({
+    title: "Hooray!",
+    text: "You win!",
+    confirmButtonText: "Cool" });
   } else {
-    console.log("Game Over! You lost.")
+    swal({
+    title: "Game Over",
+    text: "You Lose :(",
+    confirmButtonText: "Cool?" });
   }
 };
 
