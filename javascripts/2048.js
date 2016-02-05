@@ -6,7 +6,7 @@ var Game = function() {
 
 Game.prototype.scoring = function(value) {
   this.score += value;
-  if (value == 32) {
+  if (value == 2048) {
       sweetAlert({   title: "You won!",   text: "You won the game!!! Keep playing or click restart to start a new game.",   type: "success",   confirmButtonText: "I'm the best!" });
   }
 };
