@@ -111,6 +111,12 @@ Game.prototype.moveTile = function(tile, direction) {
   }
 };
 
+Game.prototype.addToScore = function(amount) {
+  var self = this;
+  self.score += amount;
+  // console.log(self.score);
+};
+
 Game.prototype.moveLeft = function() {
   var self = this;
   var board = this.board;
@@ -131,6 +137,7 @@ Game.prototype.moveLeft = function() {
           ((filledCols[board[r][c]] === (c - 3))  &&  emptyCols.includes(1) && emptyCols.includes(2))  // ex [m,0,0,c]
           ){
             board[r][filledCols[board[r][c]]] = 2 * (board[r][c]); //merge
+            self.addToScore(2 * (board[r][c]));
             delete filledCols[board[r][c]]; //delete filledCols old key
             board[r][c] = 0; //empty col where content was
             emptyCols.push(c);// add current c to emptyCols
@@ -181,6 +188,7 @@ Game.prototype.moveRight = function() {
           ((filledCols[board[r][c]] === (c + 3))  && emptyCols.includes(1) && emptyCols.includes(2))
           ){
             board[r][filledCols[board[r][c]]] = 2 * (board[r][c]); //merge
+            self.addToScore(2 * (board[r][c]));
             delete filledCols[board[r][c]]; //delete filledCols old key
             board[r][c] = 0; //empty col where content was
             emptyCols.push(c);// add current c to emptyCols
@@ -230,6 +238,7 @@ Game.prototype.moveUp = function() {
           ((filledRows[board[r][c]] === (r - 3))  &&  emptyRows.includes(1) && emptyRows.includes(2))
           ){
             board[filledRows[board[r][c]]][c] = 2 * (board[r][c]);
+            self.addToScore(2 * (board[r][c]));
             delete filledRows[board[r][c]];
             board[r][c] = 0;
             emptyRows.push(r);
@@ -279,6 +288,7 @@ Game.prototype.moveDown = function() {
           ((filledRows[board[r][c]] === (r + 3))  &&  emptyRows.includes(1) && emptyRows.includes(2))
           ){
             board[filledRows[board[r][c]]][c] = 2 * (board[r][c]);
+            self.addToScore(2 * (board[r][c]));
             delete filledRows[board[r][c]];
             board[r][c] = 0;
             emptyRows.push(r);
