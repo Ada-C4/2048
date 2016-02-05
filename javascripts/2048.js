@@ -119,7 +119,7 @@ Game.prototype.moveLeft = function() {
           //if prev matching content is adjacent to current content OR only empty spaces between
           if((filledCols[board[r][c]] === (c - 1))||  //ex [match,current,0,0]
           ((filledCols[board[r][c]] === (c - 2)) && emptyCols.includes(c - 1)) || // ex [m,0,c,0]
-          ((filledCols[board[r][c]] === (c - 3))  &&  emptyCols.includes(1, 2))  // ex [m,0,0,c]
+          ((filledCols[board[r][c]] === (c - 3))  &&  emptyCols.includes(1) && emptyCols.includes(2))  // ex [m,0,0,c]
           ){
             board[r][filledCols[board[r][c]]] = 2 * (board[r][c]); //merge
             delete filledCols[board[r][c]]; //delete filledCols old key
@@ -169,7 +169,7 @@ Game.prototype.moveRight = function() {
           //if prev matching content is adjacent to current content OR only empty spaces between
           if((filledCols[board[r][c]] === (c + 1))||
           ((filledCols[board[r][c]] === (c + 2)) && emptyCols.includes(c + 1)) ||
-          ((filledCols[board[r][c]] === (c + 3))  &&  emptyCols.includes(1, 2))
+          ((filledCols[board[r][c]] === (c + 3))  && emptyCols.includes(1) && emptyCols.includes(2))
           ){
             board[r][filledCols[board[r][c]]] = 2 * (board[r][c]); //merge
             delete filledCols[board[r][c]]; //delete filledCols old key
