@@ -13,6 +13,7 @@ $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
   var game = new Game();
+  $(".numbers").append("0");
   game.addRandoTile();
   $('body').keydown(function(event){
     var arrows = [37, 38, 39, 40];
@@ -24,8 +25,6 @@ $(document).ready(function() {
           250);
       }
     }
-    $(".score").append(this.score);
-    console.log(this.score);
   });
 });
 
@@ -40,7 +39,6 @@ Game.prototype.reverseIndices = function(indicesIn) {
   }
   return indicesOut;
 };
-
 
 Game.prototype.moveTiles = function(direction) {
   this.hasMoved = false;
@@ -69,7 +67,6 @@ Game.prototype.moveTiles = function(direction) {
       break;
   }
 };
-
 
 Game.prototype.getValsByDim = function(dim, index) {
   var vals = [];
@@ -138,7 +135,7 @@ Game.prototype.smash = function(valsIn) {
       //if I am smashing, I want my indices to be the same number as what I smashed. So, take the last value of indicesOut and push it to indicesOut again. Double whammy.
       indicesOut.push(indicesOut[indicesOut.length-1]);
       this.score += valsOut[valsOut.length-1];
-      console.log(this.score);
+      // console.log(this.score);
     }
 //if they're not equal to each other, push the value and the indices OUT.
       else {
@@ -150,6 +147,9 @@ Game.prototype.smash = function(valsIn) {
       valsOut.push(valsIn[i]);
     }
   }
+  $(".numbers").empty();
+  $(".numbers").append(this.score);
+  console.log(this.score);
 //returns 2D array
   return [valsOut, indicesOut];
 };

@@ -7,30 +7,33 @@ h1 {
   font-size: 74px;
   line-height: 66px;
   text-align: center;
+  display: inline-block;
+
 }
 
 .score {
-  position: relative;
-    display: inline-block;
-    background: #bbada0;
-    padding: 15px 25px;
-    font-size: 25px;
-    height: 25px;
-    line-height: 47px;
-    font-weight: bold;
-    border-radius: 3px;
-    color: white;
-    margin-top: 8px;
-    text-align: center;
-    position: absolute;
-    width: 100%;
-    top: 10px;
-    left: 0;
-    text-transform: uppercase;
-    font-size: 13px;
-    line-height: 13px;
-    text-align: center;
-    color: #eee4da;
+  background-color: hotpink;
+  color: white;
+  width: 30%;
+  margin-left: 490px;  
+  border-radius: 0.5rem;
+  display: inline-block;
+}
+
+.score-title {
+  text-align: center;
+  padding-top: 20px;
+  margin: 0;
+  display: inline-block;
+
+}
+
+.numbers {
+  text-align: center;
+  padding-bottom: 20px;
+  margin: 0;
+  display: inline-block;
+
 }
 
 #gameboard {
