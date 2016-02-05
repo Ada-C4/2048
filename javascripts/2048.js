@@ -4,10 +4,10 @@ var Game = function() {
                [0,0,0,0],
                [0,0,0,0],
                [0,0,0,0]];
-  this.addRandomTile();
-  this.addRandomTile();
   this.score = 0;
   this.gameOver = false;
+  this.addRandomTile();
+  this.addRandomTile();
 };
 
 Game.prototype.addRandomTile = function(){
