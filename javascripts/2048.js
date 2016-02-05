@@ -266,7 +266,7 @@ Game.prototype.getFreeSpaces = function(){
   for(var i = 0; i < 3; i++){
     for(var j = 0; j < 3; j++){
     // and find all that are empty
-      if (this.gameBoard[i][j] === 0){
+        if(this.gameBoard[i][j] === 0){
       // keep a list of the indices in a new array saved as a variable
         freeSpaces.push([i, j]);
       }
