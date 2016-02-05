@@ -82,10 +82,14 @@ h1 {
   position: relative;
   color: #FFFFFF;
   background-color: #8F7A66;
-  width: 250px;
+  width: 200px;
+  text-align: center;
+  display: block;
+  margin: auto;
+  border-radius: 0.5rem;
   padding: 10px;
   font-weight: bold;
-  bottom: 100px;
+  bottom: 110px;
 }
 
 .header {
