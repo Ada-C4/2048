@@ -32,7 +32,7 @@ Game.prototype.lost = function() {
   }
 
   sweetAlert({   title: "You lost!",   text: "You lost the game. You should try again!",   type: "error",   confirmButtonText: "Okay" });
-  this.restart();
+//  this.restart();
 };
 
 
