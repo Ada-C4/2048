@@ -4,6 +4,7 @@ var Game = function() {
   this.gameLost = false;
   // this.addOneTile();
   // this.addOneTile();
+  this.showBoard();
   this.score = 0;
 };
 
@@ -34,44 +35,52 @@ Game.prototype.moveTile = function(tile, direction) {
       self.upMoveTiles();
       self.upTileCollision();
       self.upMoveTiles();
+      self.isGameLost();
       self.addOneTile();
       console.log(self.gameBoard);
       self.isGameLost();
       console.log(self.score);
       console.log(self.gameLost);
+      this.showBoard();
       break;
     case 40: //down
       console.log('down');
       self.downMoveTiles();
       self.downTileCollision();
       self.downMoveTiles();
+      self.isGameLost();
       self.addOneTile();
       console.log(self.gameBoard);
       self.isGameLost();
       console.log(self.score);
       console.log(self.gameLost);
+      this.showBoard();
       break;
     case 37: //left
       console.log('left');
       self.leftMoveTiles();
       self.leftTileCollision();
       self.leftMoveTiles();
+      self.isGameLost();
       self.addOneTile();
       console.log(self.gameBoard);
       self.isGameLost();
       console.log(self.score);
       console.log(self.gameLost);
+      this.showBoard();
       break;
     case 39: //right
       console.log('right');
       self.rightMoveTiles();
       self.rightTileCollision();
       self.rightMoveTiles();
+      self.isGameLost();
       self.addOneTile();
       console.log(self.gameBoard);
       self.isGameLost();
       console.log(self.score);
       console.log(self.gameLost);
+      this.showBoard();
       break;
   }
 }
@@ -290,4 +299,18 @@ Game.prototype.addOneTile = function(){
   console.log(this.gameBoard[selectedSpot[0]][selectedSpot[1]]);
   console.log(selectedSpot, result);
   return result;
+};
+
+Game.prototype.showBoard = function() {
+  var self = this;
+  $('.tile').remove();
+
+  for (var r = 0; r <= 3; r++) {
+    for (var c = 0; c <= 3; c++) {
+      if (this.gameBoard[r][c] > 0) {
+        var tile = this.gameBoard[r][c];
+        $('#gameboard').append('<div class="tile" data-row=r' + r + ' data-col=c' + c + ' data-val=' + tile + '>' + tile + '</div>');
+      }
+    }
+  }
 };
