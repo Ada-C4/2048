@@ -19,7 +19,7 @@ h1 {
   font-size: 104px;
 }
 
-.gameover {
+.game-change {
   color: #776e65;
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: #776e65;
@@ -62,7 +62,8 @@ h1 {
   width: 18.5rem;
 }
 
-#game-message{
+#game-message,
+#game-won {
   display: none;
   background: #bbada0;
   opacity: 0.8;

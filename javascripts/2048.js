@@ -249,7 +249,7 @@ Game.prototype.moveTile = function(tile, direction) {
   if (this.gameWon === false) {
     this.updateGameWon();
     if (this.gameWon) {
-      alert('Game won!');
+      $('#game-won').fadeIn();
     }
   }
   this.checkGameOver();
@@ -277,11 +277,13 @@ $(document).ready(function() {
       }
     }  
   });
-  $('#reset').click(function () {
+  $('.reset').click(function () {
     game.startGame();
+    $('#game-won').fadeOut();
   });
-  $('button').click(function () {
-    game.startGame();
+
+  $('.resume').click(function() {
+    $('#game-won').fadeOut();
   });
 
 });
