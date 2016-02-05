@@ -12,34 +12,33 @@ Game.prototype.scoring = function(value) {
 };
 
 Game.prototype.lost = function() {
-  var count = 0;
+  //var count = 0;
   board = this.board;
   //check col
   for (var i = 0; i < 3; i++) {
-    for (var j = 0; j < 4; j ++) {
-      if (board[i][j] === [i+1][j]) {
+    for (var j = 0; j < 4; j++) {
+      if (board[i][j] === board[i+1][j]) {
         return false;
       }
     }
   }
   //check row
-  for (var x = 0; x < 4; i++) {
-    for (var y = 0; y < 3; y ++) {
-      if (board[x][y] === [x][y+1]) {
+  for (var x = 0; x < 4; x++) {
+    for (var y = 0; y < 3; y++) {
+      if (board[x][y] === board[x][y+1]) {
         return false;
       }
     }
   }
-  console.log(this.board);
-  alert("Game Over!");
-  console.log("Game Over");
-  //this.restart();
 
+  alert("Game Over!");
+  this.restart();
 };
 
 
 Game.prototype.randTile = function() {
   var arr = [];
+  self = this;
   for(var i = 0; i < 4; i++) {
     for(var j = 0; j < 4; j++ ) {
       if( this.board[i][j] === 0 ) {
@@ -47,8 +46,7 @@ Game.prototype.randTile = function() {
       }
     }
   }
-  console.log(this.board)
-  console.log(arr)
+  //console.log(arr)
   if (arr.length !== 0) {
     var randNum = Math.floor((Math.random() * arr.length));
     var i_board = arr[randNum][0];
@@ -61,12 +59,13 @@ Game.prototype.randTile = function() {
     }
     var val = this.board[i_board][j_board];
     $('#gameboard').append('<div class="tile" data-row="r'+i_board+'" data-col="c'+j_board+'" data-val="'+ val +'">'+ val +'</div>');
+    console.log(arr.length);
 
-    return [i_board, j_board];
+
   } else {
-    console.log("Inside the else")
-    this.lost();
+    self.lost();
   }
+  //return [i_board, j_board];
 };
 
 Game.prototype.selectTile = function(row, col, value) {
