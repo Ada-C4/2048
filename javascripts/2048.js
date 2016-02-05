@@ -6,7 +6,7 @@ var Game = function() {
 };
 
 Game.prototype.newBoard = function(){
-  var rand = [0, 0, 0, 0, 0, 0, 0, 2048, 0, 0, 0, 0, 0, 0, Math.random() < 0.9 ? 2 : 4, Math.random() < 0.9 ? 2 : 4];
+  var rand = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Math.random() < 0.9 ? 2 : 4, Math.random() < 0.9 ? 2 : 4];
 
   function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) {
