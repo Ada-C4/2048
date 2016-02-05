@@ -331,7 +331,7 @@ Game.prototype.moveDown = function() {
 Game.prototype.displayBoard = function() {
   var self = this;
   // first empty previous values
-  $("#gameboard").empty();
+  $(".tile").remove();
   var board = this.board;
   //go through the board, and create a custom tile on each piece
   // first go through each row top to bottom
