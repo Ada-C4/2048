@@ -6,8 +6,8 @@ var Game = function() {
 
 Game.prototype.scoring = function(value) {
   this.score += value;
-  if (this.value == 2048) {
-    this.win = true;
+  if (value == 2048) {
+    alert("You made it to 2048! Keep playing or click the restart button!");
   }
 };
 
@@ -30,7 +30,6 @@ Game.prototype.lost = function() {
       }
     }
   }
-
   alert("Game Over!");
   this.restart();
 };
