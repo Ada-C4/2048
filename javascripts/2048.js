@@ -1,9 +1,9 @@
 var Game = function() {
   // Game logic and initialization here
-  this.gameBoard = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+  this.gameBoard = [[0, 0, 0, 0], [0, 2, 0, 0], [0, 0, 0, 2], [0, 0, 0, 2]];
   this.gameLost = false;
-  this.addOneTile();
-  this.addOneTile();
+  // this.addOneTile();
+  // this.addOneTile();
   this.score = 0;
 };
 
@@ -113,7 +113,7 @@ Game.prototype.downMoveTiles = function(){
         for (var i = rowIndex; i < 3; i++) {
           // increment numSpaces to move down by 1 if the next num down is 0
           if (self.gameBoard[i + 1][columnIndex] === 0) {
-            self.gameBoard[rowIndex + 1][columnIndex] = column;
+            self.gameBoard[i + 1][columnIndex] = column;
             self.gameBoard[i][columnIndex] = 0;
           }
         }
@@ -171,7 +171,7 @@ Game.prototype.rightMoveTiles = function(){
 
 Game.prototype.upTileCollision = function(){
   var self = this;
-  for(var i = 3; i >= 1; i--){
+  for(var i = 3; i > 0; i--){
     for(var j = 0; j <= 3; j++){
       if(self.gameBoard[i][j] > 0){
         if(self.gameBoard[i - 1][j] === self.gameBoard[i][j]){
@@ -187,7 +187,7 @@ Game.prototype.upTileCollision = function(){
 Game.prototype.downTileCollision = function(){
   var self = this;
   for (var i = 3; i > 0; i--) { // iterate through each row
-    for (var j = 0; j < 3; j++) { // iterate through each tile in each row
+    for (var j = 0; j <= 3; j++) { // iterate through each tile in each row
       if (self.gameBoard[i][j] > 0) {
         if (self.gameBoard[i - 1][j] === self.gameBoard[i][j]) {
           self.gameBoard[i][j] *= 2;
@@ -263,8 +263,8 @@ Game.prototype.isGameLost = function() {
 Game.prototype.getFreeSpaces = function(){
   var freeSpaces = [];
 // 3. Iterate through the rows and the columns in the gameboard
-  for(var i = 0; i < 3; i++){
-    for(var j = 0; j < 3; j++){
+  for(var i = 0; i <= 3; i++){
+    for(var j = 0; j <= 3; j++){
     // and find all that are empty
         if(this.gameBoard[i][j] === 0){
       // keep a list of the indices in a new array saved as a variable
