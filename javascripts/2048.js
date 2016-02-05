@@ -8,6 +8,7 @@ var Game = function() {
   this.gameOver = false;
   this.addRandomTile();
   this.addRandomTile();
+  this.gameWon = false;
 };
 
 Game.prototype.addRandomTile = function(){
@@ -115,6 +116,14 @@ Game.prototype.addToScore = function(amount) {
   var self = this;
   self.score += amount;
   // console.log(self.score);
+};
+
+Game.prototype.endGame = function() {
+  var self = this;
+  // if the board values contain any number that is 2048 or greater
+  // if this.board.includes(){
+  //   self.gameWon = true;
+  // }
 };
 
 Game.prototype.moveLeft = function() {
