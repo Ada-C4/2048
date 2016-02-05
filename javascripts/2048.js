@@ -63,8 +63,6 @@ Game.prototype.moveTiles = function(tiles, direction) {
 
 Game.prototype.animateTiles = function(tiles) {
   var tileArray = this.sortTiles(tiles);
-  console.log("tileArray is " + tileArray);
-  console.log("this.board is " + this.board);
   for (var i = 0; i < tileArray.length; i++) {
     if (tileArray[i] !== 0) {
       var tileRow = tileArray[i].dataset.row.charAt(1);
@@ -96,6 +94,7 @@ Game.prototype.animateTiles = function(tiles) {
           var moveAmt = this.calcMoveAmt(oldCol, 0);
           tileArray[i].animate({left: moveAmt}, 50);
           tileArray[i].dataset.col = "c" + 0;
+          tileArray[i].remove();
           // then delete the tile because it has been combined
         }
       }
@@ -108,7 +107,6 @@ Game.prototype.animateTiles = function(tiles) {
 
 Game.prototype.calcMoveAmt = function(oldCol,newCol) {
   var colDiff = oldCol - newCol;
-  console.log("colDiff is " + colDiff);
   var moveAmt = 135 * colDiff;
   return '-=' + moveAmt + 'px';
 };
@@ -121,15 +119,10 @@ Game.prototype.updateBoard = function(arr,rowIndex) {
       this.board[rowIndex] = [arr[0],0,0,0];
       break;
     case 2:
-    console.log("this is case 2");
-    console.log("arr 0 is " + arr[0]);
-    console.log("arr 1 is " + arr[1]);
       if (arr[0] === arr[1]) {
         this.board[rowIndex] = [(arr[0] + arr[1]),0,0,0];
-        console.log("if " + this.board[rowIndex]);
       } else {
         this.board[rowIndex] = [arr[0],arr[1],0,0];
-        console.log("else " + this.board[rowIndex]);
       }
       break;
     case 3:
