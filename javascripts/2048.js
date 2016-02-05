@@ -11,6 +11,7 @@ var Game = function() {
 };
 
 Game.prototype.addRandomTile = function(){
+  var self = this;
   //find all the 0s in board, put their positions in separate array
   var array = [];
   for (var r = 0; r < 4; r++) {
@@ -20,26 +21,32 @@ Game.prototype.addRandomTile = function(){
       }
     }
   }
-  // using the length of this array, choose a random empty (0 containing) position
-  var randIndex = array[Math.floor(Math.random()* array.length)];
-  // insert a 2 or 4 into that position on the board
-  var startNumArray = [2,2,2,2,2,2,4];
-  var randTile = startNumArray[Math.floor(Math.random()*startNumArray.length)];
-  this.board[randIndex[0]][randIndex[1]] = randTile;
-  var $tile = $('<div class="tile"></div>');
-  if (randTile === 2) {
-    $("#gameboard").append($tile);
-    $tile.attr("data-row", ("r" + randIndex[0]));
-    $tile.attr("data-col", ("c" + randIndex[1]));
-    $tile.attr("data-val", ("2"));
-    $tile.html("2");
+  if(array.length === 0){
+    self.gameOver = true;
+    console.log("Game Over");
   }
-  if (randTile === 4) {
-    $("#gameboard").append($tile);
-    $tile.attr("data-row", ("r" + randIndex[0]));
-    $tile.attr("data-col", ("c" + randIndex[1]));
-    $tile.attr("data-val", ("4"));
-    $tile.html("4");
+  if(self.gameOver === false){
+    // using the length of this array, choose a random empty (0 containing) position
+    var randIndex = array[Math.floor(Math.random()* array.length)];
+    // insert a 2 or 4 into that position on the board
+    var startNumArray = [2,2,2,2,2,2,4];
+    var randTile = startNumArray[Math.floor(Math.random()*startNumArray.length)];
+    this.board[randIndex[0]][randIndex[1]] = randTile;
+    var $tile = $('<div class="tile"></div>');
+    if (randTile === 2) {
+      $("#gameboard").append($tile);
+      $tile.attr("data-row", ("r" + randIndex[0]));
+      $tile.attr("data-col", ("c" + randIndex[1]));
+      $tile.attr("data-val", ("2"));
+      $tile.html("2");
+    }
+    if (randTile === 4) {
+      $("#gameboard").append($tile);
+      $tile.attr("data-row", ("r" + randIndex[0]));
+      $tile.attr("data-col", ("c" + randIndex[1]));
+      $tile.attr("data-val", ("4"));
+      $tile.html("4");
+    }
   }
 };
 
