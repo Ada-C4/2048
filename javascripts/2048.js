@@ -426,3 +426,11 @@ $(document).ready(function() {
     game.resetGame();
   });
 });
+
+$.fn.preload = function() {
+  this.each(function(){
+    $('<img/>')[0].src = this;
+  });
+}
+
+$(['assets/images/2.png','assets/images/4.png','assets/images/8.png','assets/images/16.png','assets/images/32.png','assets/images/64.png','assets/images/128.png','assets/images/256.png','assets/images/512.png','assets/images/2048.png','assets/images/1024.png']).preload();
