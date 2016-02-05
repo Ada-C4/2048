@@ -6,6 +6,8 @@ var Game = function() {
                [0,0,0,0]];
   this.addRandomTile();
   this.addRandomTile();
+  this.score = 0;
+  this.gameOver = false;
 };
 
 Game.prototype.addRandomTile = function(){
