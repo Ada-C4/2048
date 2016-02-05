@@ -118,15 +118,11 @@ Game.prototype.moveLeft = function() {
         if(filledCols.hasOwnProperty(board[r][c])){ //if current content matches a previous content
           //if prev matching content is adjacent to current content
           if(filledCols[board[r][c]] === (c - 1)){
-            //merge
-            board[r][filledCols[board[r][c]]] = 2 * (board[r][c]);
-            //filledCols old key = new key,  then delete filledCols old key
-            filledCols[board[r][filledCols[board[r][c]]]] = filledCols[board[r][c]];
-            delete filledCols[board[r][c]];
-            //empty col where content was
-            board[r][c] = 0;
-            // add current c to emptyCols
-            emptyCols.push(c);
+            board[r][filledCols[board[r][c]]] = 2 * (board[r][c]); //merge
+            filledCols[board[r][filledCols[board[r][c]]]] = filledCols[board[r][c]]; //filledCols old key = new key
+            delete filledCols[board[r][c]]; //delete filledCols old key
+            board[r][c] = 0; //empty col where content was
+            emptyCols.push(c);// add current c to emptyCols
           //not adjacent, but only empty cols between
         } else if(((filledCols[board[r][c]] === (c - 2)) && emptyCols.includes(c-1)) ||
           ((filledCols[board[r][c]] === (c - 3))  &&  emptyCols.includes(1, 2)  )){
