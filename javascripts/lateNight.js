@@ -47,7 +47,7 @@ Game.prototype.moveTiles = function(direction) {
   switch(direction) {
     case 38: //up
       for (i = 0; i < this.boardSize; i++) {
-        this.moveColumnUp(i);
+        this.move(i, "col", "towards");
       }
       break;
     case 40: //down
@@ -57,7 +57,7 @@ Game.prototype.moveTiles = function(direction) {
       break;
     case 37: //left
     for (i = 0; i < this.boardSize; i++) {
-      this.moveRowLeft(i);
+      this.move(i, "row", "towards");
     }
       break;
     case 39: //right
@@ -155,10 +155,10 @@ Game.prototype.smash = function(valsIn) {
 };
 
 // columnIndex is the index of all four columns (see iteration above);
-Game.prototype.moveColumnUp = function(columnIndex) {
+Game.prototype.move = function(index, dim, vertex) {
 // we pass in 1 because we're working in column dimension (dimesnion can be 0 or 1),
 // columnIndex can be [0,1,2,3]. Loop in case statement iterates through numbers.
-  var valsAndIndicesIn = this.getValsByDim("col", columnIndex);
+  var valsAndIndicesIn = this.getValsByDim(dim, index);
   var valsIn = valsAndIndicesIn[0];
   var indicesIn = valsAndIndicesIn[1];
 // smash values (like [2,2])
@@ -166,10 +166,20 @@ Game.prototype.moveColumnUp = function(columnIndex) {
 //below begins the unsmashing;
   var valsOut = valsandIndicesOut[0];
   var indicesOut = valsandIndicesOut[1];
-  this.setValsByDim("col", columnIndex, valsOut);
+  this.setValsByDim(dim, index, valsOut);
+  this.display(index, vertex, dim, indicesIn, indicesOut, valsOut);
+};
+
   //loop over indices in and indices out to see if they are the same. if they are, then nothing has moved!
-  for (var i = 0; i < indicesIn.length; i++){
-    var tileQuery = $(tileSelect(indicesIn[i], columnIndex));
+Game.prototype.display = function(index, vertex, dim, indicesIn, indicesOut, valsOut) {
+  for (var i = 0; i < indicesIn.length; i++) {
+    var tileQuery;
+    if (dim === "col") {
+      tileQuery = $(tileSelect(indicesIn[i], index));
+      console.log(dim);
+    } else if (dim === "row") {
+      tileQuery = $(tileSelect(index, indicesIn[i]));
+    }
     //if I am smashed into, delete myself
     if (i < indicesIn.length - 1) {
       if (indicesOut[i] === indicesOut[i+1]) {
@@ -185,8 +195,15 @@ Game.prototype.moveColumnUp = function(columnIndex) {
         tileQuery[0].setAttribute("data-val", newVal);
       }
     }
+    // dim = ("col") ? "row" : "col";
+
     if (indicesIn[i] !== indicesOut[i]) {
-      tileQuery[0].setAttribute("data-row", ("r" + indicesOut[i]));
+      if (dim === "col") {
+        tileQuery[0].setAttribute("data-row", ("r" + indicesOut[i]));
+      } else {
+        tileQuery[0].setAttribute("data-col", ("c" + indicesOut[i]));
+      }
+
 //will use this later to prevent a tile from appearing when nothing has moved;
       this.hasMoved = true;
     }
