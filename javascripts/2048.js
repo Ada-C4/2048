@@ -123,6 +123,7 @@ Game.prototype.updateBoard = function(arr,rowIndex) {
     case 2:
       if (arr[0] === arr[1]) {
         this.board[rowIndex] = [(arr[0] + arr[1]),0,0,0];
+        this.score += (arr[0] + arr[1]);
       } else {
         this.board[rowIndex] = [arr[0],arr[1],0,0];
       }
@@ -130,28 +131,37 @@ Game.prototype.updateBoard = function(arr,rowIndex) {
     case 3:
       if (arr[0] === arr[1]) {
         this.board[rowIndex] = [(arr[0] + arr[1]), arr[2],0,0];
+        this.score += (arr[0] + arr[1]);
       } else if (arr[1] === arr[2]) {
         this.board[rowIndex] = [arr[0],(arr[1] + arr[2]),0,0];
+        this.score += (arr[1] + arr[2]);
       } else {
         this.board[rowIndex] = [arr[0],arr[1],arr[2],0];
-      };
+      }
       break;
     case 4:
       if (arr[0] == arr[1]) {
         if (arr[2] == arr[3]){
           this.board[rowIndex] = [(arr[0] + arr[1]), (arr[2] + arr[3]), 0,0];
+          this.score += (arr[0] + arr[1]);
+          this.score += (arr[2] + arr[3]);
         } else {
           this.board[rowIndex] = [(arr[0] + arr[1]),arr[2], arr[3], 0];
+          this.score += (arr[0] + arr[1]);
         }
       } else if (arr[1] === arr[2]) {
         this.board[rowIndex] = [arr[0], (arr[1] + arr[2]), arr[3], 0];
+        this.score += (arr[1] + arr[2]);
       } else if (arr[2] == arr[3]) {
         this.board[rowIndex] = [arr[0], arr[1], (arr[2] + arr[3]), 0];
+        this.score += (arr[2] + arr[3]);
       } else {
         this.board[rowIndex] = arr;
       }
       break;
   }
+  console.log("the score is now " + this.score);
+  $(".score").html("Score: " + this.score);
 };
 
 // call this function twice when creating a new game, call it on every turn
@@ -188,7 +198,6 @@ $(document).ready(function() {
   // Any interactive jQuery functionality
   var game = new Game();
   // randomly assign two tiles
-  game.createRandomTile();
   game.createRandomTile();
   game.createRandomTile();
   game.createRandomTile();
