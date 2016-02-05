@@ -2,6 +2,16 @@ html {
   font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
+body {
+  background-color: #DFF5F4;
+}
+
+h1{
+  text-align: center;
+  font-family: 'Droid Sans', sans-serif;
+  color: #533475;
+}
+
 #gameboard {
   background: rgb(0, 145, 104);
   border-radius: 0.5rem;
@@ -48,14 +58,14 @@ html {
 .tile[data-col=c2] { left: 9rem; }
 .tile[data-col=c3] { left: 13.5rem; }
 
-.tile[data-val="2"]    { color: #776e65; background-color: #eee4da; }
-.tile[data-val="4"]    { color: #776e65; background-color: #ede0c8; }
-.tile[data-val="8"]    { background-color: #f2b179; }
-.tile[data-val="16"]   { background-color: #f59563; }
-.tile[data-val="32"]   { background: #f67c5f; }
-.tile[data-val="64"]   { background: #f65e3b; }
+.tile[data-val="2"]    { color: #776e65; background-color: #B1F0D4; }
+.tile[data-val="4"]    { color: #776e65; background-color: #B1DBF0; }
+.tile[data-val="8"]    { background-color: #C9B1F0; }
+.tile[data-val="16"]   { background-color: #BF4DBF; }
+.tile[data-val="32"]   { background: #5166E0; }
+.tile[data-val="64"]   { background: #00C4A0; }
 .tile[data-val="128"]  { background: #edcf72; }
-.tile[data-val="256"]  { background: #edcc61; }
-.tile[data-val="512"]  { background: #edc850; }
-.tile[data-val="1024"] { background: #edc53f; }
-.tile[data-val="2048"] { background: #edc22e; }
+.tile[data-val="256"]  { background: #FC90E0; }
+.tile[data-val="512"]  { background: #AB007D; }
+.tile[data-val="1024"] { background: #B2CECF; }
+.tile[data-val="2048"] { background: #FF0000; }
