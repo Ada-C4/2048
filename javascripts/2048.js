@@ -47,21 +47,31 @@ Game.prototype.moveTiles = function(tiles, direction) {
           // bTA now looks like [2,4] if you started with [2,0,4,0]
           }
         }
-        this.updateBoard(beginningTilesArray,i);
+        this.updateBoardLeft(beginningTilesArray,i);
       }
-      this.animateTiles(tiles);
+      this.animateTilesLeft(tiles);
       break;
     case 39: //right
-      if (currentCol < 3) {
-        tiles[0].dataset.col = "c" + (currentCol + 1);
-        tiles.animate({left: '+=135px'}, 50);
+    // looping through this.board array
+      for (var i = 0; i < 4; i++) {
+        var innerArray = this.board[i];
+        var beginningTilesArray = [];
+        for (var j = 0; j < 4; j++) {
+          if (innerArray[j] !== 0) {
+            beginningTilesArray.push(innerArray[j]);
+          // bTA now looks like [2,4] if you started with [2,0,4,0]
+          }
+        }
+        this.updateBoardRight(beginningTilesArray,i);
+        console.log("updated board is " + this.board);
       }
+      this.animateTilesRight(tiles);
       break;
   }
 };
 
 
-Game.prototype.animateTiles = function(tiles) {
+Game.prototype.animateTilesLeft = function(tiles) {
   var tileArray = this.sortTiles(tiles);
   for (var i = 0; i < tileArray.length; i++) {
     if (tileArray[i] !== 0) {
@@ -86,7 +96,6 @@ Game.prototype.animateTiles = function(tiles) {
             // move tile[i] to position of this.board[tileRow][i]
             tileArray[i].dataset.col = "c" + j;
             tileArray[i].dataset.val = this.board[tileRow][j];
-            console.log(typeof tileArray[i]);
             $(tileArray[i]).html(tileArray[i].dataset.val);
             // and reassign the value to be this.board[tileRow][i]
             // tileArray[i].dataset.val = this.board[tileRow][i];
@@ -107,14 +116,115 @@ Game.prototype.animateTiles = function(tiles) {
   }
 };
 
+Game.prototype.animateTilesRight = function(tiles) {
+  var tileArray = this.sortTiles(tiles);
+  for (var i = 0; i < tileArray.length; i++) {
+    if (tileArray[i] !== 0) {
+      var tileRow = tileArray[i].dataset.row.charAt(1);
+      if (oldTileRow != tileRow) {
+      var j = 3;
+      }
+      var tileVal = tileArray[i].dataset.val;
+        var newCol = j;
+        var oldCol = tileArray[i].dataset.col.charAt(1);
+        if (this.board[tileRow][j] !== 0) {
+          if(this.board[tileRow][j] === tileVal) {
+            // move tile[i] to position of this.board[tileRow][i]
+            // access tile element's dataset.col and update it
+            var moveAmt = this.calcMoveAmtRight(oldCol, newCol);
+            tileArray[i].animate({left: moveAmt}, 50);
+            tileArray[i].dataset.col = "c" + j;
+          }
+          else {
+            var moveAmt = this.calcMoveAmtRight(oldCol, newCol);
+            tileArray[i].animate({left: moveAmt}, 50);
+            // move tile[i] to position of this.board[tileRow][i]
+            tileArray[i].dataset.col = "c" + j;
+            tileArray[i].dataset.val = this.board[tileRow][j];
+            $(tileArray[i]).html(tileArray[i].dataset.val);
+            // and reassign the value to be this.board[tileRow][i]
+            // tileArray[i].dataset.val = this.board[tileRow][i];
+          }
+        }
+        else {
+          var moveAmt = this.calcMoveAmtRight(oldCol, 0);
+          tileArray[i].animate({left: moveAmt}, 50);
+          tileArray[i].dataset.col = "c" + 0;
+          tileArray[i].remove();
+          // then delete the tile because it has been combined
+        }
+      }
+    var oldTileRow = tileRow;
+    if (j !== undefined && tileArray[i] !== 0) {
+      j--;
+    }
+  }
+};
+
 Game.prototype.calcMoveAmt = function(oldCol,newCol) {
   var colDiff = oldCol - newCol;
   var moveAmt = 135 * colDiff;
   return '-=' + moveAmt + 'px';
 };
 
+Game.prototype.calcMoveAmtRight = function(oldCol,newCol) {
+  var colDiff = Math.abs(oldCol - newCol);
+  var moveAmt = 135 * colDiff;
+  return '+=' + moveAmt + 'px';
+};
+
 // used inside the moveTiles function
-Game.prototype.updateBoard = function(arr,rowIndex) {
+Game.prototype.updateBoardRight = function(arr,rowIndex) {
+  var brd = this.board[rowIndex];
+  switch(arr.length) {
+    case 1:
+      this.board[rowIndex] = [0,0,0,arr[0]];
+      break;
+    case 2:
+      if (arr[0] === arr[1]) {
+        this.board[rowIndex] = [0,0,0,(arr[0] + arr[1])];
+        this.score += (arr[0] + arr[1]);
+      } else {
+        this.board[rowIndex] = [0,0,arr[0],arr[1]];
+      }
+      break;
+    case 3:
+      if (arr[1] === arr[2]) {
+        this.board[rowIndex] = [0,0,arr[0],(arr[1] + arr[2])];
+        this.score += (arr[1] + arr[2]);
+      } else if (arr[0] === arr[1]) {
+        this.board[rowIndex] = [0,0,(arr[0] + arr[1]),arr[2]];
+        this.score += (arr[0] + arr[1]);
+      } else {
+        this.board[rowIndex] = [0,arr[0],arr[1],arr[2]];
+      }
+      break;
+    case 4:
+      if (arr[2] == arr[3]) {
+        if (arr[0] == arr[1]){
+          this.board[rowIndex] = [0,0,(arr[0] + arr[1]), (arr[2] + arr[3])];
+          this.score += (arr[0] + arr[1]);
+          this.score += (arr[2] + arr[3]);
+        } else {
+          this.board[rowIndex] = [0, arr[0], arr[1], (arr[2] + arr[3])];
+          this.score += (arr[2] + arr[3]);
+        }
+      } else if (arr[1] === arr[2]) {
+        this.board[rowIndex] = [0, arr[0], (arr[1] + arr[2]), arr[3]];
+        this.score += (arr[1] + arr[2]);
+      } else if (arr[0] == arr[1]) {
+        this.board[rowIndex] = [0,(arr[0] + arr[1]),arr[2],arr[3]];
+        this.score += (arr[0] + arr[1]);
+      } else {
+        this.board[rowIndex] = arr;
+      }
+      break;
+  }
+  $(".score").html("Score: " + this.score);
+};
+
+// used inside the moveTiles function
+Game.prototype.updateBoardLeft = function(arr,rowIndex) {
   var brd = this.board[rowIndex];
   switch(arr.length) {
     case 1:
@@ -198,6 +308,8 @@ $(document).ready(function() {
   // Any interactive jQuery functionality
   var game = new Game();
   // randomly assign two tiles
+  game.createRandomTile();
+  game.createRandomTile();
   game.createRandomTile();
   game.createRandomTile();
   game.createRandomTile();
