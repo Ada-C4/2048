@@ -24,7 +24,7 @@ Game.prototype.addRandomTile = function(){
   }
   if(array.length === 0){
     self.boardFull = true;
-    console.log("Game Over");
+    self.endGame();
   }
   if(self.boardFull === false){
     // using the length of this array, choose a random empty (0 containing) position
@@ -120,10 +120,23 @@ Game.prototype.addToScore = function(amount) {
 
 Game.prototype.endGame = function() {
   var self = this;
+  var board = this.board;// first go through each row top to bottom
+  for (var r = 0; r < 4; r++) {
+    // go through each column left to right
+    for (var c = 0; c < 4; c++) {
   // if the board values contain any number that is 2048 or greater
-  // if this.board.includes(){
-  //   self.gameWon = true;
-  // }
+      if (board[r][c] >= 2048) {
+        self.gameWon = true;
+      } else {
+        self.gameWon = false;
+      }
+    }
+  }
+  if (self.gameWon === true) {
+    console.log("You Win!");
+  } else {
+    console.log("Game Over! You lost.")
+  }
 };
 
 Game.prototype.moveLeft = function() {
