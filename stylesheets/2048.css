@@ -3,7 +3,7 @@ html {
 }
 
 #gameboard {
-  background: #bbada0;
+  background: rgb(0, 145, 104);
   border-radius: 0.5rem;
   height: 18.5rem;
   margin: 1rem auto;
