@@ -118,6 +118,7 @@ h1 {
     cursor: pointer;
     display: block;
     text-align: center;
-    margin-left: 640px;
+    margin: auto;
+    /*margin-left: 640px;*/
     width: 100px;
 }
