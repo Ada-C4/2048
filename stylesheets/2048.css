@@ -12,10 +12,17 @@ html, body {
   display: block;
   clear: both; }
 
+h5.title {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 10px 10px 0px 20px;
+  display: block;
+  float: left; }
+
 h1.title {
   font-size: 80px;
   font-weight: bold;
-  margin: 10px 10px 10px 20px;
+  margin: 0px 10px 10px 20px;
   display: block;
   float: left; }
 
@@ -58,12 +65,12 @@ h1.title {
   background: #bbada0;
   padding: 15px 25px;
   font-size: 25px;
-  height: 25px;
+  height: 30px;
   line-height: 47px;
   font-weight: bold;
   border-radius: 3px;
   color: white;
-  margin-top: 30px;
+  margin-top: 17px;
   text-align: center; }
   .score-container:after {
     position: absolute;
@@ -129,20 +136,6 @@ hr {
   width: 350px;
   margin: auto;
   margin-bottom: -20px;
-}
-
-.scorebox {
-  margin-left: 167px;
-  width: 150px;
-  height: 100px;
-  text-align: center;
-  background-color: #bbada0;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-radius: 0.5rem;
-  font-size: 24px;
-  color: #FFFFFF;
-  display: inline-block;
 }
 
 .score-val {
