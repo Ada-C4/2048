@@ -83,7 +83,9 @@ Game.prototype.moveTile = function(tile, direction) {
             tileToDelete = tile[i];
             rowToDelete = row[1];
             columnToDelete = column[1];
-            this.combineTile(rowToUpdate, columnToUpdate, tileToDelete, rowToDelete, columnToDelete);
+            if (this.board[rowToUpdate][columnToUpdate] == tile[i].dataset.val) {
+              this.combineTile(rowToUpdate, columnToUpdate, tileToDelete, rowToDelete, columnToDelete);
+            }
           }
         }
       }
@@ -114,7 +116,9 @@ Game.prototype.moveTile = function(tile, direction) {
             tileToDelete = tile[i];
             rowToDelete = row[1];
             columnToDelete = column[1];
-            this.combineTile(rowToUpdate, columnToUpdate, tileToDelete, rowToDelete, columnToDelete);
+            if (this.board[rowToUpdate][columnToUpdate] == tile[i].dataset.val) {
+              this.combineTile(rowToUpdate, columnToUpdate, tileToDelete, rowToDelete, columnToDelete);
+            }
           }
         }
       }
@@ -145,7 +149,9 @@ Game.prototype.moveTile = function(tile, direction) {
             tileToDelete = tile[i];
             rowToDelete = row[1];
             columnToDelete = column[1];
-            this.combineTile(rowToUpdate, columnToUpdate, tileToDelete, rowToDelete, columnToDelete);
+            if (this.board[rowToUpdate][columnToUpdate] == tile[i].dataset.val) {
+              this.combineTile(rowToUpdate, columnToUpdate, tileToDelete, rowToDelete, columnToDelete);
+            }
           }
         }
       }
@@ -176,7 +182,9 @@ Game.prototype.moveTile = function(tile, direction) {
             tileToDelete = tile[i];
             rowToDelete = row[1];
             columnToDelete = column[1];
-            this.combineTile(rowToUpdate, columnToUpdate, tileToDelete, rowToDelete, columnToDelete);
+            if (this.board[rowToUpdate][columnToUpdate] == tile[i].dataset.val) {
+              this.combineTile(rowToUpdate, columnToUpdate, tileToDelete, rowToDelete, columnToDelete);
+            }
           }
         }
       }
@@ -185,18 +193,16 @@ Game.prototype.moveTile = function(tile, direction) {
 };
 
 Game.prototype.combineTile = function(rowToUpdate, columnToUpdate, tile, rowToDelete, columnToDelete) {
-  if (this.board[rowToUpdate][columnToUpdate] == tile.dataset.val) {
-    //update array board
-    this.board[rowToUpdate][columnToUpdate] *= 2;
-    newVal = this.board[rowToUpdate][columnToUpdate];
-    this.board[rowToDelete][columnToDelete] = 0;
-    //delete extra tile and update value
-    tile.remove();
-    updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
-    updateTile[0].dataset.val = newVal;
-    // update score
-    this.updateScore(newVal);
-  }
+  //update array board
+  this.board[rowToUpdate][columnToUpdate] *= 2;
+  newVal = this.board[rowToUpdate][columnToUpdate];
+  this.board[rowToDelete][columnToDelete] = 0;
+  //delete extra tile and update value
+  tile.remove();
+  updateTile = $(".tile[data-row=\"r" + rowToUpdate + "\"][data-col=\"c" + columnToUpdate + "\"]");
+  updateTile[0].dataset.val = newVal;
+  // update score
+  this.updateScore(newVal);
 };
 
 
@@ -289,7 +295,7 @@ Game.prototype.gameWinAlert = function(){
     showCancelButton: true,
     closeOnConfirm: true,
     confirmButtonText: "Yes, play again!",
-    confirmButtonColor: "#ec6c62"
+    confirmButtonColor: "#006666"
   }, function() {
       window.location.reload();
   });
@@ -303,7 +309,7 @@ Game.prototype.gameOverAlert = function() {
     showCancelButton: false,
     closeOnConfirm: true,
     confirmButtonText: "Yes, play again!",
-    confirmButtonColor: "#ec6c62"
+    confirmButtonColor: "#006666"
   }, function() {
       window.location.reload();
   });
@@ -431,6 +437,6 @@ $.fn.preload = function() {
   this.each(function(){
     $('<img/>')[0].src = this;
   });
-}
+};
 
 $(['assets/images/2.png','assets/images/4.png','assets/images/8.png','assets/images/16.png','assets/images/32.png','assets/images/64.png','assets/images/128.png','assets/images/256.png','assets/images/512.png','assets/images/2048.png','assets/images/1024.png']).preload();
