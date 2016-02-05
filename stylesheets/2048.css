@@ -2,6 +2,16 @@ html {
   font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
+h1 {
+  text-align: center;
+  font-size: 80px;
+}
+
+#score {
+  text-align: center;
+  font-size: 40px;
+}
+
 #gameboard {
   background: #bbada0;
   border-radius: 0.5rem;
@@ -22,6 +32,7 @@ html {
 
 .tile {
   position: absolute;
+  text-align: center;
   top: 0; left: 0;
   transition: all 0.2s ease-in-out;
 
@@ -59,3 +70,55 @@ html {
 .tile[data-val="512"]  { background: #edc850; }
 .tile[data-val="1024"] { background: #edc53f; }
 .tile[data-val="2048"] { background: #edc22e; }
+/*
+.container {
+    width: 500px;
+    margin: 0 auto;
+}*/
+
+html, body {
+    color: #776e65;
+    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 18px;
+}
+
+h1 {
+  font-size: 70px;
+}
+
+.score-container, .best-container {
+    position: relative;
+    display: inline-block;
+    background: #bbada0;
+    padding: 15px 25px;
+    font-size: 25px;
+    height: 25px;
+    line-height: 47px;
+    font-weight: bold;
+    border-radius: 3px;
+    color: white;
+    margin-top: 8px;
+    text-align: center;
+}
+
+.game-intro {
+    float: left;
+    line-height: 42px;
+    margin-bottom: 0;
+}
+.restart-button {
+    display: inline-block;
+    background: #8f7a66;
+    border-radius: 3px;
+    padding: 0 20px;
+    text-decoration: none;
+    color: #f9f6f2;
+    height: 40px;
+    line-height: 42px;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    margin: auto;
+    /*margin-left: 640px;*/
+    width: 100px;
+}
