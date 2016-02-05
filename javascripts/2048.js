@@ -7,7 +7,7 @@ var Game = function() {
 Game.prototype.scoring = function(value) {
   this.score += value;
   if (value == 2048) {
-    sweetAlert({   title: "Winner!",   text: "You made it to 2048! Keep playing or hit the restart button to start from the beginning",   type: "success",   confirmButtonText: "I'm the best!" });
+    alert("You made it to 2048! Keep playing or click the restart button!");
   }
 };
 
@@ -30,8 +30,7 @@ Game.prototype.lost = function() {
       }
     }
   }
-  sweetAlert({   title: "You Lost",   text: "You lost. You should try again!",   type: "error",   confirmButtonText: "Okay" });
-  //alert("Game Over!");
+  alert("Game Over!");
   this.restart();
 };
 
@@ -106,13 +105,16 @@ Game.prototype.moveTile = function(direction) {
       }, 300);
       break;
     case 39: //right
+      var count = self.moveBoardRight();
       self.moveBoardRight();
       setTimeout(function() {
         self.collideBoardRight();
       }, 100);
-      setTimeout(function() {
-        self.randTile();
-      }, 300);
+      if (count > 0) {
+        setTimeout(function() {
+          self.randTile();
+        }, 300);
+      }
       break;
   }
 };
@@ -133,13 +135,14 @@ Game.prototype.moveLeft = function(row,col) {
   }
 };
 
-Game.prototype.moveRight = function(row,col) {
+Game.prototype.moveRight = function(row,col, count) {
   var $tile;
   var value = this.board[row][col];
   $tile = $('.tile[data-row="r' + row + '"][data-col="c' + col + '"]');
   if (this.board[row][col] !== 0) {
     for(var j=3; j > col; j--) {
       if (this.board[row][j] === 0) {
+        count += 1;
         this.board[row][j] = value;
         $tile.attr('data-col', 'c' + j);
         this.board[row][col] = 0;
@@ -147,6 +150,7 @@ Game.prototype.moveRight = function(row,col) {
       }
     }
   }
+  return count;
 };
 
 Game.prototype.moveUp = function(row, col) {
@@ -193,12 +197,13 @@ Game.prototype.moveBoardLeft = function() {
 
 Game.prototype.moveBoardRight = function() {
   self = this;
+  count = 0;
   for (var row=0; row < 4; row++) {
     for (var col=3; col >= 0; col--) {
-      self.moveRight(row, col);
+      count += self.moveRight(row, col, count);
     }
   }
-  return this.board;
+  return count;
 };
 
 Game.prototype.moveBoardUp = function() {
@@ -283,7 +288,9 @@ Game.prototype.collideLeft = function(row, col) {
   setTimeout(function() {
     //console.log()
     $tile1.attr('data-val', self.board[row][col]);
+    $tile1.height('5px');
     $tile1.html(self.board[row][col]);
+    $tile1.animate({width: '4rem', height: '4rem'}, "fast");
     $tile2.remove();
     self.scoring(self.board[row][col]);
     $("#score").html("Score: " + self.score);
