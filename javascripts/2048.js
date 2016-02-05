@@ -30,6 +30,7 @@ Game.prototype.lost = function() {
       }
     }
   }
+  console.log(this.board)
   alert("Game Over!");
   this.restart();
 };
@@ -46,7 +47,7 @@ Game.prototype.randTile = function() {
     }
   }
   //console.log(arr)
-  if (arr.length !== 0) {
+  //if (arr.length !== 0) {
     var randNum = Math.floor((Math.random() * arr.length));
     var i_board = arr[randNum][0];
     var j_board = arr[randNum][1];
@@ -59,12 +60,11 @@ Game.prototype.randTile = function() {
     var val = this.board[i_board][j_board];
     $('#gameboard').append('<div class="tile" data-row="r'+i_board+'" data-col="c'+j_board+'" data-val="'+ val +'">'+ val +'</div>');
     console.log(arr.length);
-
-
-  } else {
-    self.lost();
-  }
-  //return [i_board, j_board];
+    if (arr.length <= 1) {
+      self.lost();
+    }
+  //}
+  //else {console.log(this.board);}
 };
 
 Game.prototype.selectTile = function(row, col, value) {
