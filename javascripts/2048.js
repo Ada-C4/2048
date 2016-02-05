@@ -2,6 +2,7 @@ var Game = function() {
   this.board = this.newBoard();
   this.score = 0;
   this.arrows = [37, 38, 39, 40];
+  this.scoreContainer  = document.querySelector(".score-container");
 };
 
 Game.prototype.newBoard = function(){
@@ -201,7 +202,19 @@ Game.prototype.combineTile = function(rowToUpdate, columnToUpdate, tile, rowToDe
 
 Game.prototype.updateScore = function(value) {
   this.score += value;
-  $(".score-val")[0].innerHTML = this.score;
+  $(".score-container")[0].innerHTML = this.score;
+
+  var difference = value;
+  this.scoreContainer = document.querySelector(".score-container");
+  this.scoreContainer.textContent = this.score;
+
+  if (difference > 0) {
+    var addition = document.createElement("div");
+    addition.classList.add("score-addition");
+    addition.textContent = "+" + difference;
+
+    this.scoreContainer.appendChild(addition);
+  }
 };
 
 Game.prototype.removeFromBoard = function(tile) {
