@@ -6,8 +6,8 @@ var Game = function() {
 
 Game.prototype.scoring = function(value) {
   this.score += value;
-  if (value == 2048) {
-    alert("You made it to 2048! Keep playing or click the restart button!");
+  if (value == 32) {
+      sweetAlert({   title: "You won!",   text: "You won the game!!! Keep playing or click restart to start a new game.",   type: "success",   confirmButtonText: "I'm the best!" });
   }
 };
 
@@ -30,8 +30,8 @@ Game.prototype.lost = function() {
       }
     }
   }
-  console.log(this.board)
-  alert("Game Over!");
+
+  sweetAlert({   title: "You lost!",   text: "You lost the game. You should try again!",   type: "error",   confirmButtonText: "Okay" });
   this.restart();
 };
 
@@ -445,7 +445,6 @@ Game.prototype.collideDown = function(row, col) {
 };
 
 Game.prototype.restart = function() {
-  console.log("in the function")
   this.board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
   this.score = 0;
   this.win = false;
@@ -458,7 +457,6 @@ Game.prototype.restart = function() {
 
 
 $(document).ready(function() {
-  console.log("ready to go!");
   var game = new Game();
   game.randTile();
   game.randTile();
