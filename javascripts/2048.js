@@ -5,7 +5,7 @@ var Game = function() {
   this.addOneTile();
   this.addOneTile();
   this.score = 0;
-}
+};
 
 
 $(document).ready(function() {
@@ -27,6 +27,7 @@ $(document).ready(function() {
 Game.prototype.moveTile = function(tile, direction) {
   // Game method here
   var self = this;
+  if (self.gameLost === false) {
   switch(direction) {
     case 38: //up
       console.log('up');
@@ -37,6 +38,7 @@ Game.prototype.moveTile = function(tile, direction) {
       console.log(self.gameBoard);
       self.isGameLost();
       console.log(self.score);
+      console.log(self.gameLost);
       break;
     case 40: //down
       console.log('down');
@@ -47,6 +49,7 @@ Game.prototype.moveTile = function(tile, direction) {
       console.log(self.gameBoard);
       self.isGameLost();
       console.log(self.score);
+      console.log(self.gameLost);
       break;
     case 37: //left
       console.log('left');
@@ -57,6 +60,7 @@ Game.prototype.moveTile = function(tile, direction) {
       console.log(self.gameBoard);
       self.isGameLost();
       console.log(self.score);
+      console.log(self.gameLost);
       break;
     case 39: //right
       console.log('right');
@@ -67,8 +71,10 @@ Game.prototype.moveTile = function(tile, direction) {
       console.log(self.gameBoard);
       self.isGameLost();
       console.log(self.score);
+      console.log(self.gameLost);
       break;
   }
+}
 };
 
 Game.prototype.upMoveTiles = function(){
@@ -180,7 +186,7 @@ Game.prototype.upTileCollision = function(){
 
 Game.prototype.downTileCollision = function(){
   var self = this;
-  for (var i = 3; i >= 0; i--) { // iterate through each row
+  for (var i = 3; i > 0; i--) { // iterate through each row
     for (var j = 0; j < 3; j++) { // iterate through each tile in each row
       if (self.gameBoard[i][j] > 0) {
         if (self.gameBoard[i - 1][j] === self.gameBoard[i][j]) {
