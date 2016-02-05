@@ -117,24 +117,23 @@ Game.prototype.moveLeft = function() {
       } else  {   // if content not empty
         if(filledCols.hasOwnProperty(board[r][c])){ //if current content matches a previous content
           //if prev matching content is adjacent to current content OR only empty spaces between
-          if((filledCols[board[r][c]] === (c - 1))||
-          ((filledCols[board[r][c]] === (c - 2)) && emptyCols.includes(c - 1)) ||
-          ((filledCols[board[r][c]] === (c - 3))  &&  emptyCols.includes(1, 2))
+          if((filledCols[board[r][c]] === (c - 1))||  //ex [match,current,0,0]
+          ((filledCols[board[r][c]] === (c - 2)) && emptyCols.includes(c - 1)) || // ex [m,0,c,0]
+          ((filledCols[board[r][c]] === (c - 3))  &&  emptyCols.includes(1, 2))  // ex [m,0,0,c]
           ){
             board[r][filledCols[board[r][c]]] = 2 * (board[r][c]); //merge
-            filledCols[board[r][filledCols[board[r][c]]]] = filledCols[board[r][c]]; //filledCols old key = new key
             delete filledCols[board[r][c]]; //delete filledCols old key
             board[r][c] = 0; //empty col where content was
             emptyCols.push(c);// add current c to emptyCols
           // there is a non matching filledCol between matching and current
-          } else if(emptyCols.includes(c-1)){
-            var index = emptyCols.indexOf(c-1);
+          } else if(emptyCols.includes(c - 1)){  // ex [m,d,c,0]
+            var index = emptyCols.indexOf(c - 1);
             board[r][c-1] = board[r][c]; //content replaces the empty col to the left of it
-            filledCols[board[r][c]]= emptyCols[index]; //add/update filledCols
+            filledCols[board[r][c]]= c - 1; //add/update filledCols
             emptyCols.splice(index, 1); //delete that entry in the empty array
             board[r][c] = 0; //empty col where content was
             emptyCols.push(c); //add current c to emptyCols
-          } else { //there is a space between current and a non matching filledCol
+          } else { //there is a space between current and a non matching filledCol  // ex [m,d,0,c] only
             filledCols[board[r][c]]= c; //add to filledCols
           }
         } else { //if content unique to row so far
@@ -173,7 +172,6 @@ Game.prototype.moveRight = function() {
           ((filledCols[board[r][c]] === (c + 3))  &&  emptyCols.includes(1, 2))
           ){
             board[r][filledCols[board[r][c]]] = 2 * (board[r][c]); //merge
-            filledCols[board[r][filledCols[board[r][c]]]] = filledCols[board[r][c]]; //filledCols old key = new key
             delete filledCols[board[r][c]]; //delete filledCols old key
             board[r][c] = 0; //empty col where content was
             emptyCols.push(c);// add current c to emptyCols
