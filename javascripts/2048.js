@@ -1,6 +1,6 @@
 var Game = function() {
   // Game logic and initialization here
-  this.gameBoard = [[0, 0, 0, 0], [0, 2, 0, 0], [0, 0, 0, 2], [0, 0, 0, 2]];
+  this.gameBoard = [[16, 0, 0, 0], [2, 16, 0, 2], [0, 0, 0, 0], [0, 0, 0, 0]];
   this.gameLost = false;
   // this.addOneTile();
   // this.addOneTile();
@@ -134,12 +134,11 @@ Game.prototype.leftMoveTiles = function(){
         // iterate through each item further left of current item
         for (var i = columnIndex; i >= 0; i--) {
           // increment numSpaces to move left by 1 if the next left over is 0
-          if (self.gameBoard[rowIndex][i-1] === 0) {
-            numSpaces += 1;
+          if (row[i - 1] === 0) {
+            row[i - 1] = column;
+            row[i] = 0;
           }
         }
-        row[columnIndex - numSpaces] = column;
-        row[columnIndex] = 0;
       }
     });
   });
@@ -171,7 +170,7 @@ Game.prototype.rightMoveTiles = function(){
 
 Game.prototype.upTileCollision = function(){
   var self = this;
-  for(var i = 3; i > 0; i--){
+  for(var i = 1; i <= 3; i++){
     for(var j = 0; j <= 3; j++){
       if(self.gameBoard[i][j] > 0){
         if(self.gameBoard[i - 1][j] === self.gameBoard[i][j]){
@@ -186,7 +185,7 @@ Game.prototype.upTileCollision = function(){
 
 Game.prototype.downTileCollision = function(){
   var self = this;
-  for (var i = 3; i > 0; i--) { // iterate through each row
+  for (var i = 3; i >= 1; i--) { // iterate through each row
     for (var j = 0; j <= 3; j++) { // iterate through each tile in each row
       if (self.gameBoard[i][j] > 0) {
         if (self.gameBoard[i - 1][j] === self.gameBoard[i][j]) {
@@ -202,7 +201,7 @@ Game.prototype.downTileCollision = function(){
 Game.prototype.leftTileCollision = function(){
   var self = this;
   for (var i = 0; i <= 3; i++) { // iterate through each row
-    for (var j = 3; j > 0; j--) { // iterate through each tile in each row
+    for (var j = 1; j <= 3; j++) { // iterate through each tile in each row
       if (self.gameBoard[i][j] > 0) {
         if (self.gameBoard[i][j - 1] === self.gameBoard[i][j]) {
           self.gameBoard[i][j] *= 2;
@@ -217,7 +216,7 @@ Game.prototype.leftTileCollision = function(){
 Game.prototype.rightTileCollision = function(){
   var self = this;
   for (var i = 0; i <= 3; i++) { // iterate through each row
-    for (var j = 3; j > 0; j--) { // iterate through each tile in each row
+    for (var j = 3; j >= 1; j--) { // iterate through each tile in each row
       if (self.gameBoard[i][j] > 0) {
         if (self.gameBoard[i][j - 1] === self.gameBoard[i][j]) {
           self.gameBoard[i][j] *= 2;
@@ -288,6 +287,7 @@ Game.prototype.addOneTile = function(){
   var openSpots = this.getFreeSpaces();
   var selectedSpot = openSpots[Math.floor(Math.random() * openSpots.length)];
   this.gameBoard[selectedSpot[0]][selectedSpot[1]] = result;
-  // console.log(selectedSpot);
+  console.log(this.gameBoard[selectedSpot[0]][selectedSpot[1]]);
+  console.log(selectedSpot, result);
   return result;
-}
+};
