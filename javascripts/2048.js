@@ -118,7 +118,7 @@ Game.prototype.moveLeft = function() {
         if(filledCols.hasOwnProperty(board[r][c])){ //if current content matches a previous content
           //if prev matching content is adjacent to current content OR only empty spaces between
           if((filledCols[board[r][c]] === (c - 1))||
-          ((filledCols[board[r][c]] === (c - 2)) && emptyCols.includes(c-1)) ||
+          ((filledCols[board[r][c]] === (c - 2)) && emptyCols.includes(c - 1)) ||
           ((filledCols[board[r][c]] === (c - 3))  &&  emptyCols.includes(1, 2))
           ){
             board[r][filledCols[board[r][c]]] = 2 * (board[r][c]); //merge
@@ -126,18 +126,16 @@ Game.prototype.moveLeft = function() {
             delete filledCols[board[r][c]]; //delete filledCols old key
             board[r][c] = 0; //empty col where content was
             emptyCols.push(c);// add current c to emptyCols
-          // not adjacent, there is a filledCol between matching and current & possibly an empty space
-          } else {
-            if(emptyCols.includes(c-1)){
-              var index = emptyCols.indexOf(c-1);
-              board[r][c-1] = board[r][c]; //content replaces the empty col to the left of it
-              filledCols[board[r][c]]= emptyCols[index]; //add/update filledCols
-              emptyCols.splice(index, 1); //delete that entry in the empty array
-              board[r][c] = 0; //empty col where content was
-              emptyCols.push(c); //add current c to emptyCols
-            } else {
-              filledCols[board[r][c]]= c; //add to filledCols
-            }
+          // there is a non matching filledCol between matching and current
+          } else if(emptyCols.includes(c-1)){
+            var index = emptyCols.indexOf(c-1);
+            board[r][c-1] = board[r][c]; //content replaces the empty col to the left of it
+            filledCols[board[r][c]]= emptyCols[index]; //add/update filledCols
+            emptyCols.splice(index, 1); //delete that entry in the empty array
+            board[r][c] = 0; //empty col where content was
+            emptyCols.push(c); //add current c to emptyCols
+          } else { //there is a space between current and a non matching filledCol
+            filledCols[board[r][c]]= c; //add to filledCols
           }
         } else { //if content unique to row so far
           if(emptyCols.length){ //if empty cols before current, shift over
@@ -162,19 +160,44 @@ Game.prototype.moveRight = function() {
   for (var r = 0; r < 4; r++) {
     // go through each column right to left
     var emptyCols = [];
+    var filledCols = {};
     for (var c = 3; c >= 0; c--) {
-      //if c is empty, store c position in an array
+      //if content is empty, store c position in an array
       if (board[r][c] === 0) {
-        // store in 0s array
         emptyCols.push(c);
-      }
-      // if c not empty, shift content to the right as far as possible up to index c3
-      if (board[r][c] !== 0) {
-        if(emptyCols.length){
-          // if there are empty spaces before c, shift to the left
-          board[r][emptyCols[0]] = board[r][c]; //content moves to rightmost empty col
-          emptyCols.shift(); //delete that entry in the empty array
-          board[r][c] = 0; //empty col where content was
+      } else  {   // if content not empty
+        if(filledCols.hasOwnProperty(board[r][c])){ //if current content matches a previous content
+          //if prev matching content is adjacent to current content OR only empty spaces between
+          if((filledCols[board[r][c]] === (c + 1))||
+          ((filledCols[board[r][c]] === (c + 2)) && emptyCols.includes(c + 1)) ||
+          ((filledCols[board[r][c]] === (c + 3))  &&  emptyCols.includes(1, 2))
+          ){
+            board[r][filledCols[board[r][c]]] = 2 * (board[r][c]); //merge
+            filledCols[board[r][filledCols[board[r][c]]]] = filledCols[board[r][c]]; //filledCols old key = new key
+            delete filledCols[board[r][c]]; //delete filledCols old key
+            board[r][c] = 0; //empty col where content was
+            emptyCols.push(c);// add current c to emptyCols
+          // there is a non matching filledCol between matching and current
+          } else if(emptyCols.includes(c + 1)){
+            var index = emptyCols.indexOf(c + 1);
+            board[r][c + 1] = board[r][c]; //content replaces the empty col to the right of it
+            filledCols[board[r][c]]= emptyCols[index]; // add/update filledCols
+            emptyCols.splice(index, 1); //delete that entry in the empty array
+            board[r][c] = 0; //empty col where content was
+            emptyCols.push(c); //add current c to emptyCols
+          } else { //there is a space between current and a non matching filledCol
+            filledCols[board[r][c]]= c; //add to filledCols
+          }
+        } else { //if content unique to row so far
+          if(emptyCols.length){ //if empty cols before current, shift over
+            board[r][emptyCols[0]] = board[r][c]; //content moves to rightmost empty col
+            filledCols[board[r][c]]= emptyCols[0];
+            emptyCols.shift(); //delete that entry in the empty array
+            board[r][c] = 0; //empty col where content was
+            emptyCols.push(c); //add current c to emptyCols
+          } else {
+            filledCols[board[r][c]]= c; //add to filledCols
+          }
         }
       }
     }
@@ -241,14 +264,19 @@ $(document).ready(function() {
   console.log("ready to go!");
   // Any interactive jQuery functionality
   var game = new Game();
+  console.log(game.board);
   $('body').keydown(function(event){
-    console.log(game.board);
     var arrows = [37, 38, 39, 40];
     if (arrows.indexOf(event.which) > -1) {
       var tile = $('.tile');
       game.moveTile(tile, event.which);
       game.addRandomTile();
       game.displayBoard();
+      console.log(game.board);
+      console.log(`| ${game.board[0][0]} ${game.board[0][1]} ${game.board[0][2]} ${game.board[0][3]} |`);
+      console.log(`| ${game.board[1][0]} ${game.board[1][1]} ${game.board[1][2]} ${game.board[1][3]} |`);
+      console.log(`| ${game.board[2][0]} ${game.board[2][1]} ${game.board[2][2]} ${game.board[2][3]} |`);
+      console.log(`| ${game.board[3][0]} ${game.board[3][1]} ${game.board[3][2]} ${game.board[3][3]} |`);
     }
   });
 });
