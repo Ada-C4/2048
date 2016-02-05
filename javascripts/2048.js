@@ -111,7 +111,7 @@ Game.prototype.moveTile = function(tile, direction) {
             var deleteTileIndex = _.indexOf(this.board, colArray[row]);
             this.board.splice(deleteTileIndex, 1);
             // delete current html object
-            $("#" + colArray[row].tileId).delay(100).fadeOut(50, function(){$(this).remove();});
+            $("#" + colArray[row].tileId).delay(75).fadeOut(50, function(){$(this).remove();});
             // delete current value (tile object)
             colArray.splice(row, 1);
             // if not combining
@@ -150,7 +150,7 @@ Game.prototype.moveTile = function(tile, direction) {
             var deleteTileIndex = _.indexOf(this.board, colArray[arrayIndex]);
             this.board.splice(deleteTileIndex, 1);
             // delete current html object
-            $("#" + colArray[arrayIndex].tileId).delay(100).fadeOut(50, function(){$(this).remove();});
+            $("#" + colArray[arrayIndex].tileId).delay(75).fadeOut(50, function(){$(this).remove();});
             // delete current value (tile object)
             colArray.splice(arrayIndex, 1);
             // if not combining
@@ -187,7 +187,7 @@ Game.prototype.moveTile = function(tile, direction) {
             var deleteTileIndex = _.indexOf(this.board, rowArray[col]);
             this.board.splice(deleteTileIndex, 1);
             // delete current html object
-            $("#" + rowArray[col].tileId).delay(100).fadeOut(50, function(){$(this).remove();});
+            $("#" + rowArray[col].tileId).delay(75).fadeOut(50, function(){$(this).remove();});
             // delete current tile object)
             rowArray.splice(col, 1);
             // if not combining
@@ -221,12 +221,12 @@ Game.prototype.moveTile = function(tile, direction) {
             // change HTML of tile
             $("#" + rowArray[arrayIndex-1].tileId).attr("data-col", "c" + col);
             $("#" + rowArray[arrayIndex-1].tileId).attr("data-val", rowArray[arrayIndex-1].val);
-            $("#" + rowArray[arrayIndex-1].tileId).html(rowArray[arrayIndex-1].val).delay(1000);
+            $("#" + rowArray[arrayIndex-1].tileId).html(rowArray[arrayIndex-1].val);
             // delete from board
             var deleteTileIndex = _.indexOf(this.board, rowArray[arrayIndex]);
             this.board.splice(deleteTileIndex, 1);
             // delete current html object
-            $("#" + rowArray[arrayIndex].tileId).delay(100).fadeOut(50, function(){$(this).remove();});
+            $("#" + rowArray[arrayIndex].tileId).delay(75).fadeOut(50, function(){$(this).remove();});
             // delete current value (tile object)
             rowArray.splice(arrayIndex, 1);
             // if not combining
