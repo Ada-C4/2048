@@ -5,7 +5,7 @@ var Game = function() {
                [0,0,0,0],
                [0,0,0,0]];
   this.score = 0;
-  this.gameOver = false;
+  this.boardFull = false;
   this.addRandomTile();
   this.addRandomTile();
   this.gameWon = false;
@@ -23,10 +23,10 @@ Game.prototype.addRandomTile = function(){
     }
   }
   if(array.length === 0){
-    self.gameOver = true;
+    self.boardFull = true;
     console.log("Game Over");
   }
-  if(self.gameOver === false){
+  if(self.boardFull === false){
     // using the length of this array, choose a random empty (0 containing) position
     var randIndex = array[Math.floor(Math.random()* array.length)];
     // insert a 2 or 4 into that position on the board
