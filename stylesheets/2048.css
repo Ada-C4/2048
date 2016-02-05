@@ -1,8 +1,8 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: #faf8ef;
-  color: #776e65;
+  background: #FFFFFF;
+  color: #232122;
   font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
   font-size: 18px; }
 
@@ -62,7 +62,7 @@ h1.title {
 .score-container{
   position: relative;
   display: inline-block;
-  background: #bbada0;
+  background: #ff420e;
   padding: 15px 25px;
   font-size: 25px;
   height: 30px;
@@ -155,7 +155,8 @@ hr {
   text-align: center;
   margin: auto;
   border-style: none;
-  background-color: #776e65;
+  /*background-color: #776e65;*/
+  background-color: #a6a6a6;
   font-size: 22px;
   height: 45px;
   width: 180px;
@@ -168,7 +169,8 @@ hr {
 }
 
 #gameboard {
-  background: #bbada0;
+  /*background: #bbada0;*/
+  background: #a6a6a6;
   border-radius: 0.5rem;
   height: 18.5rem;
   margin: 1rem auto;
@@ -177,7 +179,8 @@ hr {
 }
 
 .cell {
-  background: rgba(238, 228, 218, 0.35);
+  /*background: rgba(238, 228, 218, 0.35);*/
+  background: #bfbfbf;
   border-radius: 0.5rem;
   float: left;
   height: 4rem;
