@@ -116,23 +116,17 @@ Game.prototype.moveLeft = function() {
         emptyCols.push(c);
       } else  {   // if content not empty
         if(filledCols.hasOwnProperty(board[r][c])){ //if current content matches a previous content
-          //if prev matching content is adjacent to current content
-          if(filledCols[board[r][c]] === (c - 1)){
+          //if prev matching content is adjacent to current content OR only empty spaces between
+          if((filledCols[board[r][c]] === (c - 1))||
+          ((filledCols[board[r][c]] === (c - 2)) && emptyCols.includes(c-1)) ||
+          ((filledCols[board[r][c]] === (c - 3))  &&  emptyCols.includes(1, 2))
+          ){
             board[r][filledCols[board[r][c]]] = 2 * (board[r][c]); //merge
             filledCols[board[r][filledCols[board[r][c]]]] = filledCols[board[r][c]]; //filledCols old key = new key
             delete filledCols[board[r][c]]; //delete filledCols old key
             board[r][c] = 0; //empty col where content was
             emptyCols.push(c);// add current c to emptyCols
-          //not adjacent, but only empty cols between
-        } else if(((filledCols[board[r][c]] === (c - 2)) && emptyCols.includes(c-1)) ||
-          ((filledCols[board[r][c]] === (c - 3))  &&  emptyCols.includes(1, 2)  )){
-            //merge, same process as above if statement
-            board[r][filledCols[board[r][c]]] = 2 * (board[r][c]);
-            filledCols[board[r][filledCols[board[r][c]]]] = filledCols[board[r][c]];
-            delete filledCols[board[r][c]];
-            board[r][c] = 0;
-            emptyCols.push(c);
-          // not adjacent, there is a filledCol between matching and current, & possibly an empty space
+          // not adjacent, there is a filledCol between matching and current & possibly an empty space
           } else {
             if(emptyCols.includes(c-1)){
               var index = emptyCols.indexOf(c-1);
