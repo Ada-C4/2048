@@ -136,10 +136,12 @@ Game.prototype.endGame = function() {
     swal({
     title: "Hooray!",
     text: "You win!",
+    type: "success",
     confirmButtonText: "Cool" });
   } else {
     swal({
     title: "Game Over",
+    type: "error",
     text: "You Lose :(",
     confirmButtonText: "Cool?" });
   }
