@@ -7,11 +7,11 @@ var Game = function() {
   this.boardSize = 4;
   this.score = 0;
   this.hasMoved = false;
+  this.winningTile = 2048;
+  this.hasWon = false;
 };
 
 $(document).ready(function() {
-  console.log("ready to go!");
-  // Any interactive jQuery functionality
   var game = new Game();
   $(".numbers").append("0");
   game.addRandoTile();
@@ -21,9 +21,15 @@ $(document).ready(function() {
       game.moveTiles(event.which);
       if (game.hasMoved) {
         setTimeout(function() {
-          game.addRandoTile();},
+          game.addRandoTile();
+          emptySpaces = game.returnEmptySpaces();
+          if (emptySpaces.length === 0 ) {
+          if (game.checkLoss()) { alert("Sorry! Try again!"); console.log("i've lost it");}
+          }
+        },
           250);
       }
+      if (game.hasWon === true) { alert("Congratulations! You've won!"); }
     }
   });
 });
@@ -43,7 +49,6 @@ Game.prototype.reverseIndices = function(indicesIn) {
 Game.prototype.moveTiles = function(direction) {
   this.hasMoved = false;
   var i;
-  // Game method here
   switch(direction) {
     case 38: //up
       for (i = 0; i < this.boardSize; i++) {
@@ -69,11 +74,10 @@ Game.prototype.moveTiles = function(direction) {
 };
 
 Game.prototype.getValsByDim = function(dim, index) {
+  //uses dim and index to push only the non zero values in each array onto a new array
   var vals = [];
   var indices = [];
   for (var i = 0; i < this.boardSize; i++) {
-//passes in the dim we're in, the column index we're working with and i,
-// which iterates through 0-3;
     var val;
     switch(dim) {
       case "row":
@@ -83,19 +87,17 @@ Game.prototype.getValsByDim = function(dim, index) {
         val = this.board[i][index];
         break;
     }
-// ignore zeros, and push everythign else into values array. It knows where
-// the values are.
-    if (val !== 0) {vals.push(val); indices.push(i); }
+    if (val !== 0) {vals.push(val); indices.push(i); } // ignore zeros, and push everything else into values array.
   }
 // values is an array with the value of the numbers pushed into it.
-// indices is also an array that contains the indecies of where the values came from.
+// indices is an array with the index within the dim of where the value came from.
   return [vals, indices];
 };
 
 Game.prototype.setValsByDim = function(dim, index, values) {
+  //iterating through entire board, places values at their new indices
   var i;
   for (i = 0; i < values.length; i++) {
-//iterating through entire board (setValue)
     switch(dim){
       case "row":
         this.board[index][i] = values[i];
@@ -105,9 +107,7 @@ Game.prototype.setValsByDim = function(dim, index, values) {
         break;
     }
   }
-  //pick up where i left off in case we need to add 0s
-  for (i; i < this.boardSize; i++) {
-// puts zeroes to fill in the board if there are empty spaces;
+  for (i; i < this.boardSize; i++) {  //pick up where i left off in case we need to add 0s
     switch(dim){
       case "row":
         this.board[index][i] = 0;
@@ -121,43 +121,29 @@ Game.prototype.setValsByDim = function(dim, index, values) {
 
 Game.prototype.smash = function(valsIn) {
   if (valsIn.length === 0) { return [ [], [] ]; }
-  var valsOut = [valsIn[0]];
-// puts 0 in new array at index 0;
-  var indicesOut = [0];
+  var valsOut = [valsIn[0]]; //the first value out will be the first in
+  var indicesOut = [0]; //the first value out will be pushed to index 0
   var alreadySmashed = false;
   for (var i = 1; i < valsIn.length; i++) {
-// if the numbers next to and equal to each other, add them together (multiply one number by 2)
-// the .lenth -1 functions is equal to ruby .last methods. So
-    if (valsIn[i] === valsOut[valsOut.length-1] && !alreadySmashed) {
-      //this is the same as valsOut[valsOut.length - 1] += valsIn[i];
-      valsOut[valsOut.length-1] *= 2;
+    if (valsIn[i] === valsOut[valsOut.length-1] && !alreadySmashed) { //if the next iteration of valsIn has a value the same as the last value out, they should be at the same index
+      valsOut[valsOut.length-1] *= 2; //numbers add together
+      if (valsOut[valsOut.length-1] == this.winningTile) { this.hasWon = true; }
       alreadySmashed = true;
-      //if I am smashing, I want my indices to be the same number as what I smashed. So, take the last value of indicesOut and push it to indicesOut again. Double whammy.
-      indicesOut.push(indicesOut[indicesOut.length-1]);
+      indicesOut.push(indicesOut[indicesOut.length-1]); //if value is smashing, the indice out should be the same as the one it smashed into, in this case the last value in indices out
       this.score += valsOut[valsOut.length-1];
-      // console.log(this.score);
     }
-//if they're not equal to each other, push the value and the indices OUT.
-      else {
-//alreadySmashed prevents everything form combining (like [2,2,2,2] to [8,0,0,0] automatically)
-      alreadySmashed = false;
-      //If I didn't smash, then make my out index the one after the last index in indicesOut because math of plus one.
-      indicesOut.push(indicesOut[indicesOut.length-1] + 1);
-      // I didn't smash, so push my value at i to valsOut. Save me!
-      valsOut.push(valsIn[i]);
+      else { //if they're not equal to each other, push the value and the indices OUT.
+      alreadySmashed = false; //alreadySmashed prevents everything form combining (like [2,2,2,2] to [8,0,0,0] automatically)
+      indicesOut.push(indicesOut[indicesOut.length-1] + 1); //If I didn't smash, then make my out index the one after the last index in indicesOut because math of plus one.
+      valsOut.push(valsIn[i]);// I didn't smash, so push my value at i to valsOut. Save me!
     }
   }
   $(".numbers").empty();
   $(".numbers").append(this.score);
-  console.log(this.score);
-//returns 2D array
   return [valsOut, indicesOut];
 };
 
-// columnIndex is the index of all four columns (see iteration above);
 Game.prototype.move = function(index, dim, vertex) {
-// we pass in 1 because we're working in column dimension (dimesnion can be 0 or 1),
-// columnIndex can be [0,1,2,3]. Loop in case statement iterates through numbers.
   var valsAndIndicesIn = this.getValsByDim(dim, index);
   var valsIn = valsAndIndicesIn[0];
   var indicesIn = valsAndIndicesIn[1];
@@ -166,8 +152,8 @@ Game.prototype.move = function(index, dim, vertex) {
     valsIn.reverse();
     indicesIn.reverse();
   }
-// smash values (like [2,2])
   var valsandIndicesOut = this.smash(valsIn);
+
 //below begins the unsmashing;
   var valsOut = valsandIndicesOut[0];
   var indicesOut = valsandIndicesOut[1];
@@ -189,19 +175,15 @@ Game.prototype.display = function(index, vertex, dim, indicesIn, indicesOut, val
     var tileQuery;
     if (dim === "col") {
       tileQuery = $(tileSelect(indicesIn[i], index));
-      console.log(dim);
     } else if (dim === "row") {
       tileQuery = $(tileSelect(index, indicesIn[i]));
     }
-    //if I am smashed into, delete myself
-    if (i < indicesIn.length - 1) {
+    if (i < indicesIn.length - 1) { //if I am smashed into, delete myself
       if (indicesOut[i] === indicesOut[i+1]) {
         tileQuery[0].remove();
       }
     }
-    // if i smashed into someone
-    if (i >= 1) {
-      //aka, they are in the same spot
+    if (i >= 1) { // if i smashed into someone (same indices)
       if (indicesOut[i] === indicesOut[i-1]) {
         var newVal = valsOut[indicesOut[i]];
         tileQuery.text(newVal);
@@ -214,9 +196,7 @@ Game.prototype.display = function(index, vertex, dim, indicesIn, indicesOut, val
       } else {
         tileQuery[0].setAttribute("data-col", ("c" + indicesOut[i]));
       }
-
-//will use this later to prevent a tile from appearing when nothing has moved;
-      this.hasMoved = true;
+      this.hasMoved = true; //to prevent a tile from appearing when nothing has moved;
     }
   }
 };
@@ -240,9 +220,9 @@ Game.prototype.returnEmptySpaces = function() {
   var row = null;
   var col = null;
   var tileLocation = null;
-  for (var i = 0; i < 4; i++) {
+  for (var i = 0; i < this.boardSize; i++) {
     row = i;
-    for (var j = 0; j < 4; j++) {
+    for (var j = 0; j < this.boardSize; j++) {
       col = j;
       tileLocation = this.board[row][col];
       if (tileLocation === 0) {
@@ -251,4 +231,21 @@ Game.prototype.returnEmptySpaces = function() {
     }
   }
   return emptySpaces;
+};
+
+Game.prototype.smashable = function(vals) {
+  for (var i = 0; i < this.boardSize - 1; i++) {
+    if (vals[i] === vals[i+1]) { return true; } //if two values are the same this can be smashed
+  }
+  return false;
+};
+
+Game.prototype.checkLoss = function() {
+  for (var i = 0; i < this.boardSize; i++) {
+    var valsAndIndices = this.getValsByDim("row", i);
+    if (this.smashable(valsAndIndices[0])) { return false;}
+    valsAndIndices = this.getValsByDim("col", i);
+    if (this.smashable(valsAndIndices[0])) {return false; }
+  }
+  return true;
 };
