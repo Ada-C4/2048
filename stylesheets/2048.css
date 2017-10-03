@@ -2,8 +2,24 @@ html {
   font: normal normal 30px/1 "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
+#score {
+  font: 400 3.5em/125% 'Berkshire Swash', Helvetica, Sans-serif;
+  display: inline-block;
+  background: #e80787;
+  padding: 15px 25px;
+  font-size: 30px;
+  height: 20px;
+  line-height: 20px;
+  float: right;
+  font-weight: bold;
+  border-radius: 3px;
+  color: white;
+  margin-top: 8px;
+  text-align: center;
+}
+
 #gameboard {
-  background: #bbada0;
+  background: #7D26CD;
   border-radius: 0.5rem;
   height: 18.5rem;
   margin: 1rem auto;
@@ -25,7 +41,8 @@ html {
   top: 0; left: 0;
   transition: all 0.2s ease-in-out;
 
-  color: #f9f6f2;
+  /*color: #f9f6f2;*/
+  color: transparent;
   background: #000;
 
   border-radius: 0.5rem;
@@ -48,14 +65,114 @@ html {
 .tile[data-col=c2] { left: 9rem; }
 .tile[data-col=c3] { left: 13.5rem; }
 
-.tile[data-val="2"]    { color: #776e65; background-color: #eee4da; }
-.tile[data-val="4"]    { color: #776e65; background-color: #ede0c8; }
-.tile[data-val="8"]    { background-color: #f2b179; }
-.tile[data-val="16"]   { background-color: #f59563; }
-.tile[data-val="32"]   { background: #f67c5f; }
-.tile[data-val="64"]   { background: #f65e3b; }
-.tile[data-val="128"]  { background: #edcf72; }
-.tile[data-val="256"]  { background: #edcc61; }
-.tile[data-val="512"]  { background: #edc850; }
-.tile[data-val="1024"] { background: #edc53f; }
-.tile[data-val="2048"] { background: #edc22e; }
+.tile[data-val="2"]    {
+  background-image: url("../images/lf1.gif");
+  background-size: cover;
+}
+.tile[data-val="4"]    {
+  background-image: url("../images/lf2.gif");
+  background-size: cover;
+}
+.tile[data-val="8"]    {
+  background-image: url("../images/lf3.jpg");
+  background-size: cover;
+}
+.tile[data-val="16"]   {
+  background-image: url("../images/lf4.jpg");
+  background-size: cover;
+}
+.tile[data-val="32"]   {
+  background-image: url("../images/lf5.jpg");
+  background-size: cover;
+}
+.tile[data-val="64"]   {
+  background-image: url("../images/lf6.jpg");
+  background-size: cover;
+}
+.tile[data-val="128"]  {
+  background-image: url("../images/lf7.jpg");
+  background-size: cover;
+}
+.tile[data-val="256"]  {
+  background-image: url("../images/lf8.jpg");
+  background-size: cover;
+}
+.tile[data-val="512"]  {
+  background-image: url("../images/lf9.jpg");
+  background-size: cover;
+}
+.tile[data-val="1024"] {
+  background-image: url("../images/lf10.jpg");
+  background-size: cover;
+}
+.tile[data-val="2048"] {
+  background-image: url("../images/lf11.jpg");
+  background-size: cover;
+}
+.tile[data-val="4096"] {
+  background-image: url("../images/lf12.jpg");
+  background-size: cover;
+}
+.tile[data-val="8192"] {
+  background-image: url("../images/lf13.png");
+  background-size: cover;
+}
+
+.game-message {
+  font: 400 3.5em/125% 'Berkshire Swash', Helvetica, Sans-serif;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(255,233,236, 0.73);
+  padding-top: 40px;
+  text-align: center;
+  -webkit-animation: fade-in 800ms ease 1200ms;
+  -moz-animation: fade-in 800ms ease 1200ms;
+  animation: fade-in 800ms ease 1200ms;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both;
+  animation-fill-mode: both; }
+  .game-message p {
+    font-size: 60px;
+    font-weight: bold;
+    height: 60px;
+    line-height: 60px;
+    margin-top: 222px;
+    z-index: 1}
+  .game-message .lower {
+    display: block;
+    margin-top: 29px; }
+  .game-message a {
+    font-size: 40px;
+    display: inline-block;
+    background: #00FFCC;
+    border-radius: 3px;
+    padding: 20px 20px;
+    text-decoration: none;
+    color: black;
+    height: 40px;
+    line-height: 42px;
+    cursor: pointer;
+    margin-left: 9px; }
+  .game-over, .game-won {
+    background: rgba(255,182,230, 0.73);
+    color: black;
+    -webkit-animation: slide-up 1.5s ease-in-out 2500ms;
+    -moz-animation: slide-up 1.5s ease-in-out 2500ms;
+    animation: slide-up 1.5s ease-in-out 2500ms;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both;
+    z-index: 1}
+
+  .game-message.game-won p, .game-message.game-over p {
+    z-index: 1
+    -webkit-animation: slide-up 1.5s ease-in-out 2500ms;
+    -moz-animation: slide-up 1.5s ease-in-out 2500ms;
+    animation: slide-up 1.5s ease-in-out 2500ms;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both; }
+}
